@@ -491,7 +491,7 @@ public class BaseCtrl implements Serializable {
 		Locale locale = getFacesContext().getViewRoot().getLocale();
 
 		ResourceBundle bundle = ResourceBundle.getBundle(
-				"com.prottaps.medicalApp.recursos.mensajes", locale,
+				"ec.edu.puce.syllabus.recursos.mensajes", locale,
 				getCurrentClassLoader(params));
 
 		String mensaje = bundle.getString(key);
@@ -532,7 +532,7 @@ public class BaseCtrl implements Serializable {
 		}
 
 		ResourceBundle bundle = ResourceBundle.getBundle(
-				"com.prottaps.medicalApp.recursos.etiquetas", locale,
+				"ec.edu.puce.syllabus.recursos.etiquetas", locale,
 				getCurrentClassLoader(params));
 		String mensaje = bundle.getString(key);
 

@@ -13,11 +13,11 @@
         </locale-config>
 
         <resource-bundle>
-            <base-name>com.prottaps.medicalApp.recursos.etiquetas</base-name>
+            <base-name>ec.edu.puce.syllabus.recursos.etiquetas</base-name>
             <var>etiquetas</var>
         </resource-bundle>
         <resource-bundle>
-            <base-name>com.prottaps.medicalApp.recursos.mensajes</base-name>
+            <base-name>ec.edu.puce.syllabus.recursos.mensajes</base-name>
             <var>mensajes</var>
         </resource-bundle>
         <resource-bundle>
