@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/template/general.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{etiquetas['seleccione.una.opcion']}" />
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form>
+			<div align="center">
+				<h:panelGrid columns="5"
+					columnClasses="columnHome,columnHome,columnHome,columnHome,columnHome">
+
+					<h:commandLink action="/paginas/usuarios/usuarioLista.jsf">
+						<h:panelGrid class="botonHome">
+							<h:graphicImage value="/img/usuarios.png" title="Usuarios" />
+							<h:outputText value="Usuarios" />
+						</h:panelGrid>
+					</h:commandLink>
+
+					<h:commandLink action="/paginas/usuarios/usuarioLista.jsf">
+						<h:panelGrid class="botonHome">
+							<h:graphicImage value="/img/agenda.png" title="Agenda" />
+							<h:outputText value="Agenda" />
+						</h:panelGrid>
+					</h:commandLink>
+
+					<h:commandLink action="/paginas/usuarios/usuarioLista.jsf">
+						<h:panelGrid class="botonHome">
+							<h:graphicImage value="/img/historia.png"
+								title="Historia Clínica" />
+							<h:outputText value="Historia Clínica" />
+						</h:panelGrid>
+					</h:commandLink>
+
+					<h:commandLink action="/paginas/usuarios/usuarioLista.jsf">
+						<h:panelGrid class="botonHome">
+							<h:graphicImage value="/img/medico.png" title="Médico" />
+							<h:outputText value="Médico" />
+						</h:panelGrid>
+					</h:commandLink>
+
+					<h:commandLink action="/paginas/usuarios/usuarioLista.jsf">
+						<h:panelGrid class="botonHome">
+							<h:graphicImage value="/img/paciente.png" title="Paciente" />
+							<h:outputText value="Paciente" />
+						</h:panelGrid>
+					</h:commandLink>
+
+				</h:panelGrid>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

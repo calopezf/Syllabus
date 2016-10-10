@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <title>#{etiquetas['olvido.contrasenia']}</title>
+            <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+            <link type="text/css"
+                  href="#{facesContext.externalContext.requestContextPath}/css/surti.css"
+                  rel="stylesheet" media="screen" />
+        </h:head>
+
+        <h:body>
+            <div id="contenenedor" style="width:900px;margin:auto;">
+                <div style="width:100%;text-align: center">
+                    <h:graphicImage value="/img/surti-login.png"/>
+                </div><!--centrado --> 
+                <!-- Begin Wrapper -->
+                <br />
+                <div style="width:100%;text-align: center">
+                    <h:outputText value="Credenciales incorrectas" class="mensajeError" rendered="#{param.error==1}"/>
+                </div>
+                <br />
+                <br />           
+
+                <h:form id="formUsuario">
+                    <p:growl id="growl" autoUpdate="true"/>  
+
+                    <!-- Begin Right Column -->
+                    <h:panelGrid class="loginPanel" cellpadding="0" cellspacing="0" columns="1" id="cuadroLogin" columnClasses="columnaLoginRow" headerClass="headerPanel" style="width:400px;margin:auto;">
+                        <f:facet name="header">
+                            <h:outputText value="#{etiquetas['ingreso.cedula']}" />
+                        </f:facet>
+                        <h:outputLabel value="#{etiquetas['usuario']}*:"/> 
+                        <h:panelGrid style="text-align: center;width:100%">
+                            <h:inputText id="cedula" value="#{usuarioCtrl.usuario.identificacion}" required="true"  requiredMessage="#{etiquetas['numero.cedula']} #{mensajes['requerido.masculino']}" maxlength="10" >
+                            </h:inputText>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" style="text-align: center;width:100%;font-size:12px">
+                            <p:commandButton value="#{etiquetas['enviar']}"   
+                                             action="#{usuarioCtrl.enviaContraseniaNueva}" update="@form" />
+                            <p:commandButton value="#{etiquetas['regresar']}"   
+                                             action="/paginas/login.jsf" immediate="true"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+
+                </h:form>
+
+                <div style="width:100%;text-align: center;margin-top: 2px;">
+                    <h:outputFormat value="#{mensajes['copyright']}">
+                        <f:param value="#{usuarioCtrl.currentYearString}"/>
+                    </h:outputFormat>
+                </div><!--centrado --> 
+
+            </div>
+            <!-- contenedor -->
+        </h:body>
+
+
+
+    </f:view>
+
+</html>
