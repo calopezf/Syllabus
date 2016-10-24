@@ -12,6 +12,7 @@ import javax.faces.model.SelectItem;
 
 import ec.edu.puce.syllabus.constantes.EnumEstado;
 import ec.edu.puce.syllabus.constantes.EnumEstadoCivil;
+import ec.edu.puce.syllabus.constantes.EnumCarrera;
 import ec.edu.puce.syllabus.constantes.EnumRol;
 
 /**
@@ -24,10 +25,24 @@ public class SelectItemCtrl extends BaseCtrl {
 	private static final long serialVersionUID = 1L;
 
 	private List<SelectItem> estadoEnum;
+	private List<SelectItem> enumCarrera;
 	private List<SelectItem> rolEnum;
 	private List<SelectItem> estadoCivil;
-	private List<SelectItem> pais;
-	private List<SelectItem> tipoIdentificacion;
+
+	public List<SelectItem> getEnumCarrera() {
+		if (enumCarrera == null) {
+			enumCarrera = new ArrayList<SelectItem>();
+			for (EnumCarrera e : EnumCarrera.values()) {
+				enumCarrera.add(new SelectItem(e, getBundleEtiquetas(
+						e.getEtiqueta(), null)));
+			}
+		}
+		return enumCarrera;
+	}
+
+	public void setEnumCarrera(List<SelectItem> enumCarrera) {
+		this.enumCarrera = enumCarrera;
+	}
 
 	public List<SelectItem> getEstadoEnum() {
 		if (estadoEnum == null) {
