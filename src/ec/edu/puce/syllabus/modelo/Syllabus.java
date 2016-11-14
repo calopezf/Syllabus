@@ -1,17 +1,15 @@
 package ec.edu.puce.syllabus.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import ec.edu.puce.syllabus.constantes.EnumEstado;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "SYLLABUS")
@@ -26,20 +24,10 @@ public class Syllabus implements Serializable {
 	private String codigo;// o username
 	@Column(name = "nombre", nullable = false, length = 200)
 	private String nombre;
-	@Column(name = "estado")
-	@Enumerated(EnumType.STRING)
-	private EnumEstado estado;
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "codigo_materia", referencedColumnName = "codigo")
+	@OneToMany(mappedBy = "syllabus",cascade=CascadeType.ALL)
+	private List<SyllabusDetalle> detalles;
+	@Transient
 	private Materia materia;
-
-	public EnumEstado getEstado() {
-		return estado;
-	}
-
-	public void setEstado(EnumEstado estado) {
-		this.estado = estado;
-	}
 
 	public String getNombre() {
 		return nombre;
@@ -64,7 +52,13 @@ public class Syllabus implements Serializable {
 	public void setMateria(Materia materia) {
 		this.materia = materia;
 	}
-	
-	
+
+	public List<SyllabusDetalle> getDetalles() {
+		return detalles;
+	}
+
+	public void setDetalles(List<SyllabusDetalle> detalles) {
+		this.detalles = detalles;
+	}
 
 }

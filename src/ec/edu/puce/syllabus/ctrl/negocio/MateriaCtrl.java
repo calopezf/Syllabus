@@ -101,6 +101,13 @@ public class MateriaCtrl extends BaseCtrl {
 		return "/paginas/materia/materia?faces-redirect=true&idMateria="
 				+ materiaData.getCodigo();
 	}
+	
+	public String navegarSyllabus() {
+		Materia materiaData = (Materia) getExternalContext().getRequestMap()
+				.get("item");
+		return "/paginas/syllabus/syllabus?faces-redirect=true&idMateria="
+				+ materiaData.getCodigo();
+	}
 
 	public void buscar() {
 		this.materias = null;

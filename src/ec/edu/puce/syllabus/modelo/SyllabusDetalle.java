@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,11 +27,14 @@ public class SyllabusDetalle implements Serializable {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "GEN_SYLLABUS_DETALLE")
 	private Long id;
-	
+
+	@Column(name = "tema", nullable = false, length = 200)
+	private String tema;
+
 	@Column(name = "descripcion", nullable = false, length = 4000)
 	private String descripcion;
-	
-	@ManyToOne(optional = false)
+
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "codigo_syllabus", referencedColumnName = "codigo")
 	private Syllabus syllabus;
 
@@ -50,6 +54,20 @@ public class SyllabusDetalle implements Serializable {
 		this.syllabus = syllabus;
 	}
 
+	public String getTema() {
+		return tema;
+	}
 
+	public void setTema(String tema) {
+		this.tema = tema;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 
 }

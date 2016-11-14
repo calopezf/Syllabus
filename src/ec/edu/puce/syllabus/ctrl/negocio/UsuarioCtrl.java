@@ -105,6 +105,7 @@ public class UsuarioCtrl extends BaseCtrl {
 			Usuario usuarioEnBase = usuarioServicio
 					.obtieneUsuarioXCedula(usuario.getIdentificacion());
 			if (usuarioEnBase == null) {
+				this.usuario.setPassword(this.usuario.getIdentificacion());
 				servicioCrud.insert(usuario);
 			} else {
 				servicioCrud.update(usuario);

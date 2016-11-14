@@ -7,12 +7,14 @@
      xmlns:p="http://primefaces.org/ui" id="header">
     <h:form>
         <h:panelGrid columns="2" columnClasses=",headerSegundaColumna" style="width:100%">
-            <h:graphicImage value="/img/puce_logo.png" title="Vers: 22-jul-2014 11:34" style="width:390px; height:110px;"/>
+            <h:graphicImage value="/img/logopuce1.png" title="Vers: 22-jul-2014 11:34" style="width:150px; height:150px;"/>
 
             <h:panelGrid columns="1" style="width:100%;">
                 <h:outputText value="#{usuarioCtrl.currentDateObj}">
                     <f:convertDateTime pattern="dd 'de' MMMM 'de' yyyy"/>
                 </h:outputText>
+                <h:outputText value="USUARIO: #{sesionCtrl.usuarioLogueado.nombre} #{sesionCtrl.usuarioLogueado.apellido}" />
+                <h:outputText value="IDENTIFICACION: #{sesionCtrl.usuarioLogueado.identificacion}"/>
                 <h:commandLink value="Inicio" action="/paginas/index.jsf" immediate="true"/>
                 <a href="#{facesContext.externalContext.requestContextPath}/admin/index.jsp">Salir</a>
                 

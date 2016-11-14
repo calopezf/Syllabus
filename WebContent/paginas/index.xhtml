@@ -13,22 +13,35 @@
 			<div align="center">
 				<h:panelGrid columns="5"
 					columnClasses="columnHome,columnHome,columnHome,columnHome,columnHome">
+					
 
 					<h:commandLink action="/paginas/usuarios/usuarioLista.jsf">
 						<h:panelGrid class="botonHome">
-							<h:graphicImage value="/img/usuarios1.png" title="Usuarios" />
+							<h:graphicImage value="/img/usuarios.png" title="Usuarios" />
 							<h:outputText value="Usuarios" />
 						</h:panelGrid>
 					</h:commandLink>
-					
+
 					<h:commandLink action="/paginas/materia/materiaLista.jsf">
 						<h:panelGrid class="botonHome">
-							<h:graphicImage value="/img/materia1.png" title="Materias" />
+							<h:graphicImage value="/img/materia2.png" title="Materias" />
 							<h:outputText value="Materias" />
 						</h:panelGrid>
 					</h:commandLink>
 
-
+					<h:commandLink action="/paginas/seguimiento/seguimientoLista.jsf">
+						<h:panelGrid class="botonHome">
+							<h:graphicImage value="/img/seguimiento.png" title="Seguimiento" />
+							<h:outputText value="Seguimiento" />
+						</h:panelGrid>
+					</h:commandLink>
+					
+					<h:commandLink action="/paginas/reporte/reporte.jsf">
+						<h:panelGrid class="botonHome">
+							<h:graphicImage value="/img/reporte.png" title="Reporte" />
+							<h:outputText value="Reporte" />
+						</h:panelGrid>
+					</h:commandLink>
 				</h:panelGrid>
 			</div>
 		</h:form>

@@ -4,7 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" template="/template/general.xhtml">
 	<ui:define name="title">
-		<h:outputText value="#{etiquetas['materias']}" />
+		<h:outputText value="#{etiquetas['syllabus']}" />
 	</ui:define>
 	<ui:define name="content">
 		<h:form id="formMateriaLista">
@@ -12,19 +12,19 @@
 			<h:panelGrid columns="2">
 				<h:panelGrid columns="2" id="gridFiltros" style="width: 700px">
 					<h:panelGrid columns="2" columnClasses="form-label,form-input">
-						<h:outputText value="#{etiquetas['codigoMateria']}" />
+						<h:outputText value="#{etiquetas['codigoSyllabus']}" />
 						<h:inputText style="width:120px"
-							value="#{materiaCtrl.materiaFiltro.codigo}"></h:inputText>
+							value="#{syllabusCtrl.syllabusFiltro.codigo}"></h:inputText>
 						<h:outputText value="#{etiquetas['nombre']}" />
-						<h:inputText value="#{materiaCtrl.materiaFiltro.nombre}"
+						<h:inputText value="#{syllabusCtrl.syllabusFiltro.nombre}"
 							style="width:120px" />
 					</h:panelGrid>
 					<h:commandButton image="/img/view.png" style="align: right;"
-						action="#{materiaCtrl.buscar}" title="#{etiquetas.buscar}">
+						action="#{syllabusCtrl.buscar}" title="#{etiquetas.buscar}">
 						<p:ajax update="itemsPanel" process="gridFiltros" />
 					</h:commandButton>
 				</h:panelGrid>
-				<h:commandLink action="/paginas/materia/materia?faces-redirect=true"
+				<h:commandLink action="/paginas/syllabus/syllabus?faces-redirect=true"
 					title="#{etiquetas['crear.nuevo']}"
 					rendered="#{sesionCtrl.administrador}">
 					<h:panelGrid style="text-align:center">
@@ -39,10 +39,10 @@
 
 				<p:dataTable id="itemsTable"
 					emptyMessage="#{etiquetas['no.existen.registros']}"
-					value="#{materiaCtrl.materias}" var="item" style="width:100%">
+					value="#{sillabusCtrl.sylla}" var="item" style="width:100%">
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="#{etiquetas['codigoMateria']}" />
+							<h:outputText value="#{etiquetas['codigoSyllabus']}" />
 						</f:facet>
 						<h:outputText value="#{item.codigo}" />
 					</p:column>
@@ -54,9 +54,9 @@
 					</p:column>
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="#{etiquetas['carrera']}" />
+							<h:outputText value="#{etiquetas['materia']}" />
 						</f:facet>
-						<h:outputText value="#{etiquetas[item.carrera.etiqueta]}" />
+						<h:outputText value="#{item.materia.codigo} - #{item.materia}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
@@ -66,25 +66,16 @@
 					</p:column>
 					<p:column styleClass="columnaCentrada">
 						<f:facet name="header">
-							<h:outputText value="#{etiquetas['syllabus']}" />
-						</f:facet>
-						<h:commandLink action="#{materiaCtrl.navegarSyllabus}"
-							title="#{etiquetas.syllabus}">
-							<h:graphicImage value="/img/syllabus.png" id="syllabusImage" style="width:50px; height:50px" />
-						</h:commandLink>
-					</p:column>
-					<p:column styleClass="columnaCentrada">
-						<f:facet name="header">
 							<h:outputText value="#{etiquetas['editar']}" />
 						</f:facet>
-						<h:commandLink action="#{materiaCtrl.editar}"
+						<h:commandLink action="#{syllabusCtrl.editar}"
 							title="#{etiquetas.editar}">
 							<h:graphicImage value="/img/edit.png" id="editImage" />
 						</h:commandLink>
 					</p:column>
 					<p:column styleClass="columnaCentrada"
 						headerText="#{etiquetas['eliminar.sistema']}">
-						<h:commandLink actionListener="#{materiaCtrl.eliminarMateria}"
+						<h:commandLink actionListener="#{syllabusCtrl.eliminarSyllabus}"
 							title="#{etiquetas['eliminar.sistema']}"
 							onclick="if(!confirm('#{mensajes['esta.seguro']}'))return false;">
 							<h:graphicImage value="/img/delete.png" id="trashImage" />
