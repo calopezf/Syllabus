@@ -5,7 +5,7 @@
 	template="/template/general.xhtml" xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="title">
-		<h:outputText value="#{etiquetas['syllabus']}" />
+		<h:outputText value="#{etiquetas['contenido']}" />
 	</ui:define>
 
 	<br />
@@ -29,47 +29,82 @@
 			<br />
 			<br />
 
-				<h:panelGrid columns="2" id="gridDetalle" style="width: 700px">
-					<h:panelGrid columns="2" columnClasses="form-label,form-input">
-						<h:outputText value="#{etiquetas['tema']}:*" />
-						<h:inputText value="#{syllabusCtrl.syllabusDetalle.tema}"
-							style="width:250px" />
-						<h:outputText value="#{etiquetas['descripcion']}:*" />
-						<h:inputTextarea style="width:600px"
-							value="#{syllabusCtrl.syllabusDetalle.descripcion}"></h:inputTextarea>
-					</h:panelGrid>
-					<h:commandLink actionListener="#{syllabusCtrl.agregarDetalle}"
-						title="#{etiquetas['eliminar.sistema']}">
-						<h:graphicImage value="/img/addList.png" id="addImage" />
-						<f:ajax render="itemsTable gridDetalle" execute="gridDetalle" />
-					</h:commandLink>
-				</h:panelGrid>
-				<p:dataTable id="itemsTable"
-					emptyMessage="#{etiquetas['no.existen.registros']}"
-					value="#{syllabusCtrl.syllabusDetalleLista}" var="item"
-					style="width:100%">
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="#{etiquetas['tema']}" />
-						</f:facet>
-						<h:outputText value="#{item.tema}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="#{etiquetas['descripcion']}" />
-						</f:facet>
-						<h:outputText value="#{item.descripcion}" />
-					</p:column>
+			<h:panelGrid columns="2" id="gridDetalle" style="width: 700px">
+				<h:commandLink actionListener="#{syllabusCtrl.agregarDetalle}"
+					title="#{etiquetas['eliminar.sistema']}">
+					<h:graphicImage value="/img/addList.png" id="addImage" />
+					<f:ajax render="itemsTable gridDetalle" execute="gridDetalle" />
+				</h:commandLink>
+			</h:panelGrid>
+			<p:dataTable id="itemsTable"
+				emptyMessage="#{etiquetas['no.existen.registros']}"
+				value="#{syllabusCtrl.syllabusDetalleLista}" var="item"
+				style="width:100%">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['claseNumero']}" />
+					</f:facet>
+					<h:inputText value="#{item.clase}" style="width:20px;"
+						maxlength="3">
+						<f:ajax />
+					</h:inputText>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['unidad']}" />
+					</f:facet>
+					<h:inputTextarea value="#{item.unidad}"
+						style="width:150px;height:80px;">
+						<f:ajax />
+					</h:inputTextarea>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['contenidos']}" />
+					</f:facet>
+					<h:inputTextarea style="width:150px; height:80px;"
+						value="#{item.contenido}">
+						<f:ajax />
+					</h:inputTextarea>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['actividadClase']}" />
+					</f:facet>
+					<h:inputTextarea style="width:150px;height:80px;"
+						value="#{item.actividad}">
+						<f:ajax />
+					</h:inputTextarea>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['trabajoAutonomo']}" />
+					</f:facet>
+					<h:inputTextarea style="width:150px;height:80px;"
+						value="#{item.trabajo}">
+						<f:ajax />
+					</h:inputTextarea>
 
-					<p:column styleClass="columnaCentrada"
-						headerText="#{etiquetas['eliminar.sistema']}">
-						<h:commandLink actionListener="#{syllabusCtrl.eliminarDetalle}"
-							title="#{etiquetas['eliminar.sistema']}">
-							<h:graphicImage value="/img/delete.png" id="trashImage" />
-							<f:ajax render="itemsTable" />
-						</h:commandLink>
-					</p:column>
-				</p:dataTable>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['evidencias']}" />
+					</f:facet>
+					<h:inputTextarea style="width:150px;height:80px;"
+						value="#{item.evidencia}">
+						<f:ajax />
+					</h:inputTextarea>
+				</p:column>
+
+				<p:column styleClass="columnaCentrada"
+					headerText="#{etiquetas['eliminar.sistema']}">
+					<h:commandLink actionListener="#{syllabusCtrl.eliminarDetalle}"
+						title="#{etiquetas['eliminar.sistema']}">
+						<h:graphicImage value="/img/delete.png" id="trashImage" />
+						<f:ajax render="itemsTable" />
+					</h:commandLink>
+				</p:column>
+			</p:dataTable>
 
 			<br />
 			<br />

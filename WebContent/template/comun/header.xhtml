@@ -10,7 +10,10 @@
             <h:graphicImage value="/img/logopuce1.png" title="Vers: 22-jul-2014 11:34" style="width:150px; height:150px;"/>
 
             <h:panelGrid columns="1" style="width:100%;">
-                <h:outputText value="#{usuarioCtrl.currentDateObj}">
+                <h:graphicImage value="/img/#{sesionCtrl.usuarioLogueado.foto}"
+					rendered="#{sesionCtrl.usuarioLogueado.foto!=null}"
+					style="width:45px; height:45px;" />
+					   <h:outputText value="#{usuarioCtrl.currentDateObj}">
                     <f:convertDateTime pattern="dd 'de' MMMM 'de' yyyy"/>
                 </h:outputText>
                 <h:outputText value="USUARIO: #{sesionCtrl.usuarioLogueado.nombre} #{sesionCtrl.usuarioLogueado.apellido}" />

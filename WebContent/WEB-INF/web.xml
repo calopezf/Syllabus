@@ -3,7 +3,7 @@
   <display-name>Syllabus</display-name>
   <context-param>
     <param-name>primefaces.THEME</param-name>
-    <param-value>cupertino</param-value>
+    <param-value>primefaces-ultima-indigo</param-value>
   </context-param>
   <context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>
@@ -76,6 +76,9 @@
     <auth-constraint>
       <description></description>
       <role-name>ADMINISTRADOR</role-name>
+      <role-name>ALUMNO</role-name>
+      <role-name>PROFESOR</role-name>
+      <role-name>COORDINADOR</role-name>
     </auth-constraint>
     <user-data-constraint>
       <transport-guarantee>NONE</transport-guarantee>
@@ -100,5 +103,9 @@
   <security-role>
     <description></description>
     <role-name>ALUMNO</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>COORDINADOR</role-name>
   </security-role>
 </web-app>

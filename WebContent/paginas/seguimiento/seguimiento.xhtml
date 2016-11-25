@@ -11,15 +11,16 @@
 			<p:growl id="growl" autoUpdate="true" />
 			<h:panelGrid columns="2" columnClasses="form-label,form-input">
 				<h:outputText value="#{etiquetas['semestre']}:*" />
-				<h:inputText value="#{seguimientoCtrl.seguimiento.semestre}"
-					style="width:250px" required="true" />
-				<h:outputText value="#{etiquetas['estado']}:*" />
-				<h:selectOneMenu id="estado" required="true"
-					value="#{seguimientoCtrl.seguimiento.estado}" style="width:250px">
-					<f:selectItems value="#{selectItemCtrl.estadoEnum}" />
+				<h:selectOneMenu id="semestre" required="true"
+					disabled="#{not usuarioCtrl.administrador}"
+					value="#{seguimientoCtrl.seguimiento.semestre.semestre}"
+					style="width:250px">
+					<f:selectItems value="#{seguimientoCtrl.semestreLista}" var="item"
+						itemLabel="#{item.semestre}" itemValue="#{item.semestre}" />
 				</h:selectOneMenu>
 				<h:outputLabel for="facultad" value="#{etiquetas['carrera']}*:" />
 				<h:selectOneMenu id="facultad" required="true"
+					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.carrera}" style="width:250px">
 					<f:selectItems value="#{selectItemCtrl.enumCarrera}" />
 					<f:ajax event="change" render="pagMateria"
@@ -28,6 +29,7 @@
 				<h:outputText value="#{etiquetas['materia']}:*" />
 				<h:panelGroup id="pagMateria">
 					<h:selectOneMenu id="materia" required="true"
+						disabled="#{not usuarioCtrl.administrador}"
 						value="#{seguimientoCtrl.seguimiento.materia.codigo}"
 						style="width:250px">
 						<f:selectItems value="#{seguimientoCtrl.materiaLista}" var="item"
@@ -37,6 +39,7 @@
 				</h:panelGroup>
 				<h:outputText value="#{etiquetas['profesor']}:*" />
 				<h:selectOneMenu id="profesor" required="true"
+					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.profesor.identificacion}"
 					style="width:250px">
 					<f:selectItems value="#{seguimientoCtrl.profesorLista}" var="item"
@@ -45,6 +48,7 @@
 				</h:selectOneMenu>
 				<h:outputText value="#{etiquetas['alumno']}:*" />
 				<h:selectOneMenu id="alumno" required="true"
+					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.alumno.identificacion}"
 					style="width:250px">
 					<f:selectItems value="#{seguimientoCtrl.alumnoLista}" var="item"
@@ -55,8 +59,15 @@
 				<p:calendar id="fecha"
 					value="#{seguimientoCtrl.seguimiento.fechaCreacion}"
 					disabled="true" style="width:250px" />
+				<h:outputText value="#{etiquetas['estado']}:*" />
+				<h:selectOneMenu id="estado" required="true"
+					disabled="#{not usuarioCtrl.administrador}"
+					value="#{seguimientoCtrl.seguimiento.estado}" style="width:250px">
+					<f:selectItems value="#{selectItemCtrl.estadoEnum}" />
+				</h:selectOneMenu>
 				<h:outputText value="#{etiquetas['descripcion']}:*" />
 				<h:inputTextarea style="width:600px; height:100px;" required="true"
+					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.descripcion}"></h:inputTextarea>
 			</h:panelGrid>
 			<h:outputText value="#{etiquetas['campos.obligatorios']}" />
@@ -64,57 +75,94 @@
 			<br />
 			<br />
 
-			<p:dataTable id="itemsTable" rendered="#{seguimientoCtrl.seguimientoListaDetalle.size()>0}"
+			<p:dataTable id="itemsTable"
+				rendered="#{seguimientoCtrl.seguimientoListaDetalle.size()>0}"
 				emptyMessage="#{etiquetas['no.existen.registros']}"
 				value="#{seguimientoCtrl.seguimientoListaDetalle}" var="item"
 				style="width:100%">
-				<p:column  style="width:180px;">
+				<p:column style="width:180px;">
 					<f:facet name="header">
-						<h:outputText value="#{etiquetas['tema']}" />
+						<h:outputText value="#{etiquetas['unidad']}" />
 					</f:facet>
-					<h:outputText value="#{item.tema}" />
+					<h:outputText value="#{item.unidad}" />
+				</p:column>
+				<p:column style="width:50px;">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['claseNumero']}" />
+					</f:facet>
+					<h:outputText value="#{item.clase}" />
 				</p:column>
 				<p:column style="width:180px;">
 					<f:facet name="header">
-						<h:outputText value="#{etiquetas['descripcion']}" />
+						<h:outputText value="#{etiquetas['contenidos']}" />
 					</f:facet>
-					<h:outputText value="#{item.descripcion}" />
+					<h:outputText value="#{item.contenido}" />
 				</p:column>
-				<p:column style="width:50px;">
+				<p:column style="width:180px;">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['actividadClase']}" />
+					</f:facet>
+					<h:outputText value="#{item.actividad}" />
+				</p:column>
+				<p:column style="width:180px;">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['trabajoAutonomo']}" />
+					</f:facet>
+					<h:outputText value="#{item.trabajo}" />
+				</p:column>
+				<p:column style="width:180px;">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['evidencias']}" />
+					</f:facet>
+					<h:outputText value="#{item.evidencia}" />
+				</p:column>
+				<p:column style="width:50px;"
+					rendered="#{usuarioCtrl.profesor or usuarioCtrl.administrador or usuarioCtrl.coordinador}">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['profesor']}" />
 					</f:facet>
-					<p:selectBooleanCheckbox value="#{item.checkProfesor}" />
+					<p:selectBooleanCheckbox value="#{item.checkProfesor}"
+						disabled="#{not usuarioCtrl.profesor}" />
 				</p:column>
-				<p:column style="width:180px;">
+				<p:column style="width:180px;"
+					rendered="#{usuarioCtrl.profesor or usuarioCtrl.administrador or usuarioCtrl.coordinador}">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['fecha']}" />
 					</f:facet>
-					<p:calendar value="#{item.fechaProfesor}"  />
+					<p:calendar value="#{item.fechaProfesor}"
+						disabled="#{not usuarioCtrl.profesor}" />
 				</p:column>
-				<p:column style="width:180px;">
-					<f:facet name="header" >
+				<p:column style="width:180px;"
+					rendered="#{usuarioCtrl.profesor or usuarioCtrl.administrador or usuarioCtrl.coordinador}">
+					<f:facet name="header">
 						<h:outputText value="#{etiquetas['comentarioProfesor']}" />
 					</f:facet>
-					<h:inputTextarea value="#{item.comentarioProfesor}" />
+					<h:inputTextarea value="#{item.comentarioProfesor}"
+						disabled="#{not usuarioCtrl.profesor}" />
 				</p:column>
-				<p:column style="width:50px;">
+				<p:column style="width:50px;"
+					rendered="#{usuarioCtrl.alumno or usuarioCtrl.administrador or usuarioCtrl.coordinador}">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['alumno']}" />
 					</f:facet>
-					<p:selectBooleanCheckbox value="#{item.checkAlumno}" />
+					<p:selectBooleanCheckbox value="#{item.checkAlumno}"
+						disabled="#{not usuarioCtrl.alumno}" />
 				</p:column>
-				<p:column  style="width:180px;">
+				<p:column style="width:180px;"
+					rendered="#{usuarioCtrl.alumno or usuarioCtrl.administrador or usuarioCtrl.coordinador}">
 					<f:facet name="header" style="width:180px;">
 						<h:outputText value="#{etiquetas['fecha']}" />
 					</f:facet>
-					<p:calendar value="#{item.fechaAlumno}" />
+					<p:calendar value="#{item.fechaAlumno}"
+						disabled="#{not usuarioCtrl.alumno}" />
 				</p:column>
-				<p:column style="width:180px;">
+				<p:column style="width:180px;"
+					rendered="#{usuarioCtrl.alumno or usuarioCtrl.administrador or usuarioCtrl.coordinador}">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['comentarioAlumno']}" />
 					</f:facet>
-					<h:inputTextarea value="#{item.comentarioAlumno}" />
+					<h:inputTextarea value="#{item.comentarioAlumno}"
+						disabled="#{not usuarioCtrl.alumno}" />
 				</p:column>
 			</p:dataTable>
 

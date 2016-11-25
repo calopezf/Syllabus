@@ -23,6 +23,7 @@ import ec.edu.puce.syllabus.modelo.Materia;
 import ec.edu.puce.syllabus.modelo.Rol;
 import ec.edu.puce.syllabus.modelo.SeguimientoSyllabus;
 import ec.edu.puce.syllabus.modelo.SeguimientoSyllabusDetalle;
+import ec.edu.puce.syllabus.modelo.Semestre;
 import ec.edu.puce.syllabus.modelo.Usuario;
 
 @ManagedBean(name = "reporteCtrl")
@@ -47,6 +48,7 @@ public class ReporteCtrl extends BaseCtrl {
 	@PostConstruct
 	public void postConstructor() {
 		this.seguimientoFiltro = new SeguimientoSyllabus();
+		this.seguimientoFiltro.setSemestre(new Semestre());
 		this.seguimientoFiltro.setMateria(new Materia());
 		this.seguimientoFiltro.setAlumno(new Usuario());
 		this.seguimientoFiltro.setProfesor(new Usuario());
@@ -90,6 +92,8 @@ public class ReporteCtrl extends BaseCtrl {
 					dictado++;
 				}
 			}
+			segui.setProfesorPorcentaje((int) (dictado * 100) / total);
+			segui.setAlumnoPorcentaje((int) (recibido * 100) / total);
 			profesor.put(segui.getMateria().getNombre(), (int) (dictado * 100)
 					/ total);
 			alumno.put(segui.getMateria().getNombre(), (int) (recibido * 100)
@@ -114,13 +118,13 @@ public class ReporteCtrl extends BaseCtrl {
 		profesorAlumnoModel.setTitle("Porcentaje Avance (Profesor y Alumno)");
 		profesorAlumnoModel.setLegendPosition("ne");
 
-		  Axis xAxis = profesorAlumnoModel.getAxis(AxisType.X);
-	        xAxis.setLabel("MATERIAS");
-	         
-	        Axis yAxis = profesorAlumnoModel.getAxis(AxisType.Y);
-	        yAxis.setLabel("PORCENTAJE");
-	        yAxis.setMin(0);
-	        yAxis.setMax(100);
+		Axis xAxis = profesorAlumnoModel.getAxis(AxisType.X);
+		xAxis.setLabel("MATERIAS");
+
+		Axis yAxis = profesorAlumnoModel.getAxis(AxisType.Y);
+		yAxis.setLabel("PORCENTAJE");
+		yAxis.setMin(0);
+		yAxis.setMax(100);
 	}
 
 	public SeguimientoSyllabus getSeguimiento() {
@@ -132,6 +136,7 @@ public class ReporteCtrl extends BaseCtrl {
 				this.seguimiento.setAlumno(new Usuario());
 				this.seguimiento.setProfesor(new Usuario());
 				this.seguimiento.setFechaCreacion(getCurrentDateObj());
+				this.seguimiento.setSemestre(new Semestre());
 				seguimiento.setEstado(EnumEstado.ACT);
 			} else {
 				seguimiento = servicioCrud.findById(
@@ -217,6 +222,13 @@ public class ReporteCtrl extends BaseCtrl {
 
 	public void setProfesorAlumnoModel(BarChartModel profesorAlumnoModel) {
 		this.profesorAlumnoModel = profesorAlumnoModel;
+	}
+	
+	public void generarReporte() {
+		SeguimientoSyllabus seguimientoData = (SeguimientoSyllabus) getExternalContext().getRequestMap()
+				.get("item");
+		generarSeguimiento(seguimientoData.getId());
+		
 	}
 
 }

@@ -7,7 +7,7 @@ package ec.edu.puce.syllabus.exceptiones;
 
 /**
  * Excepcion que se genera cuando no se puede generar la secuencia de forma automatica por anotacion en la entidad.
- * @author Gestorinc S.A.
+ * @author Cristian
  * @version $Revision: $
  */
 public class SecuenciaIncorrectaRuntimeException extends RuntimeException {

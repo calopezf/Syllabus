@@ -30,11 +30,23 @@ public class SeguimientoSyllabusDetalle implements Serializable {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "GEN_SEGUIMIENTO_SYLLABUS_DETALLE")
 	private Long id;
 
-	@Column(name = "tema", nullable = false, length = 200)
-	private String tema;
-
-	@Column(name = "descripcion", nullable = false, length = 4000)
-	private String descripcion;
+	@Column(name = "unidad", nullable = false, length = 4000)
+	private String unidad;
+	
+	@Column(name = "clase", nullable = false)
+	private Integer clase;
+	
+	@Column(name = "contenido", nullable = false, length = 4000)
+	private String contenido;
+	
+	@Column(name = "actividad", nullable = false, length = 4000)
+	private String actividad;
+	
+	@Column(name = "trabajo", nullable = false, length = 4000)
+	private String trabajo;
+	
+	@Column(name = "evidencia", nullable = false, length = 4000)
+	private String evidencia;
 
 	@Column(name = "check_profesor", nullable = true)
 	private Boolean checkProfesor;
@@ -116,22 +128,6 @@ public class SeguimientoSyllabusDetalle implements Serializable {
 		this.fechaAlumno = fechaAlumno;
 	}
 
-	public String getTema() {
-		return tema;
-	}
-
-	public void setTema(String tema) {
-		this.tema = tema;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
 	public SeguimientoSyllabus getSeguimiento() {
 		return seguimiento;
 	}
@@ -139,5 +135,55 @@ public class SeguimientoSyllabusDetalle implements Serializable {
 	public void setSeguimiento(SeguimientoSyllabus seguimiento) {
 		this.seguimiento = seguimiento;
 	}
+
+	public String getUnidad() {
+		return unidad;
+	}
+
+	public void setUnidad(String unidad) {
+		this.unidad = unidad;
+	}
+
+	public Integer getClase() {
+		return clase;
+	}
+
+	public void setClase(Integer clase) {
+		this.clase = clase;
+	}
+
+	public String getContenido() {
+		return contenido;
+	}
+
+	public void setContenido(String contenido) {
+		this.contenido = contenido;
+	}
+
+	public String getActividad() {
+		return actividad;
+	}
+
+	public void setActividad(String actividad) {
+		this.actividad = actividad;
+	}
+
+	public String getTrabajo() {
+		return trabajo;
+	}
+
+	public void setTrabajo(String trabajo) {
+		this.trabajo = trabajo;
+	}
+
+	public String getEvidencia() {
+		return evidencia;
+	}
+
+	public void setEvidencia(String evidencia) {
+		this.evidencia = evidencia;
+	}
+	
+	
 
 }

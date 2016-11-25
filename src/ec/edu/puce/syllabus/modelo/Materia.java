@@ -25,6 +25,12 @@ public class Materia implements Serializable {
 	private String codigo;// o username
 	@Column(name = "nombre", nullable = false, length = 200)
 	private String nombre;
+	@Column(name = "area", nullable = false, length = 200)
+	private String area;
+	@Column(name = "creditos", nullable = false)
+	private Integer creditos;
+	@Column(name = "nivel", length = 20, nullable = true)
+	private String nivel;
 	@Column(name = "estado")
 	@Enumerated(EnumType.STRING)
 	private EnumEstado estado;
@@ -62,6 +68,30 @@ public class Materia implements Serializable {
 
 	public void setCarrera(EnumCarrera carrera) {
 		this.carrera = carrera;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public Integer getCreditos() {
+		return creditos;
+	}
+
+	public void setCreditos(Integer creditos) {
+		this.creditos = creditos;
+	}
+
+	public String getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
 	}
 
 }

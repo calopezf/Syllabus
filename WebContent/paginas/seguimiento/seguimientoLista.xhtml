@@ -13,8 +13,14 @@
 				<h:panelGrid columns="2" id="gridFiltros" style="width: 700px">
 					<h:panelGrid columns="2" columnClasses="form-label,form-input">
 						<h:outputText value="#{etiquetas['semestre']}" />
-						<h:inputText value="#{seguimientoCtrl.seguimientoFiltro.semestre}"
-							style="width:250px" />
+						<h:selectOneMenu id="semestre" 
+							value="#{seguimientoCtrl.seguimientoFiltro.semestre.semestre}"
+							style="width:250px">
+							<f:selectItem />
+							<f:selectItems value="#{seguimientoCtrl.semestreLista}"
+								var="item" itemLabel="#{item.semestre}"
+								itemValue="#{item.semestre}" />
+						</h:selectOneMenu>
 						<h:outputText value="#{etiquetas['estado']}" />
 						<h:selectOneMenu id="estado"
 							value="#{seguimientoCtrl.seguimientoFiltro.estado}">
@@ -43,6 +49,7 @@
 						</h:panelGroup>
 						<h:outputText value="#{etiquetas['profesor']}" />
 						<h:selectOneMenu id="profesor"
+							disabled="#{usuarioCtrl.profesor and not usuarioCtrl.administrador}"
 							value="#{seguimientoCtrl.seguimientoFiltro.profesor.identificacion}"
 							style="width:250px">
 							<f:selectItem />
@@ -52,6 +59,7 @@
 						</h:selectOneMenu>
 						<h:outputText value="#{etiquetas['alumno']}" />
 						<h:selectOneMenu id="alumno"
+							disabled="#{usuarioCtrl.alumno and not usuarioCtrl.administrador}"
 							value="#{seguimientoCtrl.seguimientoFiltro.alumno.identificacion}"
 							style="width:250px">
 							<f:selectItem />
@@ -82,61 +90,66 @@
 				<p:dataTable id="itemsTable"
 					emptyMessage="#{etiquetas['no.existen.registros']}"
 					value="#{seguimientoCtrl.seguimientoLista}" var="item"
-					style="width:100%">
-					<p:column>
+					style="width:100%"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10">
+					<p:column style="width:100px;">
 						<f:facet name="header">
 							<h:outputText value="#{etiquetas['semestre']}" />
 						</f:facet>
-						<h:outputText value="#{item.semestre}" />
+						<h:outputText value="#{item.semestre.semestre}" />
 					</p:column>
-					<p:column>
+					<p:column style="width:200px;">
 						<f:facet name="header">
 							<h:outputText value="#{etiquetas['carrera']}" />
 						</f:facet>
 						<h:outputText value="#{etiquetas[item.carrera.etiqueta]}" />
 					</p:column>
-					<p:column>
+					<p:column style="width:300px;">
 						<f:facet name="header">
 							<h:outputText value="#{etiquetas['materia']}" />
 						</f:facet>
-						<h:outputText value="#{item.materia.codigo} - #{item.materia.nombre}" />
+						<h:outputText
+							value="#{item.materia.codigo} - #{item.materia.nombre}" />
 					</p:column>
-					<p:column>
+					<p:column style="width:80px;">
 						<f:facet name="header">
 							<h:outputText value="#{etiquetas['estado']}" />
 						</f:facet>
 						<h:outputText value="#{etiquetas[item.estado.etiqueta]}" />
 					</p:column>
-					<p:column>
+					<p:column style="width:200px;">
 						<f:facet name="header">
 							<h:outputText value="#{etiquetas['profesor']}" />
 						</f:facet>
 						<h:outputText
 							value="#{item.profesor.identificacion} - #{item.profesor.nombre} #{item.profesor.apellido}" />
 					</p:column>
-					<p:column>
+					<p:column style="width:200px;">
 						<f:facet name="header">
 							<h:outputText value="#{etiquetas['alumno']}" />
 						</f:facet>
 						<h:outputText
 							value="#{item.alumno.identificacion} - #{item.alumno.nombre} #{item.alumno.apellido}" />
 					</p:column>
-					<p:column styleClass="columnaCentrada">
+					<p:column styleClass="columnaCentrada" style="width:150px;">
 						<f:facet name="header">
-							<h:outputText value="#{etiquetas['editar']}" />
+							<h:outputText value="#{etiquetas['actualizarSeguimiento']}" />
 						</f:facet>
 						<h:commandLink action="#{seguimientoCtrl.editar}"
 							title="#{etiquetas.editar}">
-							<h:graphicImage value="/img/edit.png" id="editImage" />
+							<h:graphicImage value="/img/edit.png" id="editImage"
+								style="width:20px; height:20px" />
 						</h:commandLink>
 					</p:column>
 					<p:column styleClass="columnaCentrada"
-						headerText="#{etiquetas['eliminar.sistema']}">
+						headerText="#{etiquetas['eliminar.sistema']}" style="width:100px;">
 						<h:commandLink
 							actionListener="#{seguimientoCtrl.eliminarSeguimiento}"
 							title="#{etiquetas['eliminar.sistema']}"
 							onclick="if(!confirm('#{mensajes['esta.seguro']}'))return false;">
-							<h:graphicImage value="/img/delete.png" id="trashImage" />
+							<h:graphicImage value="/img/delete.png" id="trashImage"
+								style="width:20px; height:20px" />
 							<f:ajax render="@form" />
 						</h:commandLink>
 					</p:column>

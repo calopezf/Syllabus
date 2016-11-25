@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="seguimiento" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="f229bb32-96a8-4b6c-bde0-b683656c26f9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="28"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="seguimientoDetalle" uuid="f0123079-839d-4f69-9a03-9fab1e8754f0">
+		<queryString language="SQL">
+			<![CDATA[select unidad, clase, contenido , actividad, trabajo, evidencia,CASE check_profesor
+         WHEN true THEN 'SI'
+         WHEN false THEN 'NO'
+         ELSE 'NO' end,fecha_profesor,comentario_profesor,
+
+ CASE check_alumno
+         WHEN true THEN 'SI'
+         WHEN false THEN 'NO'
+         ELSE 'NO' end ,fecha_alumno,comentario_alumno
+          from seguimiento_syllabus_detalle where codigo_seguimiento=85]]>
+		</queryString>
+		<field name="unidad" class="java.lang.String"/>
+		<field name="clase" class="java.lang.Integer"/>
+		<field name="contenido" class="java.lang.String"/>
+		<field name="actividad" class="java.lang.String"/>
+		<field name="trabajo" class="java.lang.String"/>
+		<field name="evidencia" class="java.lang.String"/>
+		<field name="case" class="java.lang.String"/>
+		<field name="fecha_profesor" class="java.sql.Timestamp"/>
+		<field name="comentario_profesor" class="java.lang.String"/>
+		<field name="fecha_alumno" class="java.sql.Timestamp"/>
+		<field name="comentario_alumno" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\calop\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select (select semestre from semestre  where semestre=syllabus.semestre) semestre, carrera carrera,(select nombre from materia  where codigo=syllabus.codigo_materia)materia,
+(select area from materia  where codigo=syllabus.codigo_materia)area,
+(select creditos from materia  where codigo=syllabus.codigo_materia)creditos,
+(select nombre||' '||apellido from usuario  where identificacion=syllabus.identificacion_profesor)profesor
+ from seguimiento_syllabus syllabus where id=$P{id}]]>
+	</queryString>
+	<field name="semestre" class="java.lang.String"/>
+	<field name="carrera" class="java.lang.String"/>
+	<field name="materia" class="java.lang.String"/>
+	<field name="area" class="java.lang.String"/>
+	<field name="creditos" class="java.lang.Integer"/>
+	<field name="profesor" class="java.lang.String"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
+		<groupHeader>
+			<band height="106">
+				<subreport>
+					<reportElement x="0" y="4" width="802" height="100" uuid="85a1ef1a-40bc-4b4a-8800-36e11b17ff9e"/>
+					<subreportParameter name="id">
+						<subreportParameterExpression><![CDATA[$P{id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "seguimiento_subreport.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/5)]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="233" splitType="Stretch">
+			<staticText>
+				<reportElement x="28" y="152" width="136" height="20" uuid="5804db13-fdc0-414f-87e5-7ebf438b6136"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font isBold="true" isItalic="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[ESCUELA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="172" width="136" height="20" uuid="18ed055d-0606-4287-b28e-707ed549e0f9"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font isBold="true" isItalic="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[NOMBRE DEL AREA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="192" width="136" height="20" uuid="1d0cd15a-5015-49ee-8205-646f165d562f"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font isBold="true" isItalic="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[PERIODO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="213" width="136" height="20" uuid="f0a0b3a4-cd5c-451e-a70f-ef0844607822"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font isBold="true" isItalic="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[ASIGNATURA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="459" y="152" width="136" height="20" uuid="27f0bfe7-4d8e-4869-83af-acd3c5425441"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font isBold="true" isItalic="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[NUMERO DE CREDITOS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="459" y="172" width="136" height="20" uuid="2f4371f1-4af2-4490-a87c-40d8d9d8f765"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font isBold="true" isItalic="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[DOCENTE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="164" y="152" width="295" height="20" uuid="a41e9a07-61e8-47ce-8016-0a69d2792b78"/>
+				<textFieldExpression><![CDATA[$F{carrera}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="172" width="295" height="20" uuid="014ace9b-b3a8-4811-bcef-0d17914ac7c4"/>
+				<textFieldExpression><![CDATA[$F{area}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="192" width="295" height="20" uuid="860dcbbf-0ebf-481a-9483-0a60e16f4313"/>
+				<textFieldExpression><![CDATA[$F{semestre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="213" width="295" height="20" uuid="0e71afe3-c279-4aa8-b829-a59893877788"/>
+				<textFieldExpression><![CDATA[$F{materia}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="16" y="4" width="187" height="134" uuid="8f43301b-a913-4b02-93ca-61de04f2ee08"/>
+				<imageExpression><![CDATA["C:\\Java\\workspaceTesis\\Syllabus\\WebContent\\reportes\\logopuce1.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="596" y="172" width="206" height="20" uuid="2554f0ef-6f60-45a1-a4ff-a357319bd57a"/>
+				<textFieldExpression><![CDATA[$F{profesor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="596" y="152" width="206" height="20" uuid="49b51f30-2b07-4cab-a2dc-91103ca54ed1"/>
+				<textFieldExpression><![CDATA[$F{creditos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="249" y="23" width="536" height="43" uuid="243dca65-179b-4ea4-a1eb-c3d01d820e13"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pontificia Universidad Católica del Ecuador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="249" y="66" width="413" height="36" uuid="75fdb2c8-d0f6-44ec-b32b-b888d04c2984"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Seguimiento a Syllabus (Contenidos)]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

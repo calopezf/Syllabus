@@ -39,55 +39,49 @@
 
 				<p:dataTable id="itemsTable"
 					emptyMessage="#{etiquetas['no.existen.registros']}"
-					value="#{materiaCtrl.materias}" var="item" style="width:100%">
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="#{etiquetas['codigoMateria']}" />
-						</f:facet>
+					value="#{materiaCtrl.materias}" var="item" style="width:100%"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="5" >
+					<p:column headerText="#{etiquetas['codigoMateria']}" style="width:100px;">
 						<h:outputText value="#{item.codigo}" />
 					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="#{etiquetas['nombre']}" />
-						</f:facet>
+					<p:column headerText="#{etiquetas['nombre']}" style="width:150px;">
 						<h:outputText value="#{item.nombre}" />
 					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="#{etiquetas['carrera']}" />
-						</f:facet>
+					<p:column headerText="#{etiquetas['carrera']}" style="width:150px;">
 						<h:outputText value="#{etiquetas[item.carrera.etiqueta]}" />
 					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="#{etiquetas['estado']}" />
-						</f:facet>
+					<p:column headerText="#{etiquetas['area']}" style="width:150px;">
+						<h:outputText value="#{item.area}" />
+					</p:column>
+					<p:column headerText="#{etiquetas['creditos']}" style="width:50px;">
+						<h:outputText value="#{item.creditos}" />
+					</p:column>
+					<p:column headerText="#{etiquetas['nivel']}" style="width:100px;">
+						<h:outputText value="#{item.nivel}" />
+					</p:column>
+					<p:column headerText="#{etiquetas['estado']}" style="width:100px;">
 						<h:outputText value="#{etiquetas[item.estado.etiqueta]}" />
 					</p:column>
-					<p:column styleClass="columnaCentrada">
-						<f:facet name="header">
-							<h:outputText value="#{etiquetas['syllabus']}" />
-						</f:facet>
+					<p:column headerText="#{etiquetas['contenido']}" style="width:70px;" styleClass="columnaCentrada">
 						<h:commandLink action="#{materiaCtrl.navegarSyllabus}"
 							title="#{etiquetas.syllabus}">
-							<h:graphicImage value="/img/syllabus.png" id="syllabusImage" style="width:50px; height:50px" />
+							<h:graphicImage value="/img/syllabus.png" id="syllabusImage"
+								style="width:20px; height:20px" />
 						</h:commandLink>
 					</p:column>
-					<p:column styleClass="columnaCentrada">
-						<f:facet name="header">
-							<h:outputText value="#{etiquetas['editar']}" />
-						</f:facet>
+					<p:column headerText="#{etiquetas['editar']}" style="width:70px;" styleClass="columnaCentrada">
 						<h:commandLink action="#{materiaCtrl.editar}"
 							title="#{etiquetas.editar}">
-							<h:graphicImage value="/img/edit.png" id="editImage" />
+							<h:graphicImage value="/img/edit.png" id="editImage" style="width:20px; height:20px"/>
 						</h:commandLink>
 					</p:column>
-					<p:column styleClass="columnaCentrada"
+					<p:column  style="width:70px;" styleClass="columnaCentrada"
 						headerText="#{etiquetas['eliminar.sistema']}">
 						<h:commandLink actionListener="#{materiaCtrl.eliminarMateria}"
 							title="#{etiquetas['eliminar.sistema']}"
 							onclick="if(!confirm('#{mensajes['esta.seguro']}'))return false;">
-							<h:graphicImage value="/img/delete.png" id="trashImage" />
+							<h:graphicImage value="/img/delete.png" id="trashImage" style="width:20px; height:20px"/>
 							<f:ajax render="@form" />
 						</h:commandLink>
 					</p:column>

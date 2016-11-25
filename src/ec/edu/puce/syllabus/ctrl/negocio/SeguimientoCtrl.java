@@ -16,6 +16,7 @@ import ec.edu.puce.syllabus.modelo.Materia;
 import ec.edu.puce.syllabus.modelo.Rol;
 import ec.edu.puce.syllabus.modelo.SeguimientoSyllabus;
 import ec.edu.puce.syllabus.modelo.SeguimientoSyllabusDetalle;
+import ec.edu.puce.syllabus.modelo.Semestre;
 import ec.edu.puce.syllabus.modelo.Syllabus;
 import ec.edu.puce.syllabus.modelo.SyllabusDetalle;
 import ec.edu.puce.syllabus.modelo.Usuario;
@@ -36,6 +37,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 	private List<SeguimientoSyllabus> seguimientoLista;
 	private List<SeguimientoSyllabusDetalle> seguimientoListaDetalle;
 	private List<Materia> materiaLista;
+	private List<Semestre> semestreLista;
 	private List<Usuario> profesorLista;
 	private List<Usuario> alumnoLista;
 
@@ -43,8 +45,18 @@ public class SeguimientoCtrl extends BaseCtrl {
 	public void postConstructor() {
 		this.seguimientoFiltro = new SeguimientoSyllabus();
 		this.seguimientoFiltro.setMateria(new Materia());
-		this.seguimientoFiltro.setAlumno(new Usuario());
-		this.seguimientoFiltro.setProfesor(new Usuario());
+		this.seguimientoFiltro.setSemestre(new Semestre());
+		if (isAlumno() && !isAdministrador()) {
+			this.seguimientoFiltro.setAlumno(getUsuarioLogueado());
+		} else {
+			this.seguimientoFiltro.setAlumno(new Usuario());
+		}
+		if (isProfesor() && !isAdministrador()) {
+			this.seguimientoFiltro.setProfesor(getUsuarioLogueado());
+		} else {
+			this.seguimientoFiltro.setProfesor(new Usuario());
+		}
+
 		this.profesorLista = new ArrayList<Usuario>();
 		this.alumnoLista = new ArrayList<Usuario>();
 		List<Usuario> usuarioLista = servicioCrud.findOrder(new Usuario());
@@ -69,6 +81,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 				this.seguimiento.setMateria(new Materia());
 				this.seguimiento.setAlumno(new Usuario());
 				this.seguimiento.setProfesor(new Usuario());
+				this.seguimiento.setSemestre(new Semestre());
 				this.seguimiento.setFechaCreacion(getCurrentDateObj());
 				seguimiento.setEstado(EnumEstado.ACT);
 			} else {
@@ -119,8 +132,12 @@ public class SeguimientoCtrl extends BaseCtrl {
 				for (SyllabusDetalle detalle : servicioCrud
 						.findOrder(syllabusDetalleFiltro)) {
 					SeguimientoSyllabusDetalle seguimientoDetalle = new SeguimientoSyllabusDetalle();
-					seguimientoDetalle.setTema(detalle.getTema());
-					seguimientoDetalle.setDescripcion(detalle.getDescripcion());
+					seguimientoDetalle.setUnidad(detalle.getUnidad());
+					seguimientoDetalle.setClase(detalle.getClase());
+					seguimientoDetalle.setContenido(detalle.getContenido());
+					seguimientoDetalle.setActividad(detalle.getActividad());
+					seguimientoDetalle.setTrabajo(detalle.getTrabajo());
+					seguimientoDetalle.setEvidencia(detalle.getEvidencia());
 					seguimientoDetalle.setSeguimiento(seguimiento);
 					seguimientoDetalle.setCheckAlumno(Boolean.FALSE);
 					seguimientoDetalle.setCheckProfesor(Boolean.FALSE);
@@ -212,6 +229,28 @@ public class SeguimientoCtrl extends BaseCtrl {
 
 	public void cambiaCarrera(AjaxBehaviorEvent event) {
 		this.materiaLista = null;
+	}
+
+	public List<Semestre> getSemestreLista() {
+		if (semestreLista == null) {
+			Semestre semestreFiltro = new Semestre();
+			if (this.seguimientoFiltro != null
+					&& this.seguimientoFiltro.getSemestre() != null) {
+				semestreFiltro.setSemestre(this.seguimientoFiltro.getSemestre()
+						.getSemestre());
+			}
+			if (this.seguimiento != null
+					&& this.seguimiento.getSemestre() != null) {
+				semestreFiltro.setSemestre(this.seguimiento.getSemestre()
+						.getSemestre());
+			}
+			semestreLista = servicioCrud.findOrder(semestreFiltro);
+		}
+		return semestreLista;
+	}
+
+	public void setSemestreLista(List<Semestre> semestreLista) {
+		this.semestreLista = semestreLista;
 	}
 
 	public List<Materia> getMateriaLista() {

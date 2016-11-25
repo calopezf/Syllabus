@@ -6,6 +6,9 @@ INSERT INTO public.rol(
     VALUES ('PROFESOR', 'Profesor', 'ACT');
     INSERT INTO public.rol(
             id, descripcion, estado)
+    VALUES ('COORDINADOR', 'Coordinador', 'ACT');
+    INSERT INTO public.rol(
+            id, descripcion, estado)
     VALUES ('ALUMNO', 'Alumno', 'ACT');
 INSERT INTO public.usuario(
             identificacion, apellido, direccion, email, estado, nombre, password)

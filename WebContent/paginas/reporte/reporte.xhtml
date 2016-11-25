@@ -11,10 +11,16 @@
 			<p:growl id="msg" autoUpdate="true" />
 			<h:panelGrid columns="2">
 				<h:panelGrid columns="2" id="gridFiltros" style="width: 700px">
-					<h:panelGrid columns="2" columnClasses="form-label,form-input">
+					<h:panelGrid columns="4" columnClasses="form-label,form-input,form-label,form-input">
 						<h:outputText value="#{etiquetas['semestre']}" />
-						<h:inputText value="#{reporteCtrl.seguimientoFiltro.semestre}"
-							style="width:250px" />
+							<h:selectOneMenu id="semestre" 
+							value="#{reporteCtrl.seguimientoFiltro.semestre.semestre}"
+							style="width:250px">
+							<f:selectItem />
+							<f:selectItems value="#{seguimientoCtrl.semestreLista}"
+								var="item" itemLabel="#{item.semestre}"
+								itemValue="#{item.semestre}" />
+						</h:selectOneMenu>
 						<h:outputText value="#{etiquetas['estado']}" />
 						<h:selectOneMenu id="estado"
 							value="#{reporteCtrl.seguimientoFiltro.estado}">
@@ -69,6 +75,83 @@
 
 			<p:chart type="bar" model="#{reporteCtrl.profesorAlumnoModel}"
 				style="height:300px" />
+			<br />
+			<br />
+			<p:dataTable id="itemsTable"
+				emptyMessage="#{etiquetas['no.existen.registros']}"
+				value="#{reporteCtrl.seguimientoLista}" var="item"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+				paginator="true" rows="10" style="width:100%; margin-bottom:20px">
+				<f:facet name="{Exporters}">
+					<h:commandLink>
+						<h:graphicImage value="/img/excel.png" width="24" />
+						<p:dataExporter type="xls" target="itemsTable" fileName="materias" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage value="/img/pdf.png" width="24" />
+						<p:dataExporter type="pdf" target="itemsTable" fileName="materias" />
+					</h:commandLink>
+				</f:facet>
+
+				<p:column  style="width:100px;">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['semestre']}" />
+					</f:facet>
+					<h:outputText value="#{item.semestre.semestre}" />
+				</p:column>
+				<p:column  style="width:200px;">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['carrera']}" />
+					</f:facet>
+					<h:outputText value="#{etiquetas[item.carrera.etiqueta]}" />
+				</p:column>
+				<p:column  style="width:250px;">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['materia']}" />
+					</f:facet>
+					<h:outputText
+						value="#{item.materia.codigo} - #{item.materia.nombre}" />
+				</p:column>
+				<p:column  style="width:100px;">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['estado']}" />
+					</f:facet>
+					<h:outputText value="#{etiquetas[item.estado.etiqueta]}" />
+				</p:column>
+				<p:column  style="width:250px;">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['profesor']}" />
+					</f:facet>
+					<h:outputText
+						value="#{item.profesor.identificacion} - #{item.profesor.nombre} #{item.profesor.apellido}" />
+				</p:column>
+				<p:column  style="width:250px;">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['alumno']}" />
+					</f:facet>
+					<h:outputText
+						value="#{item.alumno.identificacion} - #{item.alumno.nombre} #{item.alumno.apellido}" />
+				</p:column>
+				<p:column  style="width:100px;">
+					<f:facet name="header">
+						<h:outputText value="Porcentaje Profesor" />
+					</f:facet>
+					<h:outputText value="#{item.profesorPorcentaje}" />
+				</p:column>
+				<p:column  style="width:100px;">
+					<f:facet name="header">
+						<h:outputText value="Porcentaje Alumno" />
+					</f:facet>
+					<h:outputText value="#{item.alumnoPorcentaje}" />
+				</p:column>
+				<p:column style="width:200px;" styleClass="columnaCentrada"
+						headerText="#{etiquetas['generarReporte']}">
+						<h:commandButton action="#{reporteCtrl.generarReporte}" value="#{etiquetas['generarReporte']}"
+							title="#{etiquetas['generarReporte']}">
+						</h:commandButton>
+					</p:column>
+			</p:dataTable>
 
 		</h:form>
 	</ui:define>

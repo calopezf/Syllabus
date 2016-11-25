@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 import ec.edu.puce.syllabus.constantes.EnumCarrera;
 import ec.edu.puce.syllabus.constantes.EnumEstado;
@@ -38,8 +39,9 @@ public class SeguimientoSyllabus implements Serializable {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "GEN_SEGUIMIENTO_SYLLABUS")
 	private Long id;
 
-	@Column(name = "semestre", nullable = false, length = 100)
-	private String semestre;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "semestre", referencedColumnName = "semestre")
+	private Semestre semestre;
 
 	@Column(name = "carrera")
 	@Enumerated(EnumType.STRING)
@@ -70,6 +72,10 @@ public class SeguimientoSyllabus implements Serializable {
 
 	@OneToMany(mappedBy = "seguimiento", cascade = CascadeType.ALL)
 	private List<SeguimientoSyllabusDetalle> detalles;
+	@Transient
+	private int alumnoPorcentaje;
+	@Transient
+	private int profesorPorcentaje;
 
 	public Long getId() {
 		return id;
@@ -87,11 +93,11 @@ public class SeguimientoSyllabus implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public String getSemestre() {
+	public Semestre getSemestre() {
 		return semestre;
 	}
 
-	public void setSemestre(String semestre) {
+	public void setSemestre(Semestre semestre) {
 		this.semestre = semestre;
 	}
 
@@ -150,5 +156,23 @@ public class SeguimientoSyllabus implements Serializable {
 	public void setDetalles(List<SeguimientoSyllabusDetalle> detalles) {
 		this.detalles = detalles;
 	}
+
+	public int getAlumnoPorcentaje() {
+		return alumnoPorcentaje;
+	}
+
+	public void setAlumnoPorcentaje(int alumnoPorcentaje) {
+		this.alumnoPorcentaje = alumnoPorcentaje;
+	}
+
+	public int getProfesorPorcentaje() {
+		return profesorPorcentaje;
+	}
+
+	public void setProfesorPorcentaje(int profesorPorcentaje) {
+		this.profesorPorcentaje = profesorPorcentaje;
+	}
+	
+	
 
 }

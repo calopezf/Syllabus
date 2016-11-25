@@ -11,18 +11,24 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.DateFormatSymbols;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -32,8 +38,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRParameter;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.fill.JRFileVirtualizer;
+import net.sf.jasperreports.engine.util.JRLoader;
 import ec.edu.puce.syllabus.constantes.EnumRol;
+import ec.edu.puce.syllabus.crud.ServicioCrud;
 import ec.edu.puce.syllabus.modelo.Usuario;
+import ec.edu.puce.syllabus.servicio.ServicioRecurso;
 
 /**
  *
@@ -46,8 +60,8 @@ public class BaseCtrl implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	// @EJB
-	// protected ParametroServicio parametroServicio;
+	@EJB
+	private ServicioCrud servicioCrud;
 	// @EJB
 	// protected UsuarioServicio usuarioServicio;
 	// @EJB
@@ -68,6 +82,8 @@ public class BaseCtrl implements Serializable {
 	 * @EJB(mappedName = "SrhtEstadosServicio/local") private
 	 * SrhtEstadosServicio srhtEstadosServicio;
 	 */
+	@EJB
+	private ServicioRecurso servicioRecurso;
 	private String locale;
 	public static final Locale DEFAULT_LOCALE = new Locale("es", "EC");
 	public static final Long ID_PAIS = 7198l;
@@ -78,8 +94,8 @@ public class BaseCtrl implements Serializable {
 
 	public Usuario getUsuarioLogueado() {
 		if (usuarioLogueado == null) {
-			// usuarioLogueado =
-			// usuarioServicio.obtieneUsuarioXIdentificacion(getRemoteUser());
+			usuarioLogueado = servicioCrud.findByPK(getRemoteUser(),
+					Usuario.class);
 		}
 		return usuarioLogueado;
 	}
@@ -729,80 +745,83 @@ public class BaseCtrl implements Serializable {
 		return isUserInRole(EnumRol.ALUMNO.toString());
 	}
 
-	// protected String generarFicha(Long idAspiranteLong, String
-	// cedulaAspirante) {
-	// ServletContext sc = (ServletContext) FacesContext.getCurrentInstance()
-	// .getExternalContext().getContext();
-	// String ctxPath = sc.getRealPath("/");
-	// String rutaReportes = ctxPath + "reportes" + File.separator;
-	// String rutaArchivo = rutaReportes.concat("HojaDeVida.jasper");
-	//
-	//
-	// Map<String, Object> parameters = new HashMap<String, Object>();
-	// parameters.put("ASPITANTE_ID", idAspiranteLong);
-	// // JRFileVirtualizer fileVirtualizer = new JRFileVirtualizer(3);
-	// // parameters.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
-	// //parameters.put("SUBREPORT_DIR", rutaReportes);
-	//
-	// generaReportePdf("HOJA_VIDA_".concat(cedulaAspirante).concat(".pdf"),
-	// rutaArchivo, parameters);
-	// System.out.println("termino");
-	// return null;
-	//
-	// }
+	public boolean isCoordinador() {
+		return isUserInRole(EnumRol.COORDINADOR.toString());
+	}
 
-	// public void generaReportePdf(String nombreArchivo, String nombreJasper,
-	// // Map<String, Object> parameters) {
-	// // FacesContext ctx = FacesContext.getCurrentInstance();
-	// //
-	// // ServletOutputStream out;
-	// // InputStream inputStream = null;
-	// // Connection con = null;
-	// //
-	// // if (!ctx.getResponseComplete()) {
-	// // String contentType = "application/pdf";
-	// // HttpServletResponse response = (HttpServletResponse) ctx
-	// // .getExternalContext().getResponse();
-	// // response.setContentType(contentType);
-	// // response.setHeader("Content-disposition", "attachment; filename="
-	// // + nombreArchivo);
-	// // response.setHeader("Cache-Control", "no-cache");
-	// // response.setHeader("Pragma", "No-cache");
-	// //
-	// // try {
-	// // inputStream = new BufferedInputStream(new
-	// FileInputStream(nombreJasper));
-	// //
-	// //// // Se obtiene una conexion
-	// //// con = recursoServicio.obtenerConnection();
-	// ////
-	// //// JasperReport jasperReport = (JasperReport)
-	// JRLoader.loadObject(inputStream);
-	// ////
-	// //// byte[] fichero = JasperRunManager.runReportToPdf(jasperReport,
-	// parameters, con);
-	// ////
-	// //// response.setContentLength(fichero.length);
-	// // out = response.getOutputStream();
-	// // out.write(fichero, 0, fichero.length);
-	// // out.flush();
-	// // out.close();
-	// //
-	// // ctx.responseComplete();
-	// // } catch (JRException e) {
-	// // e.printStackTrace();
-	// // } catch (IOException e) {
-	// // e.printStackTrace();
-	// // } catch (SQLException e) {
-	// // e.printStackTrace();
-	// // } finally {
-	// // try {
-	// // if (con != null) {
-	// // con.close();
-	// // }
-	// } catch (SQLException e) {
-	// }
-	// }
-	// }
-	// }
+
+    protected String generarSeguimiento(Long idSeguimiento) {
+        ServletContext sc = (ServletContext) FacesContext.getCurrentInstance()
+                .getExternalContext().getContext();
+        String ctxPath = sc.getRealPath("/");
+        String rutaReportes = ctxPath + "/reportes" + File.separator;
+        String rutaArchivo = rutaReportes.concat("seguimiento.jasper");
+
+
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("id", idSeguimiento.intValue());
+        JRFileVirtualizer fileVirtualizer = new JRFileVirtualizer(3);
+        parameters.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
+        //parameters.put("SUBREPORT_DIR", rutaReportes);
+
+        generaReportePdf("Seguimiento-".concat(idSeguimiento.toString()).concat(".pdf"), rutaArchivo, parameters);
+        System.out.println("termino");
+        return null;
+
+    }
+
+	public void generaReportePdf(String nombreArchivo, String nombreJasper,
+			Map<String, Object> parameters) {
+		FacesContext ctx = FacesContext.getCurrentInstance();
+
+		ServletOutputStream out;
+		InputStream inputStream = null;
+		Connection con = null;
+
+		if (!ctx.getResponseComplete()) {
+			String contentType = "application/pdf";
+			HttpServletResponse response = (HttpServletResponse) ctx
+					.getExternalContext().getResponse();
+			response.setContentType(contentType);
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ nombreArchivo);
+			response.setHeader("Cache-Control", "no-cache");
+			response.setHeader("Pragma", "No-cache");
+
+			try {
+				inputStream = new BufferedInputStream(new FileInputStream(
+						nombreJasper));
+
+				// Se obtiene una conexion
+				con = servicioRecurso.obtenerConnection();
+
+				JasperReport jasperReport = (JasperReport) JRLoader
+						.loadObject(inputStream);
+
+				byte[] fichero = JasperRunManager.runReportToPdf(jasperReport,
+						parameters, con);
+
+				response.setContentLength(fichero.length);
+				out = response.getOutputStream();
+				out.write(fichero, 0, fichero.length);
+				out.flush();
+				out.close();
+
+				ctx.responseComplete();
+			} catch (JRException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (con != null) {
+						con.close();
+					}
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 }

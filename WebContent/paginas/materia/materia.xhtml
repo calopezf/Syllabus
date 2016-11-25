@@ -24,13 +24,33 @@
 				<h:inputText id="nombre" value="#{materiaCtrl.materia.nombre}"
 					required="true"
 					requiredMessage="#{etiquetas['nombre']} #{mensajes['requerido.masculino']}"
-					maxlength="250" size="25" />
+					maxlength="200" size="50" />
+
+				<h:outputLabel value="#{etiquetas['area']}*:" />
+				<h:inputText id="area" value="#{materiaCtrl.materia.area}"
+					required="true"
+					requiredMessage="#{etiquetas['area']} #{mensajes['requerido.femenino']}"
+					maxlength="200" size="50" />
+
+				<h:outputLabel value="#{etiquetas['creditos']}*:" />
+				<h:inputText id="nivel" value="#{materiaCtrl.materia.creditos}"
+					required="true"
+					requiredMessage="#{etiquetas['creditos']} #{mensajes['requerido.masculino']}"
+					maxlength="2" size="2" />
+					
+					<h:outputLabel value="#{etiquetas['nivel']}*:" />
+				<h:inputText id="creditos" value="#{materiaCtrl.materia.nivel}"
+					required="true"
+					requiredMessage="#{etiquetas['nivel']} #{mensajes['requerido.masculino']}"
+					maxlength="100" size="16" />
+					
 
 				<h:outputLabel for="facultad" value="#{etiquetas['carrera']}*:" />
-				<h:selectOneMenu id="facultad" value="#{materiaCtrl.materia.carrera}">
+				<h:selectOneMenu id="facultad"
+					value="#{materiaCtrl.materia.carrera}">
 					<f:selectItems value="#{selectItemCtrl.enumCarrera}" />
 				</h:selectOneMenu>
-				
+
 				<h:outputLabel for="estado" value="#{etiquetas['estado']}*:" />
 				<h:selectOneMenu id="estado" value="#{materiaCtrl.materia.estado}">
 					<f:selectItems value="#{selectItemCtrl.estadoEnum}" />

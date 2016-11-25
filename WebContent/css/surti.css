@@ -30,7 +30,7 @@ a:hover{
 }
 
 #container {
-    width: 1200px;
+    width: 900px;
     margin: 0 auto;
     margin: 0 auto;
     background-color: #fff;
@@ -414,10 +414,10 @@ input[disabled], textarea[disabled]{
 .loginPanel{
     background-color: #fff;
 
-    border-top: 16px solid #fdedbd;
-    border-bottom: 16px solid #fdedbd;
-    border-right: 64px solid #fdedbd;
-    border-left: 64px solid #fdedbd;
+    border-top: 16px solid #3d5f94;
+    border-bottom: 16px solid #3d5f94;
+    border-right: 64px solid #3d5f94;
+    border-left: 64px solid #3d5f94;
 }
 
 .headerPanel{

@@ -1,15 +1,31 @@
 package ec.edu.puce.syllabus.ctrl.negocio;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
+
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import ec.edu.puce.syllabus.crud.ServicioCrud;
 import ec.edu.puce.syllabus.ctrl.BaseCtrl;
@@ -44,7 +60,55 @@ public class UsuarioCtrl extends BaseCtrl {
 	public void postConstructor() {
 		this.usuarioFiltro = new Usuario();
 	}
-	
+
+	private String destination = "C:\\Java\\wildfly-8.2.1.Final\\standalone\\deployments\\Syllabus.war\\img\\";
+
+	public void upload(FileUploadEvent event) {
+		try {
+			copyFile(event.getFile().getFileName(), event.getFile()
+					.getInputstream());
+			FacesMessage message = new FacesMessage(
+					"El archivo se ha subido con éxito!");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void copyFile(String fileName, InputStream in) {
+		try {
+			OutputStream out = new FileOutputStream(new File(destination
+					+ fileName));
+			int read = 0;
+			byte[] bytes = new byte[1024];
+			while ((read = in.read(bytes)) != -1) {
+				out.write(bytes, 0, read);
+			}
+			in.close();
+			out.flush();
+			out.close();
+			System.out.println("El archivo se ha creado con éxito!");
+
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss");
+			Date date = new Date();
+			String ruta1 = destination + fileName;
+			String nombre = dateFormat.format(date) + "-" + fileName;
+			String ruta2 = destination + nombre;
+			System.out.println("Archivo: " + ruta1 + " Renombrado a: " + ruta2);
+			File archivo = new File(ruta1);
+			archivo.renameTo(new File(ruta2));
+			usuario.setFoto(nombre);
+
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public String getImagePath() {
+		return usuario.getFoto() != null ? "/img/" + usuario.getFoto() : null;
+	}
+
 	/*
 	 * @return the usuario
 	 */
@@ -68,7 +132,7 @@ public class UsuarioCtrl extends BaseCtrl {
 
 		return usuario;
 	}
-	
+
 	/**
 	 * @param to
 	 *            setusuario.
@@ -157,6 +221,29 @@ public class UsuarioCtrl extends BaseCtrl {
 			getUsuario();
 		}
 		return rolesSeleccionados;
+	}
+
+	public void enviaContraseniaNueva() {
+		try {
+			Usuario usuarioRecuperado = servicioCrud.findByPK(
+					usuario.getIdentificacion(), Usuario.class);
+			if (usuarioRecuperado == null) {
+				throw new NoSuchAlgorithmException();
+			}
+			// String emailUsuario =
+			// usuarioServicio.obtieneEmailXCedula(usuario.getIdentificacion());
+			System.out.println("usuarioRecuperado: " + usuarioRecuperado);
+			this.usuarioServicio
+					.generaCadenaAleatoriaYEnviaMail(usuarioRecuperado);
+
+			String m = getBundleMensajes("clave.reseteada.correctamente", null);
+			addInfoMessage(m, m);
+
+		} catch (NoSuchAlgorithmException nae) {
+			nae.printStackTrace();
+			String m = getBundleMensajes("no.existe.usuario", null);
+			addErrorMessage(m, m, m);
+		}
 	}
 
 	public void setRolesSeleccionados(List<String> rolesSeleccionados) {

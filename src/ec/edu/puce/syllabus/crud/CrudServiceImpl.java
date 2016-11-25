@@ -86,7 +86,6 @@ public abstract class CrudServiceImpl {
      * @return referencia a la unidad de persistencia.
      * @deprecated NO se debe invocar directamente, utilice getEntityManager
      */
-    @Deprecated
     protected abstract EntityManager getPunit();
 
     /**

@@ -14,6 +14,7 @@ import ec.edu.puce.syllabus.constantes.EnumEstado;
 import ec.edu.puce.syllabus.constantes.EnumEstadoCivil;
 import ec.edu.puce.syllabus.constantes.EnumCarrera;
 import ec.edu.puce.syllabus.constantes.EnumRol;
+import ec.edu.puce.syllabus.constantes.EnumTipoParametro;
 
 /**
  *
@@ -28,6 +29,23 @@ public class SelectItemCtrl extends BaseCtrl {
 	private List<SelectItem> enumCarrera;
 	private List<SelectItem> rolEnum;
 	private List<SelectItem> estadoCivil;
+	private List<SelectItem> tipoParametroEnumItems;
+	
+	
+
+	public List<SelectItem> getTipoParametroEnumItems() {
+		if (tipoParametroEnumItems == null) {
+			tipoParametroEnumItems = new ArrayList<SelectItem>();
+			for (EnumTipoParametro e : EnumTipoParametro.values()) {
+				tipoParametroEnumItems.add(new SelectItem(e, e.toString()));
+			}
+		}
+		return tipoParametroEnumItems;
+	}
+
+	public void setTipoParametroEnumItems(List<SelectItem> tipoParametroEnumItems) {
+		this.tipoParametroEnumItems = tipoParametroEnumItems;
+	}
 
 	public List<SelectItem> getEnumCarrera() {
 		if (enumCarrera == null) {

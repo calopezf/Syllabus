@@ -28,7 +28,7 @@ public abstract class CrudServiceCore extends CrudServiceImpl {
     /**
      * Objeto que maneja las operaciones de persistencia.
      */
-    @PersistenceContext(name = "medicusDS")
+    @PersistenceContext(name = "syllabusDS")
     private EntityManager punit;
 
     /**
@@ -36,9 +36,8 @@ public abstract class CrudServiceCore extends CrudServiceImpl {
      * @deprecated NO se debe invocar directamente. utilizar el metodo
      *             getEntityManager().
      */
-    @Deprecated
     @Override
-    protected EntityManager getPunit() {
+    public EntityManager getPunit() {
         return this.punit;
     }
 
