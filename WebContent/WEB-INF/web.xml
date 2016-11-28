@@ -3,7 +3,7 @@
   <display-name>Syllabus</display-name>
   <context-param>
     <param-name>primefaces.THEME</param-name>
-    <param-value>primefaces-ultima-indigo</param-value>
+    <param-value>bluesky</param-value>
   </context-param>
   <context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>

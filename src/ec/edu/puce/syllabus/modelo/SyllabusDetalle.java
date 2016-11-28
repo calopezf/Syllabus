@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+
+import ec.edu.puce.syllabus.constantes.EnumEstado;
+import ec.edu.puce.syllabus.constantes.EnumTipoContenido;
 
 @Entity
 @Table(name = "SYLLABUS_DETALLE")
@@ -37,14 +42,21 @@ public class SyllabusDetalle implements Serializable {
 	@Column(name = "contenido", nullable = false, length = 4000)
 	private String contenido;
 
-	@Column(name = "actividad", nullable = false, length = 4000)
+	@Column(name = "actividad", nullable = true, length = 4000)
 	private String actividad;
 
-	@Column(name = "trabajo", nullable = false, length = 4000)
+	@Column(name = "trabajo", nullable = true, length = 4000)
 	private String trabajo;
 
-	@Column(name = "evidencia", nullable = false, length = 4000)
+	@Column(name = "evidencia", nullable = true, length = 4000)
 	private String evidencia;
+
+	@Column(name = "bimestre", nullable = true)
+	private Integer bimestre;
+
+	@Column(name = "tipo", nullable = true, length = 3)
+	@Enumerated(EnumType.STRING)
+	private EnumTipoContenido tipo;
 
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "codigo_syllabus", referencedColumnName = "codigo")
@@ -113,5 +125,22 @@ public class SyllabusDetalle implements Serializable {
 	public void setEvidencia(String evidencia) {
 		this.evidencia = evidencia;
 	}
+
+	public Integer getBimestre() {
+		return bimestre;
+	}
+
+	public void setBimestre(Integer bimestre) {
+		this.bimestre = bimestre;
+	}
+
+	public EnumTipoContenido getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(EnumTipoContenido tipo) {
+		this.tipo = tipo;
+	}
+
 
 }

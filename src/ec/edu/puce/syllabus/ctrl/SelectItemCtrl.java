@@ -10,10 +10,11 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.SelectItem;
 
+import ec.edu.puce.syllabus.constantes.EnumCarrera;
 import ec.edu.puce.syllabus.constantes.EnumEstado;
 import ec.edu.puce.syllabus.constantes.EnumEstadoCivil;
-import ec.edu.puce.syllabus.constantes.EnumCarrera;
 import ec.edu.puce.syllabus.constantes.EnumRol;
+import ec.edu.puce.syllabus.constantes.EnumTipoContenido;
 import ec.edu.puce.syllabus.constantes.EnumTipoParametro;
 
 /**
@@ -30,8 +31,23 @@ public class SelectItemCtrl extends BaseCtrl {
 	private List<SelectItem> rolEnum;
 	private List<SelectItem> estadoCivil;
 	private List<SelectItem> tipoParametroEnumItems;
-	
-	
+	private List<SelectItem> tipoContenidoEnumItems;
+
+	public List<SelectItem> getTipoContenidoEnumItems() {
+		if (tipoContenidoEnumItems == null) {
+			tipoContenidoEnumItems = new ArrayList<SelectItem>();
+			for (EnumTipoContenido e : EnumTipoContenido.values()) {
+				tipoContenidoEnumItems.add(new SelectItem(e,
+						getBundleEtiquetas(e.getEtiqueta(), null)));
+			}
+		}
+		return tipoContenidoEnumItems;
+	}
+
+	public void setTipoContenidoEnumItems(
+			List<SelectItem> tipoContenidoEnumItems) {
+		this.tipoContenidoEnumItems = tipoContenidoEnumItems;
+	}
 
 	public List<SelectItem> getTipoParametroEnumItems() {
 		if (tipoParametroEnumItems == null) {
@@ -43,7 +59,8 @@ public class SelectItemCtrl extends BaseCtrl {
 		return tipoParametroEnumItems;
 	}
 
-	public void setTipoParametroEnumItems(List<SelectItem> tipoParametroEnumItems) {
+	public void setTipoParametroEnumItems(
+			List<SelectItem> tipoParametroEnumItems) {
 		this.tipoParametroEnumItems = tipoParametroEnumItems;
 	}
 

@@ -1,7 +1,7 @@
 /*
 Error: File to import not found or unreadable: ../../sass/layout/_layout.
-       Load path: C:/Java/workspaceTesis/Syllabus/WebContent/resources/ultima-layout
-        on line 11 of C:/Java/workspaceTesis/Syllabus/WebContent/resources/ultima-layout/css/layout-indigo.scss
+       Load path: C:/Java/workspaceTesis/Syllabus/WebContent/resources
+        on line 11 of resources/ultima-layout/css/layout-indigo.scss
 
 6: $accentLightColor: #f48fb1;
 7: $accentTextColor: #ffffff;
@@ -11,7 +11,7 @@ Error: File to import not found or unreadable: ../../sass/layout/_layout.
 11: @import '../../sass/layout/_layout';
 
 Backtrace:
-C:/Java/workspaceTesis/Syllabus/WebContent/resources/ultima-layout/css/layout-indigo.scss:11
+resources/ultima-layout/css/layout-indigo.scss:11
 C:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.22/lib/sass/tree/import_node.rb:67:in `rescue in import'
 C:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.22/lib/sass/tree/import_node.rb:45:in `import'
 C:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.22/lib/sass/tree/import_node.rb:28:in `imported_file'
@@ -55,4 +55,4 @@ C:/Ruby23/bin/sass:23:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: File to import not found or unreadable: ../../sass/layout/_layout.\A        Load path: C:/Java/workspaceTesis/Syllabus/WebContent/resources/ultima-layout\A         on line 11 of C:/Java/workspaceTesis/Syllabus/WebContent/resources/ultima-layout/css/layout-indigo.scss\A \A 6: $accentLightColor: #f48fb1;\A 7: $accentTextColor: #ffffff;\A 8: $darkMenuBgColor: #424242;\A 9: $darkMenuHoverColor: #676767;\A 10: \A 11: @import '../../sass/layout/_layout';"; }
+  content: "Error: File to import not found or unreadable: ../../sass/layout/_layout.\A        Load path: C:/Java/workspaceTesis/Syllabus/WebContent/resources\A         on line 11 of resources/ultima-layout/css/layout-indigo.scss\A \A 6: $accentLightColor: #f48fb1;\A 7: $accentTextColor: #ffffff;\A 8: $darkMenuBgColor: #424242;\A 9: $darkMenuHoverColor: #676767;\A 10: \A 11: @import '../../sass/layout/_layout';"; }

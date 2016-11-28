@@ -141,6 +141,8 @@ public class SeguimientoCtrl extends BaseCtrl {
 					seguimientoDetalle.setSeguimiento(seguimiento);
 					seguimientoDetalle.setCheckAlumno(Boolean.FALSE);
 					seguimientoDetalle.setCheckProfesor(Boolean.FALSE);
+					seguimientoDetalle.setTipo(detalle.getTipo());
+					seguimientoDetalle.setBimestre(detalle.getBimestre());
 					servicioCrud.insert(seguimientoDetalle);
 				}
 

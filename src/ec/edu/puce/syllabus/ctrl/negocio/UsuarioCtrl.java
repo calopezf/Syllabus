@@ -170,9 +170,9 @@ public class UsuarioCtrl extends BaseCtrl {
 					.obtieneUsuarioXCedula(usuario.getIdentificacion());
 			if (usuarioEnBase == null) {
 				this.usuario.setPassword(this.usuario.getIdentificacion());
-				servicioCrud.insert(usuario);
+				servicioCrud.insert(this.usuario);
 			} else {
-				servicioCrud.update(usuario);
+				servicioCrud.update(this.usuario);
 			}
 			System.out.println("guardado...");
 			String m = getBundleMensajes("registro.guardado.correctamente",

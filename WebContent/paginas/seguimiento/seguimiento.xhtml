@@ -116,6 +116,18 @@
 					</f:facet>
 					<h:outputText value="#{item.evidencia}" />
 				</p:column>
+				<p:column style="width:180px;">
+					<f:facet name="header" >
+						<h:outputText value="#{etiquetas['tipoContenido']}" />
+					</f:facet>
+					<h:outputText id="estado" value="#{etiquetas[item.tipo.etiqueta]}"/>
+				</p:column>
+				<p:column style="width:180px;">
+					<f:facet name="header" >
+						<h:outputText value="#{etiquetas['bimestre']}" />
+					</f:facet>
+					<h:outputText value="#{item.bimestre}"/>
+				</p:column>
 				<p:column style="width:50px;"
 					rendered="#{usuarioCtrl.profesor or usuarioCtrl.administrador or usuarioCtrl.coordinador}">
 					<f:facet name="header">

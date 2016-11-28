@@ -41,7 +41,7 @@
 					emptyMessage="#{etiquetas['no.existen.registros']}"
 					value="#{materiaCtrl.materias}" var="item" style="width:100%"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-					paginator="true" rows="5" >
+					paginator="true" rows="10" >
 					<p:column headerText="#{etiquetas['codigoMateria']}" style="width:100px;">
 						<h:outputText value="#{item.codigo}" />
 					</p:column>

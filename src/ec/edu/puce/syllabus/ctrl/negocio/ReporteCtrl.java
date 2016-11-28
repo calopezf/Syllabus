@@ -74,7 +74,6 @@ public class ReporteCtrl extends BaseCtrl {
 
 		Hashtable<String, Integer> alumno = new Hashtable<String, Integer>();
 		Hashtable<String, Integer> profesor = new Hashtable<String, Integer>();
-
 		for (SeguimientoSyllabus segui : getSeguimientoLista()) {
 			SeguimientoSyllabusDetalle detalleFiltro = new SeguimientoSyllabusDetalle();
 			detalleFiltro.setSeguimiento(segui);
@@ -102,14 +101,24 @@ public class ReporteCtrl extends BaseCtrl {
 
 		ChartSeries porcentajeProfesor = new ChartSeries();
 		porcentajeProfesor.setLabel("Profesor");
+		int cont=0;
 		for (Map.Entry<String, Integer> entry : profesor.entrySet()) {
 			porcentajeProfesor.set(entry.getKey(), entry.getValue());
+			if(cont==3){
+				break;
+			}
+			cont++;
 		}
 
 		ChartSeries porcentajeAlumno = new ChartSeries();
 		porcentajeAlumno.setLabel("Alumno");
+		int cont1=0;
 		for (Map.Entry<String, Integer> entry : alumno.entrySet()) {
 			porcentajeAlumno.set(entry.getKey(), entry.getValue());
+			if(cont1==3){
+				break;
+			}
+			cont1++;
 		}
 
 		profesorAlumnoModel.addSeries(porcentajeProfesor);

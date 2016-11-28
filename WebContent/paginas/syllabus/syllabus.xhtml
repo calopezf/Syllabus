@@ -18,10 +18,10 @@
 				<h:inputText id="materia"
 					value="#{syllabusCtrl.syllabus.materia.codigo} - #{syllabusCtrl.syllabus.materia.nombre}"
 					disabled="true" size="200" />
-				<h:outputLabel value="#{etiquetas['nombre']}*:" />
+				<h:outputLabel value="#{etiquetas['pensum']}*:" />
 				<h:inputText id="nombre" value="#{syllabusCtrl.syllabus.nombre}"
 					required="true"
-					requiredMessage="#{etiquetas['nombre']} #{mensajes['requerido.masculino']}"
+					requiredMessage="#{etiquetas['pensum']} #{mensajes['requerido.masculino']}"
 					maxlength="250" size="25" />
 			</h:panelGrid>
 			<h:outputText value="#{etiquetas['campos.obligatorios']}" />
@@ -40,7 +40,7 @@
 				emptyMessage="#{etiquetas['no.existen.registros']}"
 				value="#{syllabusCtrl.syllabusDetalleLista}" var="item"
 				style="width:100%">
-				<p:column>
+				<p:column style="width:60px;">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['claseNumero']}" />
 					</f:facet>
@@ -49,54 +49,73 @@
 						<f:ajax />
 					</h:inputText>
 				</p:column>
-				<p:column>
+				<p:column style="width:100px;">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['unidad']}" />
 					</f:facet>
 					<h:inputTextarea value="#{item.unidad}"
-						style="width:150px;height:80px;">
+						style="width:100px;height:80px;">
 						<f:ajax />
 					</h:inputTextarea>
 				</p:column>
-				<p:column>
+				<p:column style="width:100px;">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['contenidos']}" />
 					</f:facet>
-					<h:inputTextarea style="width:150px; height:80px;"
+					<h:inputTextarea style="width:100px; height:80px;"
 						value="#{item.contenido}">
 						<f:ajax />
 					</h:inputTextarea>
 				</p:column>
-				<p:column>
+				<p:column style="width:100px;">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['actividadClase']}" />
 					</f:facet>
-					<h:inputTextarea style="width:150px;height:80px;"
+					<h:inputTextarea style="width:100px;height:80px;"
 						value="#{item.actividad}">
 						<f:ajax />
 					</h:inputTextarea>
 				</p:column>
-				<p:column>
+				<p:column style="width:100px;">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['trabajoAutonomo']}" />
 					</f:facet>
-					<h:inputTextarea style="width:150px;height:80px;"
+					<h:inputTextarea style="width:100px;height:80px;"
 						value="#{item.trabajo}">
 						<f:ajax />
 					</h:inputTextarea>
 
 				</p:column>
-				<p:column>
+				<p:column style="width:100px;">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['evidencias']}" />
 					</f:facet>
-					<h:inputTextarea style="width:150px;height:80px;"
+					<h:inputTextarea style="width:100px;height:80px;"
 						value="#{item.evidencia}">
 						<f:ajax />
 					</h:inputTextarea>
 				</p:column>
-
-				<p:column styleClass="columnaCentrada"
+				<p:column style="width:100px;">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['tipoContenido']}" />
+					</f:facet>
+					<h:selectOneMenu id="estado" value="#{item.tipo}" style="width:90px;">
+						<f:selectItems value="#{selectItemCtrl.tipoContenidoEnumItems}" />
+						<f:ajax />
+					</h:selectOneMenu>
+				</p:column>
+				<p:column style="width:100px;">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['bimestre']}" />
+					</f:facet>
+					<div align="center">
+					<h:inputText style="width:30px;" maxlength="3"
+						value="#{item.bimestre}">
+						<f:ajax />
+					</h:inputText>
+					</div>
+				</p:column>
+				<p:column styleClass="columnaCentrada" style="width:100px;"
 					headerText="#{etiquetas['eliminar.sistema']}">
 					<h:commandLink actionListener="#{syllabusCtrl.eliminarDetalle}"
 						title="#{etiquetas['eliminar.sistema']}">

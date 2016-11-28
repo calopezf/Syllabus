@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
+
+import ec.edu.puce.syllabus.constantes.EnumTipoContenido;
 
 @Entity
 @Table(name = "SEGUIMIENTO_SYLLABUS_DETALLE")
@@ -32,21 +36,28 @@ public class SeguimientoSyllabusDetalle implements Serializable {
 
 	@Column(name = "unidad", nullable = false, length = 4000)
 	private String unidad;
-	
+
 	@Column(name = "clase", nullable = false)
 	private Integer clase;
-	
+
 	@Column(name = "contenido", nullable = false, length = 4000)
 	private String contenido;
-	
+
 	@Column(name = "actividad", nullable = false, length = 4000)
 	private String actividad;
-	
+
 	@Column(name = "trabajo", nullable = false, length = 4000)
 	private String trabajo;
-	
+
 	@Column(name = "evidencia", nullable = false, length = 4000)
 	private String evidencia;
+
+	@Column(name = "bimestre", nullable = true)
+	private Integer bimestre;
+
+	@Column(name = "tipo", nullable = true, length = 3)
+	@Enumerated(EnumType.STRING)
+	private EnumTipoContenido tipo;
 
 	@Column(name = "check_profesor", nullable = true)
 	private Boolean checkProfesor;
@@ -183,7 +194,21 @@ public class SeguimientoSyllabusDetalle implements Serializable {
 	public void setEvidencia(String evidencia) {
 		this.evidencia = evidencia;
 	}
-	
-	
+
+	public Integer getBimestre() {
+		return bimestre;
+	}
+
+	public void setBimestre(Integer bimestre) {
+		this.bimestre = bimestre;
+	}
+
+	public EnumTipoContenido getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(EnumTipoContenido tipo) {
+		this.tipo = tipo;
+	}
 
 }

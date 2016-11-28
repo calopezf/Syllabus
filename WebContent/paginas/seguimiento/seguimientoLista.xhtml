@@ -105,18 +105,12 @@
 						</f:facet>
 						<h:outputText value="#{etiquetas[item.carrera.etiqueta]}" />
 					</p:column>
-					<p:column style="width:300px;">
+					<p:column style="width:200px;">
 						<f:facet name="header">
 							<h:outputText value="#{etiquetas['materia']}" />
 						</f:facet>
 						<h:outputText
 							value="#{item.materia.codigo} - #{item.materia.nombre}" />
-					</p:column>
-					<p:column style="width:80px;">
-						<f:facet name="header">
-							<h:outputText value="#{etiquetas['estado']}" />
-						</f:facet>
-						<h:outputText value="#{etiquetas[item.estado.etiqueta]}" />
 					</p:column>
 					<p:column style="width:200px;">
 						<f:facet name="header">
@@ -142,7 +136,13 @@
 								style="width:20px; height:20px" />
 						</h:commandLink>
 					</p:column>
-					<p:column styleClass="columnaCentrada"
+					<p:column style="width:80px;">
+						<f:facet name="header">
+							<h:outputText value="#{etiquetas['estado']}" />
+						</f:facet>
+						<h:outputText value="#{etiquetas[item.estado.etiqueta]}" />
+					</p:column>
+					<p:column styleClass="columnaCentrada" rendered="#{sesionCtrl.administrador}"
 						headerText="#{etiquetas['eliminar.sistema']}" style="width:100px;">
 						<h:commandLink
 							actionListener="#{seguimientoCtrl.eliminarSeguimiento}"
