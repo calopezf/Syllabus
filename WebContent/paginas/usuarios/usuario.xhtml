@@ -15,7 +15,7 @@
 			<p:growl id="growl" autoUpdate="true" />
 			<h:panelGrid columns="2">
 				<h:panelGrid columns="2" columnClasses="form-label,form-input">
-					<h:outputLabel value="#{etiquetas['usuario']}*:" />
+					<h:outputLabel value="#{etiquetas['cedula']}*:" />
 					<h:inputText id="cedula" size="16"
 						value="#{usuarioCtrl.usuario.identificacion}" required="true"
 						requiredMessage="#{etiquetas['numero.cedula']} #{mensajes['requerido.masculino']}"
@@ -42,18 +42,24 @@
 						size="25">
 						<f:validator validatorId="MailValidator" />
 					</h:inputText>
-					<h:outputLabel value="#{etiquetas['referencia']}:" />
-					<h:inputText id="referencia"
-						value="#{usuarioCtrl.usuario.referencia}" maxlength="250"
-						size="25" />
 
 					<h:outputLabel value="#{etiquetas['rol']}*:" />
 					<p:selectCheckboxMenu value="#{usuarioCtrl.rolesSeleccionados}"
-						label="#{etiquetas['rol']}" required="true"
+						label="Roles" required="true"
 						requiredMessage="#{etiquetas['rol']} #{mensajes['requerido.masculino']}">
 						<f:selectItems value="#{usuarioCtrl.roles}" />
+						<f:ajax event="change" render="semestre"
+							listener="#{usuarioCtrl.cambiaRoles}" />
 					</p:selectCheckboxMenu>
 
+					<h:outputText value="#{etiquetas['ocupacion']}:*" />
+					<h:selectOneMenu id="semestre" required="true"
+						requiredMessage="#{etiquetas['ocupacion']} #{mensajes['requerido.masculino']}"
+						value="#{usuarioCtrl.usuario.referencia.codigo}"
+						style="width:250px">
+						<f:selectItems value="#{usuarioCtrl.referenciaLista}" var="item"
+							itemLabel="#{item.nombre}" itemValue="#{item.codigo}" />
+					</h:selectOneMenu>
 
 					<h:outputLabel for="estado" value="#{etiquetas['estado']}*:" />
 					<h:selectOneMenu id="estado" value="#{usuarioCtrl.usuario.estado}">

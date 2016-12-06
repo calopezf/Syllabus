@@ -23,15 +23,15 @@ public class Parametro implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name = "codigo")
+	private String codigo;// de ParametroEnum
+
 	@Column(name = "nombre")
 	private String nombre;// de ParametroEnum
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo", nullable = false, length = 15)
+	@Column(name = "tipo", nullable = false, length = 30)
 	private EnumTipoParametro tipo;
-
-	@Column(name = "valor", nullable = false, length = 150)
-	private String valor;
 
 	@Column(name = "descripcion", nullable = false, length = 150)
 	private String descripcion;
@@ -59,14 +59,6 @@ public class Parametro implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public String getValor() {
-		return valor;
-	}
-
-	public void setValor(String valor) {
-		this.valor = valor;
-	}
-
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -91,10 +83,18 @@ public class Parametro implements Serializable {
 		this.registroNuevo = registroNuevo;
 	}
 
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
 	@Override
 	public String toString() {
 		return "Parametro{" + "nombre=" + nombre + ", tipo=" + tipo
-				+ ", valor=" + valor + ", descripcion=" + descripcion
+				+ ", descripcion=" + descripcion
 				+ ", estado=" + estado + '}';
 	}
 

@@ -13,10 +13,10 @@
 				<h:outputText value="#{etiquetas['semestre']}:*" />
 				<h:selectOneMenu id="semestre" required="true"
 					disabled="#{not usuarioCtrl.administrador}"
-					value="#{seguimientoCtrl.seguimiento.semestre.semestre}"
+					value="#{seguimientoCtrl.seguimiento.semestre.codigo}"
 					style="width:250px">
 					<f:selectItems value="#{seguimientoCtrl.semestreLista}" var="item"
-						itemLabel="#{item.semestre}" itemValue="#{item.semestre}" />
+						itemLabel="#{item.nombre}" itemValue="#{item.codigo}" />
 				</h:selectOneMenu>
 				<h:outputLabel for="facultad" value="#{etiquetas['carrera']}*:" />
 				<h:selectOneMenu id="facultad" required="true"
@@ -46,8 +46,10 @@
 						itemLabel="#{item.identificacion} - #{item.nombre} #{item.apellido}"
 						itemValue="#{item.identificacion}" />
 				</h:selectOneMenu>
-				<h:outputText value="#{etiquetas['alumno']}:*" />
+				<h:outputText value="#{etiquetas['alumno']}:*"
+					rendered="#{not usuarioCtrl.profesor}" />
 				<h:selectOneMenu id="alumno" required="true"
+					rendered="#{not usuarioCtrl.profesor}"
 					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.alumno.identificacion}"
 					style="width:250px">
@@ -59,14 +61,17 @@
 				<p:calendar id="fecha"
 					value="#{seguimientoCtrl.seguimiento.fechaCreacion}"
 					disabled="true" style="width:250px" />
-				<h:outputText value="#{etiquetas['estado']}:*" />
+				<h:outputText value="#{etiquetas['estado']}:*"
+					rendered="#{not usuarioCtrl.profesor or not usuarioCtrl.alumno}" />
 				<h:selectOneMenu id="estado" required="true"
+					rendered="#{not usuarioCtrl.profesor or not usuarioCtrl.alumno}"
 					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.estado}" style="width:250px">
 					<f:selectItems value="#{selectItemCtrl.estadoEnum}" />
 				</h:selectOneMenu>
 				<h:outputText value="#{etiquetas['descripcion']}:*" />
 				<h:inputTextarea style="width:600px; height:100px;" required="true"
+					requiredMessage="#{etiquetas['descripcion']} #{mensajes['requerido.masculino']}"
 					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.descripcion}"></h:inputTextarea>
 			</h:panelGrid>
@@ -117,16 +122,16 @@
 					<h:outputText value="#{item.evidencia}" />
 				</p:column>
 				<p:column style="width:180px;">
-					<f:facet name="header" >
+					<f:facet name="header">
 						<h:outputText value="#{etiquetas['tipoContenido']}" />
 					</f:facet>
-					<h:outputText id="estado" value="#{etiquetas[item.tipo.etiqueta]}"/>
+					<h:outputText id="estado" value="#{etiquetas[item.tipo.etiqueta]}" />
 				</p:column>
 				<p:column style="width:180px;">
-					<f:facet name="header" >
+					<f:facet name="header">
 						<h:outputText value="#{etiquetas['bimestre']}" />
 					</f:facet>
-					<h:outputText value="#{item.bimestre}"/>
+					<h:outputText value="#{item.bimestre}" />
 				</p:column>
 				<p:column style="width:50px;"
 					rendered="#{usuarioCtrl.profesor or usuarioCtrl.administrador or usuarioCtrl.coordinador}">
@@ -151,6 +156,17 @@
 					</f:facet>
 					<h:inputTextarea value="#{item.comentarioProfesor}"
 						disabled="#{not usuarioCtrl.profesor}" />
+				</p:column>
+				<p:column styleClass="columnaCentrada"
+					rendered="#{usuarioCtrl.profesor}"
+					headerText="#{etiquetas['copiarClase']}" style="width:100px;">
+					<h:commandLink actionListener="#{seguimientoCtrl.copiarClase}"
+						title="#{etiquetas['copiarClase']}"
+						onclick="if(!confirm('#{mensajes['seguroCopiar']}'))return false;">
+						<h:graphicImage value="/img/copiar.png" id="trashImage"
+							style="width:20px; height:20px" />
+						<f:ajax render="@form" />
+					</h:commandLink>
 				</p:column>
 				<p:column style="width:50px;"
 					rendered="#{usuarioCtrl.alumno or usuarioCtrl.administrador or usuarioCtrl.coordinador}">

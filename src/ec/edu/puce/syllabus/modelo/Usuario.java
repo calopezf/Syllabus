@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -21,6 +22,10 @@ import ec.edu.puce.syllabus.constantes.EnumEstado;
 @Table(name = "USUARIO")
 public class Usuario implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "identificacion", length = 20)
 	private String identificacion;// o username
@@ -33,8 +38,9 @@ public class Usuario implements Serializable {
 	private EnumEstado estado;
 	@Column(name = "direccion", length = 255)
 	private String direccion;
-	@Column(name = "referencia",nullable = true, length = 255)
-	private String referencia;
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "referencia", referencedColumnName = "codigo")
+	private Parametro referencia;
 	@Column(name = "password", length = 64)
 	private String password;
 	@Column(name = "email", length = 64)
@@ -150,15 +156,13 @@ public class Usuario implements Serializable {
 		this.tachado = tachado;
 	}
 
-	public String getReferencia() {
+	public Parametro getReferencia() {
 		return referencia;
 	}
 
-	public void setReferencia(String referencia) {
+	public void setReferencia(Parametro referencia) {
 		this.referencia = referencia;
 	}
-	
-	
 
 	public String getFoto() {
 		return foto;

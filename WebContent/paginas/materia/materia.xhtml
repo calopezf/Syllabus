@@ -43,12 +43,19 @@
 					required="true"
 					requiredMessage="#{etiquetas['nivel']} #{mensajes['requerido.masculino']}"
 					maxlength="100" size="16" />
-					
 
 				<h:outputLabel for="facultad" value="#{etiquetas['carrera']}*:" />
 				<h:selectOneMenu id="facultad"
 					value="#{materiaCtrl.materia.carrera}">
 					<f:selectItems value="#{selectItemCtrl.enumCarrera}" />
+				</h:selectOneMenu>
+				
+				<h:outputText value="#{etiquetas['planEstudio']}:*" />
+				<h:selectOneMenu id="semestre" required="true" requiredMessage="#{etiquetas['planEstudio']} #{mensajes['requerido.masculino']}"
+					value="#{materiaCtrl.materia.plan.codigo}"
+					style="width:250px">
+					<f:selectItems value="#{materiaCtrl.planLista}" var="item"
+						itemLabel="#{item.nombre}" itemValue="#{item.codigo}" />
 				</h:selectOneMenu>
 
 				<h:outputLabel for="estado" value="#{etiquetas['estado']}*:" />

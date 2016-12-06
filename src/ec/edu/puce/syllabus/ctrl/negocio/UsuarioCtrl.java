@@ -21,14 +21,18 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.PhaseId;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import ec.edu.puce.syllabus.constantes.EnumEstado;
+import ec.edu.puce.syllabus.constantes.EnumTipoParametro;
 import ec.edu.puce.syllabus.crud.ServicioCrud;
 import ec.edu.puce.syllabus.ctrl.BaseCtrl;
+import ec.edu.puce.syllabus.modelo.Parametro;
 import ec.edu.puce.syllabus.modelo.Rol;
 import ec.edu.puce.syllabus.modelo.Usuario;
 import ec.edu.puce.syllabus.servicio.ServicioRol;
@@ -55,6 +59,7 @@ public class UsuarioCtrl extends BaseCtrl {
 	private List<String> rolStringSeleccionados;
 	private List<String> rolesSeleccionados;
 	private List<Usuario> usuarios;
+	private List<Parametro> referenciaLista;
 
 	@PostConstruct
 	public void postConstructor() {
@@ -119,6 +124,7 @@ public class UsuarioCtrl extends BaseCtrl {
 				usuario = new Usuario();
 				usuario.setRegistroNuevo(true);
 				usuario.setRoles(new ArrayList<Rol>());
+				usuario.setReferencia(new Parametro());
 			} else {
 				usuario = usuarioServicio.obtieneUsuarioXCedula(usuarioId);
 				usuario.setRegistroNuevo(false);
@@ -305,6 +311,47 @@ public class UsuarioCtrl extends BaseCtrl {
 
 	public void setUsuarioFiltro(Usuario usuarioFiltro) {
 		this.usuarioFiltro = usuarioFiltro;
+	}
+
+	public List<Parametro> getReferenciaLista() {
+		if (this.referenciaLista == null) {
+			this.referenciaLista = new ArrayList<Parametro>();
+			if (rolesSeleccionados != null) {
+				int contaProfe=0;
+				for (String s : rolesSeleccionados) {
+					if (!s.equals("ALUMNO")&& contaProfe<1) {
+						contaProfe++;
+						Parametro referenciaFiltro = new Parametro();
+						referenciaFiltro
+								.setTipo(EnumTipoParametro.OCUPACION_PROFESOR);
+						referenciaFiltro.setEstado(EnumEstado.ACT);
+						for (Parametro a : servicioCrud
+								.findOrder(referenciaFiltro)) {
+							this.referenciaLista.add(a);
+						}
+					}
+					if (s.equals("ALUMNO")) {
+						Parametro referenciaFiltro = new Parametro();
+						referenciaFiltro
+								.setTipo(EnumTipoParametro.NIVEL_ALUMNO);
+						referenciaFiltro.setEstado(EnumEstado.ACT);
+						for (Parametro a : servicioCrud
+								.findOrder(referenciaFiltro)) {
+							this.referenciaLista.add(a);
+						}
+					}
+				}
+			}
+		}
+		return referenciaLista;
+	}
+
+	public void setReferenciaLista(List<Parametro> referenciaLista) {
+		this.referenciaLista = referenciaLista;
+	}
+
+	public void cambiaRoles(AjaxBehaviorEvent event) {
+		this.referenciaLista = null;
 	}
 
 }

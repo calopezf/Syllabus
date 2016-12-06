@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import ec.edu.puce.syllabus.constantes.EnumEstado;
@@ -31,6 +33,9 @@ public class Materia implements Serializable {
 	private Integer creditos;
 	@Column(name = "nivel", length = 20, nullable = true)
 	private String nivel;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "plan", referencedColumnName = "codigo")
+	private Parametro plan;
 	@Column(name = "estado")
 	@Enumerated(EnumType.STRING)
 	private EnumEstado estado;
@@ -92,6 +97,14 @@ public class Materia implements Serializable {
 
 	public void setNivel(String nivel) {
 		this.nivel = nivel;
+	}
+
+	public Parametro getPlan() {
+		return plan;
+	}
+
+	public void setPlan(Parametro plan) {
+		this.plan = plan;
 	}
 
 }

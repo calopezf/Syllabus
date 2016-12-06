@@ -48,7 +48,7 @@
 					paginator="true" rows="10" style="width:100%; margin-bottom:20px">
 					<p:column style="width:100px;">
 						<f:facet name="header">
-							<h:outputText value="#{etiquetas['identificacion']}" />
+							<h:outputText value="#{etiquetas['cedula']}" />
 						</f:facet>
 						<h:outputText styleClass="tachado" value="#{item.identificacion}"
 							rendered="#{item.tachado == false}" />
@@ -91,9 +91,9 @@
 						style="width:200px;">
 						<h:outputText value="#{item.email}" />
 					</p:column>
-					<p:column headerText="#{etiquetas['referencia']}"
+					<p:column headerText="#{etiquetas['ocupacion']}"
 						style="width:200px;">
-						<h:outputText value="#{item.referencia}" />
+						<h:outputText value="#{item.referencia.nombre}" />
 					</p:column>
 					<p:column style="width:70px;" styleClass="columnaCentrada">
 						<f:facet name="header">

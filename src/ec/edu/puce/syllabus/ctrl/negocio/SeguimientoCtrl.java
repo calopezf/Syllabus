@@ -8,11 +8,14 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.xml.soap.Detail;
 
 import ec.edu.puce.syllabus.constantes.EnumEstado;
+import ec.edu.puce.syllabus.constantes.EnumTipoParametro;
 import ec.edu.puce.syllabus.crud.ServicioCrud;
 import ec.edu.puce.syllabus.ctrl.BaseCtrl;
 import ec.edu.puce.syllabus.modelo.Materia;
+import ec.edu.puce.syllabus.modelo.Parametro;
 import ec.edu.puce.syllabus.modelo.Rol;
 import ec.edu.puce.syllabus.modelo.SeguimientoSyllabus;
 import ec.edu.puce.syllabus.modelo.SeguimientoSyllabusDetalle;
@@ -37,7 +40,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 	private List<SeguimientoSyllabus> seguimientoLista;
 	private List<SeguimientoSyllabusDetalle> seguimientoListaDetalle;
 	private List<Materia> materiaLista;
-	private List<Semestre> semestreLista;
+	private List<Parametro> semestreLista;
 	private List<Usuario> profesorLista;
 	private List<Usuario> alumnoLista;
 
@@ -45,7 +48,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 	public void postConstructor() {
 		this.seguimientoFiltro = new SeguimientoSyllabus();
 		this.seguimientoFiltro.setMateria(new Materia());
-		this.seguimientoFiltro.setSemestre(new Semestre());
+		this.seguimientoFiltro.setSemestre(new Parametro());
 		if (isAlumno() && !isAdministrador()) {
 			this.seguimientoFiltro.setAlumno(getUsuarioLogueado());
 		} else {
@@ -81,7 +84,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 				this.seguimiento.setMateria(new Materia());
 				this.seguimiento.setAlumno(new Usuario());
 				this.seguimiento.setProfesor(new Usuario());
-				this.seguimiento.setSemestre(new Semestre());
+				this.seguimiento.setSemestre(new Parametro());
 				this.seguimiento.setFechaCreacion(getCurrentDateObj());
 				seguimiento.setEstado(EnumEstado.ACT);
 			} else {
@@ -187,6 +190,24 @@ public class SeguimientoCtrl extends BaseCtrl {
 		return "/paginas/seguimiento/seguimiento?faces-redirect=true&idMateria="
 				+ seguimientoData.getId();
 	}
+	
+	public void copiarClase(){
+		SeguimientoSyllabusDetalle detalleData = (SeguimientoSyllabusDetalle) getExternalContext()
+				.getRequestMap().get("item");
+		SeguimientoSyllabusDetalle detalleNuevo =new SeguimientoSyllabusDetalle();
+		detalleNuevo.setUnidad(detalleData.getUnidad());
+		detalleNuevo.setClase(detalleData.getClase());
+		detalleNuevo.setContenido(detalleData.getContenido());
+		detalleNuevo.setActividad(detalleData.getActividad());
+		detalleNuevo.setTrabajo(detalleData.getTrabajo());
+		detalleNuevo.setEvidencia(detalleData.getEvidencia());
+		detalleNuevo.setTipo(detalleData.getTipo());
+		detalleNuevo.setBimestre(detalleData.getBimestre());
+		detalleNuevo.setSeguimiento(detalleData.getSeguimiento());
+		this.servicioCrud.insert(detalleNuevo);
+		this.seguimientoListaDetalle=null;
+	}
+	
 
 	public List<SeguimientoSyllabusDetalle> getSeguimientoListaDetalle() {
 		if (seguimientoListaDetalle == null) {
@@ -194,7 +215,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 			SeguimientoSyllabusDetalle detalleFiltro = new SeguimientoSyllabusDetalle();
 			detalleFiltro.setSeguimiento(seguimiento);
 			this.seguimientoListaDetalle = servicioCrud
-					.findOrder(detalleFiltro);
+					.findOrder(detalleFiltro,"clase");
 
 		}
 		return seguimientoListaDetalle;
@@ -233,31 +254,32 @@ public class SeguimientoCtrl extends BaseCtrl {
 		this.materiaLista = null;
 	}
 
-	public List<Semestre> getSemestreLista() {
+	public List<Parametro> getSemestreLista() {
 		if (semestreLista == null) {
-			Semestre semestreFiltro = new Semestre();
+			Parametro semestreFiltro = new Parametro();
+			semestreFiltro.setTipo(EnumTipoParametro.SEMESTRE);
 			if (this.seguimientoFiltro != null
 					&& this.seguimientoFiltro.getSemestre() != null) {
-				semestreFiltro.setSemestre(this.seguimientoFiltro.getSemestre()
-						.getSemestre());
+				semestreFiltro.setCodigo(this.seguimientoFiltro.getSemestre().getCodigo());
 			}
 			if (this.seguimiento != null
 					&& this.seguimiento.getSemestre() != null) {
-				semestreFiltro.setSemestre(this.seguimiento.getSemestre()
-						.getSemestre());
+				semestreFiltro.setCodigo(this.seguimiento.getSemestre()
+						.getCodigo());
 			}
 			semestreLista = servicioCrud.findOrder(semestreFiltro);
 		}
 		return semestreLista;
 	}
 
-	public void setSemestreLista(List<Semestre> semestreLista) {
+	public void setSemestreLista(List<Parametro> semestreLista) {
 		this.semestreLista = semestreLista;
 	}
 
 	public List<Materia> getMateriaLista() {
 		if (materiaLista == null) {
 			Materia materiaFiltro = new Materia();
+			materiaFiltro.setEstado(EnumEstado.ACT);
 			if (this.seguimientoFiltro != null
 					&& this.seguimientoFiltro.getCarrera() != null) {
 				materiaFiltro.setCarrera(this.seguimientoFiltro.getCarrera());

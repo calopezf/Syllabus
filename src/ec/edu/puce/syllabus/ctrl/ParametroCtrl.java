@@ -72,7 +72,7 @@ public class ParametroCtrl extends BaseCtrl {
 
 		try {
 			Parametro paramtroEnBase = servicioCrud.findById(
-					this.parametro.getNombre(), Parametro.class);
+					this.parametro.getCodigo(), Parametro.class);
 			if (paramtroEnBase == null) {
 				servicioCrud.insert(parametro);
 			} else {
@@ -97,7 +97,7 @@ public class ParametroCtrl extends BaseCtrl {
 		Parametro parametroData = (Parametro) getExternalContext()
 				.getRequestMap().get("item");
 		return "/paginas/parametros/parametro?faces-redirect=true&idParametro="
-				+ parametroData.getNombre();
+				+ parametroData.getCodigo();
 	}
 
 	public void buscar() {

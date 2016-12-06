@@ -20,6 +20,7 @@ import ec.edu.puce.syllabus.constantes.EnumEstado;
 import ec.edu.puce.syllabus.crud.ServicioCrud;
 import ec.edu.puce.syllabus.ctrl.BaseCtrl;
 import ec.edu.puce.syllabus.modelo.Materia;
+import ec.edu.puce.syllabus.modelo.Parametro;
 import ec.edu.puce.syllabus.modelo.Rol;
 import ec.edu.puce.syllabus.modelo.SeguimientoSyllabus;
 import ec.edu.puce.syllabus.modelo.SeguimientoSyllabusDetalle;
@@ -48,7 +49,7 @@ public class ReporteCtrl extends BaseCtrl {
 	@PostConstruct
 	public void postConstructor() {
 		this.seguimientoFiltro = new SeguimientoSyllabus();
-		this.seguimientoFiltro.setSemestre(new Semestre());
+		this.seguimientoFiltro.setSemestre(new Parametro());
 		this.seguimientoFiltro.setMateria(new Materia());
 		this.seguimientoFiltro.setAlumno(new Usuario());
 		this.seguimientoFiltro.setProfesor(new Usuario());
@@ -145,7 +146,7 @@ public class ReporteCtrl extends BaseCtrl {
 				this.seguimiento.setAlumno(new Usuario());
 				this.seguimiento.setProfesor(new Usuario());
 				this.seguimiento.setFechaCreacion(getCurrentDateObj());
-				this.seguimiento.setSemestre(new Semestre());
+				this.seguimiento.setSemestre(new Parametro());
 				seguimiento.setEstado(EnumEstado.ACT);
 			} else {
 				seguimiento = servicioCrud.findById(

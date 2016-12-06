@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,8 +39,8 @@ public class SeguimientoSyllabus implements Serializable {
 	private Long id;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "semestre", referencedColumnName = "semestre")
-	private Semestre semestre;
+	@JoinColumn(name = "semestre", referencedColumnName = "codigo")
+	private Parametro semestre;
 
 	@Column(name = "carrera")
 	@Enumerated(EnumType.STRING)
@@ -93,11 +92,11 @@ public class SeguimientoSyllabus implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public Semestre getSemestre() {
+	public Parametro getSemestre() {
 		return semestre;
 	}
 
-	public void setSemestre(Semestre semestre) {
+	public void setSemestre(Parametro semestre) {
 		this.semestre = semestre;
 	}
 

@@ -22,20 +22,10 @@ public class Syllabus implements Serializable {
 	@Id
 	@Column(name = "codigo", length = 20)
 	private String codigo;// o username
-	@Column(name = "nombre", nullable = false, length = 200)
-	private String nombre;
 	@OneToMany(mappedBy = "syllabus",cascade=CascadeType.ALL)
 	private List<SyllabusDetalle> detalles;
 	@Transient
 	private Materia materia;
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
 
 	public String getCodigo() {
 		return codigo;

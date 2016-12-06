@@ -8,9 +8,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import ec.edu.puce.syllabus.constantes.EnumEstado;
+import ec.edu.puce.syllabus.constantes.EnumTipoParametro;
 import ec.edu.puce.syllabus.crud.ServicioCrud;
 import ec.edu.puce.syllabus.ctrl.BaseCtrl;
 import ec.edu.puce.syllabus.modelo.Materia;
+import ec.edu.puce.syllabus.modelo.Parametro;
 import ec.edu.puce.syllabus.modelo.Usuario;
 import ec.edu.puce.syllabus.servicio.ServicioRol;
 import ec.edu.puce.syllabus.servicio.ServicioUsuario;
@@ -33,6 +35,7 @@ public class MateriaCtrl extends BaseCtrl {
 	private Materia materia;
 	private Materia materiaFiltro;
 	private List<Materia> materias;
+	private List<Parametro> planLista;
 
 	@PostConstruct
 	public void postConstructor() {
@@ -45,6 +48,7 @@ public class MateriaCtrl extends BaseCtrl {
 			if (materiaId == null) {
 				materia = new Materia();
 				materia.setEstado(EnumEstado.ACT);
+				materia.setPlan(new Parametro());
 			} else {
 				materia = servicioCrud.findById(materiaId, Materia.class);
 			}
@@ -101,7 +105,7 @@ public class MateriaCtrl extends BaseCtrl {
 		return "/paginas/materia/materia?faces-redirect=true&idMateria="
 				+ materiaData.getCodigo();
 	}
-	
+
 	public String navegarSyllabus() {
 		Materia materiaData = (Materia) getExternalContext().getRequestMap()
 				.get("item");
@@ -130,6 +134,20 @@ public class MateriaCtrl extends BaseCtrl {
 
 	public void setMateriaFiltro(Materia materiaFiltro) {
 		this.materiaFiltro = materiaFiltro;
+	}
+
+	public List<Parametro> getPlanLista() {
+		if (this.planLista == null) {
+			Parametro planFiltro = new Parametro();
+			planFiltro.setTipo(EnumTipoParametro.PLAN_ESTUDIOS);
+			planFiltro.setEstado(EnumEstado.ACT);
+			this.planLista = servicioCrud.findOrder(planFiltro);
+		}
+		return this.planLista;
+	}
+
+	public void setPlanLista(List<Parametro> planLista) {
+		this.planLista = planLista;
 	}
 
 }

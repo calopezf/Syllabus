@@ -18,13 +18,7 @@
 				<h:inputText id="materia"
 					value="#{syllabusCtrl.syllabus.materia.codigo} - #{syllabusCtrl.syllabus.materia.nombre}"
 					disabled="true" size="200" />
-				<h:outputLabel value="#{etiquetas['pensum']}*:" />
-				<h:inputText id="nombre" value="#{syllabusCtrl.syllabus.nombre}"
-					required="true"
-					requiredMessage="#{etiquetas['pensum']} #{mensajes['requerido.masculino']}"
-					maxlength="250" size="25" />
 			</h:panelGrid>
-			<h:outputText value="#{etiquetas['campos.obligatorios']}" />
 
 			<br />
 			<br />
