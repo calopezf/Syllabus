@@ -75,6 +75,14 @@ public class SeguimientoSyllabusDetalle implements Serializable {
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date fechaProfesor;
 
+	@Column(name = "hora_entrada_prof", nullable = true)
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	private Date horaEntrada;
+
+	@Column(name = "hora_salida_prof", nullable = true)
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	private Date horaSalida;
+
 	@Column(name = "fecha_alumno", nullable = true)
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date fechaAlumno;
@@ -209,6 +217,22 @@ public class SeguimientoSyllabusDetalle implements Serializable {
 
 	public void setTipo(EnumTipoContenido tipo) {
 		this.tipo = tipo;
+	}
+
+	public Date getHoraEntrada() {
+		return horaEntrada;
+	}
+
+	public void setHoraEntrada(Date horaEntrada) {
+		this.horaEntrada = horaEntrada;
+	}
+
+	public Date getHoraSalida() {
+		return horaSalida;
+	}
+
+	public void setHoraSalida(Date horaSalida) {
+		this.horaSalida = horaSalida;
 	}
 
 }

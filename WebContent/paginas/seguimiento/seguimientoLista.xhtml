@@ -67,6 +67,26 @@
 								itemLabel="#{item.identificacion} - #{item.nombre}"
 								itemValue="#{item.identificacion}" />
 						</h:selectOneMenu>
+						<h:outputText value="#{etiquetas['coordinador']}" rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno}" />
+						<h:selectOneMenu id="coordinador" rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno}"
+							disabled="#{usuarioCtrl.alumno and usuarioCtrl.profesor and not usuarioCtrl.administrador}"
+							value="#{seguimientoCtrl.seguimientoFiltro.coordinador.identificacion}"
+							style="width:250px">
+							<f:selectItem />
+							<f:selectItems value="#{seguimientoCtrl.coordinadorLista}" var="item"
+								itemLabel="#{item.identificacion} - #{item.nombre}"
+								itemValue="#{item.identificacion}" />
+						</h:selectOneMenu>
+						<h:outputText value="#{etiquetas['director']}" rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno and not usuarioCtrl.coordinador}" />
+						<h:selectOneMenu id="director" rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno and not usuarioCtrl.coordinador}"
+							disabled="#{not usuarioCtrl.director and not usuarioCtrl.administrador}"
+							value="#{seguimientoCtrl.seguimientoFiltro.director.identificacion}"
+							style="width:250px">
+							<f:selectItem />
+							<f:selectItems value="#{seguimientoCtrl.directorLista}" var="item"
+								itemLabel="#{item.identificacion} - #{item.nombre}"
+								itemValue="#{item.identificacion}" />
+						</h:selectOneMenu>
 					</h:panelGrid>
 					<h:commandButton image="/img/view.png" style="align: right;"
 						action="#{seguimientoCtrl.buscar}" title="#{etiquetas.buscar}">
@@ -97,7 +117,7 @@
 						<f:facet name="header">
 							<h:outputText value="#{etiquetas['semestre']}" />
 						</f:facet>
-						<h:outputText value="#{item.semestre.codigo}" />
+						<h:outputText value="#{item.semestre.nombre}" />
 					</p:column>
 					<p:column style="width:200px;">
 						<f:facet name="header">

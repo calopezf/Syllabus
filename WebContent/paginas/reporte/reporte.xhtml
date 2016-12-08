@@ -14,12 +14,12 @@
 					<h:panelGrid columns="4" columnClasses="form-label,form-input,form-label,form-input">
 						<h:outputText value="#{etiquetas['semestre']}" />
 							<h:selectOneMenu id="semestre" 
-							value="#{reporteCtrl.seguimientoFiltro.semestre.semestre}"
+							value="#{reporteCtrl.seguimientoFiltro.semestre.codigo}"
 							style="width:250px">
 							<f:selectItem />
 							<f:selectItems value="#{seguimientoCtrl.semestreLista}"
-								var="item" itemLabel="#{item.semestre}"
-								itemValue="#{item.semestre}" />
+								var="item" itemLabel="#{item.nombre}"
+								itemValue="#{item.codigo}" />
 						</h:selectOneMenu>
 						<h:outputText value="#{etiquetas['estado']}" />
 						<h:selectOneMenu id="estado"
@@ -98,7 +98,7 @@
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['semestre']}" />
 					</f:facet>
-					<h:outputText value="#{item.semestre.semestre}" />
+					<h:outputText value="#{item.semestre.nombre}" />
 				</p:column>
 				<p:column  style="width:200px;">
 					<f:facet name="header">

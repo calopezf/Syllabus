@@ -57,14 +57,34 @@
 						itemLabel="#{item.identificacion} - #{item.nombre} #{item.apellido}"
 						itemValue="#{item.identificacion}" />
 				</h:selectOneMenu>
+				<h:outputText value="#{etiquetas['coordinador']}:*" />
+				<h:selectOneMenu id="coordinador" required="true"
+					disabled="#{not usuarioCtrl.administrador}"
+					value="#{seguimientoCtrl.seguimiento.coordinador.identificacion}"
+					style="width:250px">
+					<f:selectItems value="#{seguimientoCtrl.coordinadorLista}" var="item"
+						itemLabel="#{item.identificacion} - #{item.nombre} #{item.apellido}"
+						itemValue="#{item.identificacion}" />
+				</h:selectOneMenu>
+				<h:outputText value="#{etiquetas['director']}:*"
+					rendered="#{not usuarioCtrl.profesor}" />
+				<h:selectOneMenu id="director" required="true"
+					rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno and not usuarioCtrl.coordinador}"
+					disabled="#{not usuarioCtrl.administrador}"
+					value="#{seguimientoCtrl.seguimiento.director.identificacion}"
+					style="width:250px">
+					<f:selectItems value="#{seguimientoCtrl.directorLista}" var="item"
+						itemLabel="#{item.identificacion} - #{item.nombre} #{item.apellido}"
+						itemValue="#{item.identificacion}" />
+				</h:selectOneMenu>
 				<h:outputText value="#{etiquetas['fecha']}:*" />
 				<p:calendar id="fecha"
 					value="#{seguimientoCtrl.seguimiento.fechaCreacion}"
 					disabled="true" style="width:250px" />
 				<h:outputText value="#{etiquetas['estado']}:*"
-					rendered="#{not usuarioCtrl.profesor or not usuarioCtrl.alumno}" />
+					rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno}" />
 				<h:selectOneMenu id="estado" required="true"
-					rendered="#{not usuarioCtrl.profesor or not usuarioCtrl.alumno}"
+					rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno}"
 					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.estado}" style="width:250px">
 					<f:selectItems value="#{selectItemCtrl.estadoEnum}" />
@@ -147,6 +167,22 @@
 						<h:outputText value="#{etiquetas['fecha']}" />
 					</f:facet>
 					<p:calendar value="#{item.fechaProfesor}"
+						disabled="#{not usuarioCtrl.profesor}" />
+				</p:column>
+					<p:column style="width:180px;"
+					rendered="#{usuarioCtrl.profesor or usuarioCtrl.administrador or usuarioCtrl.coordinador}">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['horaEntrada']}" />
+					</f:facet>
+					<p:calendar value="#{item.horaEntrada}"  pattern="HH:mm" timeOnly="true"
+						disabled="#{not usuarioCtrl.profesor}" />
+				</p:column>
+					<p:column style="width:180px;"
+					rendered="#{usuarioCtrl.profesor or usuarioCtrl.administrador or usuarioCtrl.coordinador}">
+					<f:facet name="header">
+						<h:outputText value="#{etiquetas['horaSalida']}" />
+					</f:facet>
+					<p:calendar value="#{item.horaSalida}"  pattern="HH:mm" timeOnly="true"
 						disabled="#{not usuarioCtrl.profesor}" />
 				</p:column>
 				<p:column style="width:180px;"

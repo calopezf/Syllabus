@@ -749,26 +749,29 @@ public class BaseCtrl implements Serializable {
 		return isUserInRole(EnumRol.COORDINADOR.toString());
 	}
 
+	public boolean isDirector() {
+		return isUserInRole(EnumRol.DIRECTOR.toString());
+	}
 
-    protected String generarSeguimiento(Long idSeguimiento) {
-        ServletContext sc = (ServletContext) FacesContext.getCurrentInstance()
-                .getExternalContext().getContext();
-        String ctxPath = sc.getRealPath("/");
-        String rutaReportes = ctxPath + "/reportes" + File.separator;
-        String rutaArchivo = rutaReportes.concat("seguimiento.jasper");
+	protected String generarSeguimiento(Long idSeguimiento) {
+		ServletContext sc = (ServletContext) FacesContext.getCurrentInstance()
+				.getExternalContext().getContext();
+		String ctxPath = sc.getRealPath("/");
+		String rutaReportes = ctxPath + "/reportes" + File.separator;
+		String rutaArchivo = rutaReportes.concat("seguimiento.jasper");
 
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("id", idSeguimiento.intValue());
+		JRFileVirtualizer fileVirtualizer = new JRFileVirtualizer(3);
+		parameters.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
+		// parameters.put("SUBREPORT_DIR", rutaReportes);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("id", idSeguimiento.intValue());
-        JRFileVirtualizer fileVirtualizer = new JRFileVirtualizer(3);
-        parameters.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
-        //parameters.put("SUBREPORT_DIR", rutaReportes);
+		generaReportePdf("Seguimiento-".concat(idSeguimiento.toString())
+				.concat(".pdf"), rutaArchivo, parameters);
+		System.out.println("termino");
+		return null;
 
-        generaReportePdf("Seguimiento-".concat(idSeguimiento.toString()).concat(".pdf"), rutaArchivo, parameters);
-        System.out.println("termino");
-        return null;
-
-    }
+	}
 
 	public void generaReportePdf(String nombreArchivo, String nombreJasper,
 			Map<String, Object> parameters) {

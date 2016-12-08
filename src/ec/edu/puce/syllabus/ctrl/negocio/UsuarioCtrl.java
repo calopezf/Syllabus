@@ -1,7 +1,6 @@
 package ec.edu.puce.syllabus.ctrl.negocio;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,11 +21,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.PhaseId;
 
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
+import org.primefaces.model.DualListModel;
 
 import ec.edu.puce.syllabus.constantes.EnumEstado;
 import ec.edu.puce.syllabus.constantes.EnumTipoParametro;
@@ -60,6 +57,7 @@ public class UsuarioCtrl extends BaseCtrl {
 	private List<String> rolesSeleccionados;
 	private List<Usuario> usuarios;
 	private List<Parametro> referenciaLista;
+	private DualListModel<String> componenteRoles;
 
 	@PostConstruct
 	public void postConstructor() {
@@ -125,14 +123,31 @@ public class UsuarioCtrl extends BaseCtrl {
 				usuario.setRegistroNuevo(true);
 				usuario.setRoles(new ArrayList<Rol>());
 				usuario.setReferencia(new Parametro());
+				List<String> rolTarget = new ArrayList<String>();
+				List<String> rolSource = new ArrayList<String>();
+				List<Rol> rolesBase = rolServicio.devuelveRolesActivos();
+				for (Rol rol : rolesBase) {
+					rolSource.add(rol.getId().toString());
+				}
+				componenteRoles = new DualListModel<String>(rolSource,
+						rolTarget);
 			} else {
 				usuario = usuarioServicio.obtieneUsuarioXCedula(usuarioId);
 				usuario.setRegistroNuevo(false);
-				List<String> lista = new ArrayList<String>();
+				List<String> rolTarget = new ArrayList<String>();
+				List<String> rolSource = new ArrayList<String>();
 				for (Rol rol : usuario.getRoles()) {
-					lista.add(rol.getId().toString());
+					rolTarget.add(rol.getId().toString());
 				}
-				setRolesSeleccionados(lista);
+				List<Rol> rolesBase = rolServicio.devuelveRolesActivos();
+				for (Rol rol : rolesBase) {
+					if(!rolTarget.contains(rol.getId().toString())){
+						rolSource.add(rol.getId().toString());
+					}
+				}
+				componenteRoles = new DualListModel<String>(rolSource,
+						rolTarget);
+				setRolesSeleccionados(rolTarget);
 			}
 		}
 
@@ -164,27 +179,30 @@ public class UsuarioCtrl extends BaseCtrl {
 	public String guardar() {
 
 		try {
-			// pone los roles seleccionados
-			List<Rol> rolesXUsuario = new ArrayList<Rol>();
-			Rol rolNuevo;
-			for (String id : getRolesSeleccionados()) {
-				rolNuevo = servicioCrud.findById(id, Rol.class);
-				rolesXUsuario.add(rolNuevo);
-			}
-			usuario.setRoles(rolesXUsuario);
-			Usuario usuarioEnBase = usuarioServicio
-					.obtieneUsuarioXCedula(usuario.getIdentificacion());
-			if (usuarioEnBase == null) {
-				this.usuario.setPassword(this.usuario.getIdentificacion());
-				servicioCrud.insert(this.usuario);
+			if (validadorDeCedula(this.usuario.getIdentificacion())) {
+				// pone los roles seleccionados
+				List<Rol> rolesXUsuario = new ArrayList<Rol>();
+				Rol rolNuevo;
+				for (String id : getComponenteRoles().getTarget()) {
+					rolNuevo = servicioCrud.findById(id, Rol.class);
+					rolesXUsuario.add(rolNuevo);
+				}
+				usuario.setRoles(rolesXUsuario);
+				Usuario usuarioEnBase = usuarioServicio
+						.obtieneUsuarioXCedula(usuario.getIdentificacion());
+				if (usuarioEnBase == null) {
+					this.usuario.setPassword(this.usuario.getIdentificacion());
+					servicioCrud.insert(this.usuario);
+				} else {
+					servicioCrud.update(this.usuario);
+				}
+				System.out.println("guardado...");
+				String m = getBundleMensajes("registro.guardado.correctamente",
+						null);
+				addInfoMessage(m, m);
 			} else {
-				servicioCrud.update(this.usuario);
+				return null;
 			}
-			System.out.println("guardado...");
-			String m = getBundleMensajes("registro.guardado.correctamente",
-					null);
-			addInfoMessage(m, m);
-
 		} catch (Exception e) {
 			// e.printStackTrace();
 			String m = getBundleMensajes("registro.noguardado.exception",
@@ -194,6 +212,59 @@ public class UsuarioCtrl extends BaseCtrl {
 		}
 
 		return "/paginas/usuarios/usuarioLista";
+	}
+
+	public void validaCedula(AjaxBehaviorEvent event) {
+		validadorDeCedula(this.usuario.getIdentificacion());
+	}
+
+	public boolean validadorDeCedula(String cedula) {
+		boolean cedulaCorrecta = false;
+
+		try {
+
+			if (cedula.length() == 10) // ConstantesApp.LongitudCedula
+			{
+				int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
+				if (tercerDigito < 6) {
+					// Coeficientes de validación cédula
+					// El decimo digito se lo considera dígito verificador
+					int[] coefValCedula = { 2, 1, 2, 1, 2, 1, 2, 1, 2 };
+					int verificador = Integer.parseInt(cedula.substring(9, 10));
+					int suma = 0;
+					int digito = 0;
+					for (int i = 0; i < (cedula.length() - 1); i++) {
+						digito = Integer.parseInt(cedula.substring(i, i + 1))
+								* coefValCedula[i];
+						suma += ((digito % 10) + (digito / 10));
+					}
+
+					if ((suma % 10 == 0) && (suma % 10 == verificador)) {
+						cedulaCorrecta = true;
+					} else if ((10 - (suma % 10)) == verificador) {
+						cedulaCorrecta = true;
+					} else {
+						cedulaCorrecta = false;
+					}
+				} else {
+					cedulaCorrecta = false;
+				}
+			} else {
+				cedulaCorrecta = false;
+			}
+		} catch (NumberFormatException nfe) {
+			cedulaCorrecta = false;
+		} catch (Exception err) {
+			System.out
+					.println("Una excepcion ocurrio en el proceso de validadcion");
+			cedulaCorrecta = false;
+		}
+
+		if (!cedulaCorrecta) {
+			addErrorMessage("cedula",
+					getBundleMensajes("numeroCedulaIncorrecto", null), "");
+		}
+		return cedulaCorrecta;
 	}
 
 	public String editar() {
@@ -316,10 +387,10 @@ public class UsuarioCtrl extends BaseCtrl {
 	public List<Parametro> getReferenciaLista() {
 		if (this.referenciaLista == null) {
 			this.referenciaLista = new ArrayList<Parametro>();
-			if (rolesSeleccionados != null) {
-				int contaProfe=0;
-				for (String s : rolesSeleccionados) {
-					if (!s.equals("ALUMNO")&& contaProfe<1) {
+			if (componenteRoles.getTarget() != null) {
+				int contaProfe = 0;
+				for (String s : componenteRoles.getTarget()) {
+					if (!s.equals("ALUMNO") && contaProfe < 1) {
 						contaProfe++;
 						Parametro referenciaFiltro = new Parametro();
 						referenciaFiltro
@@ -352,6 +423,17 @@ public class UsuarioCtrl extends BaseCtrl {
 
 	public void cambiaRoles(AjaxBehaviorEvent event) {
 		this.referenciaLista = null;
+	}
+
+	public DualListModel<String> getComponenteRoles() {
+		if (componenteRoles == null) {
+			componenteRoles = new DualListModel<String>();
+		}
+		return componenteRoles;
+	}
+
+	public void setComponenteRoles(DualListModel<String> componenteRoles) {
+		this.componenteRoles = componenteRoles;
 	}
 
 }

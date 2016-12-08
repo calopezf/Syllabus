@@ -19,8 +19,8 @@
 					<h:inputText id="cedula" size="16"
 						value="#{usuarioCtrl.usuario.identificacion}" required="true"
 						requiredMessage="#{etiquetas['numero.cedula']} #{mensajes['requerido.masculino']}"
-						maxlength="10" />
-
+						maxlength="10" >
+						</h:inputText>
 					<h:outputLabel value="#{etiquetas['nombres']}*:" />
 					<h:inputText id="nombres" value="#{usuarioCtrl.usuario.nombre}"
 						required="true"
@@ -44,13 +44,18 @@
 					</h:inputText>
 
 					<h:outputLabel value="#{etiquetas['rol']}*:" />
-					<p:selectCheckboxMenu value="#{usuarioCtrl.rolesSeleccionados}"
+					  <p:pickList id="pickList" value="#{usuarioCtrl.componenteRoles}" var="roles" itemLabel="#{roles}" itemValue="#{roles}" >
+					  <f:ajax event="transfer" render="semestre"
+							listener="#{usuarioCtrl.cambiaRoles}" />
+					  </p:pickList>
+					  
+					<!--  >p:selectCheckboxMenu value="#{usuarioCtrl.rolesSeleccionados}"
 						label="Roles" required="true"
 						requiredMessage="#{etiquetas['rol']} #{mensajes['requerido.masculino']}">
 						<f:selectItems value="#{usuarioCtrl.roles}" />
 						<f:ajax event="change" render="semestre"
 							listener="#{usuarioCtrl.cambiaRoles}" />
-					</p:selectCheckboxMenu>
+					</p:selectCheckboxMenu-->
 
 					<h:outputText value="#{etiquetas['ocupacion']}:*" />
 					<h:selectOneMenu id="semestre" required="true"

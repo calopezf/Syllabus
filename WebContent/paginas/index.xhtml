@@ -33,7 +33,7 @@
 					</h:commandLink>
 
 					<h:commandLink action="/paginas/materia/materiaLista.jsf"
-						rendered="#{usuarioCtrl.administrador}">
+						rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
 						<h:panelGrid class="botonHome">
 							<h:graphicImage value="/img/materia2.png" title="Materias"
 								style="width:90px; height:90px;"/>
@@ -50,7 +50,7 @@
 					</h:commandLink>
 
 					<h:commandLink action="/paginas/reporte/reporte.jsf"
-						rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador}">
+						rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
 						<h:panelGrid class="botonHome">
 							<h:graphicImage value="/img/reporte.png" title="Reporte"
 								style="width:90px; height:90px;" />

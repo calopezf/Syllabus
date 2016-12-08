@@ -58,6 +58,14 @@ public class SeguimientoSyllabus implements Serializable {
 	@JoinColumn(name = "identificacion_alumno", referencedColumnName = "identificacion")
 	private Usuario alumno;
 
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "identificacion_coordinador", referencedColumnName = "identificacion")
+	private Usuario coordinador;
+
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "identificacion_director", referencedColumnName = "identificacion")
+	private Usuario director;
+
 	@Column(name = "fecha_creacion", length = 200)
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date fechaCreacion;
@@ -171,7 +179,21 @@ public class SeguimientoSyllabus implements Serializable {
 	public void setProfesorPorcentaje(int profesorPorcentaje) {
 		this.profesorPorcentaje = profesorPorcentaje;
 	}
-	
-	
+
+	public Usuario getCoordinador() {
+		return coordinador;
+	}
+
+	public void setCoordinador(Usuario coordinador) {
+		this.coordinador = coordinador;
+	}
+
+	public Usuario getDirector() {
+		return director;
+	}
+
+	public void setDirector(Usuario director) {
+		this.director = director;
+	}
 
 }

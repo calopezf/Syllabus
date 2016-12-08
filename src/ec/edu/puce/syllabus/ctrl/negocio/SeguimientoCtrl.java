@@ -43,6 +43,8 @@ public class SeguimientoCtrl extends BaseCtrl {
 	private List<Parametro> semestreLista;
 	private List<Usuario> profesorLista;
 	private List<Usuario> alumnoLista;
+	private List<Usuario> coordinadorLista;
+	private List<Usuario> directorLista;
 
 	@PostConstruct
 	public void postConstructor() {
@@ -59,9 +61,21 @@ public class SeguimientoCtrl extends BaseCtrl {
 		} else {
 			this.seguimientoFiltro.setProfesor(new Usuario());
 		}
+		if (isCoordinador() && !isAdministrador()) {
+			this.seguimientoFiltro.setCoordinador(getUsuarioLogueado());
+		} else {
+			this.seguimientoFiltro.setCoordinador(new Usuario());
+		}
+		if (isDirector() && !isAdministrador()) {
+			this.seguimientoFiltro.setDirector(getUsuarioLogueado());
+		} else {
+			this.seguimientoFiltro.setDirector(new Usuario());
+		}
 
 		this.profesorLista = new ArrayList<Usuario>();
 		this.alumnoLista = new ArrayList<Usuario>();
+		this.coordinadorLista = new ArrayList<Usuario>();
+		this.directorLista = new ArrayList<Usuario>();
 		List<Usuario> usuarioLista = servicioCrud.findOrder(new Usuario());
 		for (Usuario usu : usuarioLista) {
 			for (Rol rol : usu.getRoles()) {
@@ -70,6 +84,12 @@ public class SeguimientoCtrl extends BaseCtrl {
 				}
 				if (rol.getId().equals("ALUMNO")) {
 					this.alumnoLista.add(usu);
+				}
+				if (rol.getId().equals("COORDINADOR")) {
+					this.coordinadorLista.add(usu);
+				}
+				if (rol.getId().equals("DIRECTOR")) {
+					this.directorLista.add(usu);
 				}
 			}
 
@@ -84,6 +104,8 @@ public class SeguimientoCtrl extends BaseCtrl {
 				this.seguimiento.setMateria(new Materia());
 				this.seguimiento.setAlumno(new Usuario());
 				this.seguimiento.setProfesor(new Usuario());
+				this.seguimiento.setCoordinador(new Usuario());
+				this.seguimiento.setDirector(new Usuario());
 				this.seguimiento.setSemestre(new Parametro());
 				this.seguimiento.setFechaCreacion(getCurrentDateObj());
 				seguimiento.setEstado(EnumEstado.ACT);
@@ -190,11 +212,11 @@ public class SeguimientoCtrl extends BaseCtrl {
 		return "/paginas/seguimiento/seguimiento?faces-redirect=true&idMateria="
 				+ seguimientoData.getId();
 	}
-	
-	public void copiarClase(){
+
+	public void copiarClase() {
 		SeguimientoSyllabusDetalle detalleData = (SeguimientoSyllabusDetalle) getExternalContext()
 				.getRequestMap().get("item");
-		SeguimientoSyllabusDetalle detalleNuevo =new SeguimientoSyllabusDetalle();
+		SeguimientoSyllabusDetalle detalleNuevo = new SeguimientoSyllabusDetalle();
 		detalleNuevo.setUnidad(detalleData.getUnidad());
 		detalleNuevo.setClase(detalleData.getClase());
 		detalleNuevo.setContenido(detalleData.getContenido());
@@ -204,18 +226,19 @@ public class SeguimientoCtrl extends BaseCtrl {
 		detalleNuevo.setTipo(detalleData.getTipo());
 		detalleNuevo.setBimestre(detalleData.getBimestre());
 		detalleNuevo.setSeguimiento(detalleData.getSeguimiento());
+		detalleNuevo.setCheckAlumno(Boolean.FALSE);
+		detalleNuevo.setCheckProfesor(Boolean.FALSE);
 		this.servicioCrud.insert(detalleNuevo);
-		this.seguimientoListaDetalle=null;
+		this.seguimientoListaDetalle = null;
 	}
-	
 
 	public List<SeguimientoSyllabusDetalle> getSeguimientoListaDetalle() {
 		if (seguimientoListaDetalle == null) {
 			this.seguimientoListaDetalle = new ArrayList<SeguimientoSyllabusDetalle>();
 			SeguimientoSyllabusDetalle detalleFiltro = new SeguimientoSyllabusDetalle();
 			detalleFiltro.setSeguimiento(seguimiento);
-			this.seguimientoListaDetalle = servicioCrud
-					.findOrder(detalleFiltro,"clase");
+			this.seguimientoListaDetalle = servicioCrud.findOrder(
+					detalleFiltro, "clase");
 
 		}
 		return seguimientoListaDetalle;
@@ -260,7 +283,8 @@ public class SeguimientoCtrl extends BaseCtrl {
 			semestreFiltro.setTipo(EnumTipoParametro.SEMESTRE);
 			if (this.seguimientoFiltro != null
 					&& this.seguimientoFiltro.getSemestre() != null) {
-				semestreFiltro.setCodigo(this.seguimientoFiltro.getSemestre().getCodigo());
+				semestreFiltro.setCodigo(this.seguimientoFiltro.getSemestre()
+						.getCodigo());
 			}
 			if (this.seguimiento != null
 					&& this.seguimiento.getSemestre() != null) {
@@ -311,6 +335,22 @@ public class SeguimientoCtrl extends BaseCtrl {
 
 	public void setAlumnoLista(List<Usuario> alumnoLista) {
 		this.alumnoLista = alumnoLista;
+	}
+
+	public List<Usuario> getCoordinadorLista() {
+		return coordinadorLista;
+	}
+
+	public void setCoordinadorLista(List<Usuario> coordinadorLista) {
+		this.coordinadorLista = coordinadorLista;
+	}
+
+	public List<Usuario> getDirectorLista() {
+		return directorLista;
+	}
+
+	public void setDirectorLista(List<Usuario> directorLista) {
+		this.directorLista = directorLista;
 	}
 
 }
