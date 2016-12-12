@@ -56,12 +56,12 @@ public class SeguimientoCtrl extends BaseCtrl {
 		} else {
 			this.seguimientoFiltro.setAlumno(new Usuario());
 		}
-		if (isProfesor() && !isAdministrador()) {
+		if (isProfesor() && !isCoordinador() && !isDirector() && !isAdministrador()) {
 			this.seguimientoFiltro.setProfesor(getUsuarioLogueado());
 		} else {
 			this.seguimientoFiltro.setProfesor(new Usuario());
 		}
-		if (isCoordinador() && !isAdministrador()) {
+		if (isCoordinador() && !isDirector() && !isAdministrador()) {
 			this.seguimientoFiltro.setCoordinador(getUsuarioLogueado());
 		} else {
 			this.seguimientoFiltro.setCoordinador(new Usuario());
@@ -172,7 +172,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 				}
 
 			} else {
-
+				this.seguimiento = servicioCrud.update(seguimiento);
 				SeguimientoSyllabusDetalle filtro = new SeguimientoSyllabusDetalle();
 				filtro.setSeguimiento(seguimiento);
 				for (SeguimientoSyllabusDetalle detalle : servicioCrud
@@ -315,6 +315,15 @@ public class SeguimientoCtrl extends BaseCtrl {
 			materiaLista = servicioCrud.findOrder(materiaFiltro);
 		}
 		return materiaLista;
+	}
+	
+	public void guardaCalificacion(AjaxBehaviorEvent event) {
+		SeguimientoSyllabus seguimientoData = (SeguimientoSyllabus) getExternalContext()
+				.getRequestMap().get("item");
+		servicioCrud.update(seguimientoData);
+		String m = getBundleMensajes("registro.guardado.correctamente",
+				null);
+		addInfoMessage(m, m);
 	}
 
 	public void setMateriaLista(List<Materia> materiaLista) {

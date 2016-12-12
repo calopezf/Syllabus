@@ -62,9 +62,27 @@ public class SeguimientoSyllabus implements Serializable {
 	@JoinColumn(name = "identificacion_coordinador", referencedColumnName = "identificacion")
 	private Usuario coordinador;
 
+	@Column(name = "check_coordinador1", nullable = true)
+	private Boolean checkCoordinador1;
+	@Column(name = "check_coordinador2", nullable = true)
+	private Boolean checkCoordinador2;
+	@Column(name = "check_coordinador3", nullable = true)
+	private Boolean checkCoordinador3;
+	@Column(name = "cometario_coordinador1", nullable = true, length = 2000)
+	private String comentarioCoordinador1;
+	@Column(name = "cometario_coordinador2", nullable = true, length = 2000)
+	private String comentarioCoordinador2;
+	@Column(name = "cometario_coordinador3", nullable = true, length = 2000)
+	private String comentarioCoordinador3;
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "identificacion_director", referencedColumnName = "identificacion")
 	private Usuario director;
+
+	@Column(name = "check_director", nullable = true)
+	private Boolean checkDirector;
+	@Column(name = "cometario_director", nullable = true, length = 2000)
+	private String comentarioDirector;
 
 	@Column(name = "fecha_creacion", length = 200)
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -194,6 +212,70 @@ public class SeguimientoSyllabus implements Serializable {
 
 	public void setDirector(Usuario director) {
 		this.director = director;
+	}
+
+	public Boolean getCheckCoordinador1() {
+		return checkCoordinador1;
+	}
+
+	public void setCheckCoordinador1(Boolean checkCoordinador1) {
+		this.checkCoordinador1 = checkCoordinador1;
+	}
+
+	public Boolean getCheckCoordinador2() {
+		return checkCoordinador2;
+	}
+
+	public void setCheckCoordinador2(Boolean checkCoordinador2) {
+		this.checkCoordinador2 = checkCoordinador2;
+	}
+
+	public Boolean getCheckCoordinador3() {
+		return checkCoordinador3;
+	}
+
+	public void setCheckCoordinador3(Boolean checkCoordinador3) {
+		this.checkCoordinador3 = checkCoordinador3;
+	}
+
+	public String getComentarioCoordinador1() {
+		return comentarioCoordinador1;
+	}
+
+	public void setComentarioCoordinador1(String comentarioCoordinador1) {
+		this.comentarioCoordinador1 = comentarioCoordinador1;
+	}
+
+	public String getComentarioCoordinador2() {
+		return comentarioCoordinador2;
+	}
+
+	public void setComentarioCoordinador2(String comentarioCoordinador2) {
+		this.comentarioCoordinador2 = comentarioCoordinador2;
+	}
+
+	public String getComentarioCoordinador3() {
+		return comentarioCoordinador3;
+	}
+
+	public void setComentarioCoordinador3(String comentarioCoordinador3) {
+		this.comentarioCoordinador3 = comentarioCoordinador3;
+	}
+
+	public Boolean getCheckDirector() {
+		return checkDirector;
+	}
+
+	public void setCheckDirector(Boolean checkDirector) {
+		this.checkDirector = checkDirector;
+	}
+
+	public String getComentarioDirector() {
+		return comentarioDirector;
+	}
+
+	public void setComentarioDirector(String comentarioDirector) {
+		this.comentarioDirector = comentarioDirector;
 	}
 
 }

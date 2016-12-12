@@ -79,6 +79,7 @@
       <role-name>ALUMNO</role-name>
       <role-name>PROFESOR</role-name>
       <role-name>COORDINADOR</role-name>
+      <role-name>DIRECTOR</role-name>
     </auth-constraint>
     <user-data-constraint>
       <transport-guarantee>NONE</transport-guarantee>
@@ -107,5 +108,9 @@
   <security-role>
     <description></description>
     <role-name>COORDINADOR</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>DIRECTOR</role-name>
   </security-role>
 </web-app>

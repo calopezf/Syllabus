@@ -148,13 +148,49 @@
 					</p:column>
 					<p:column styleClass="columnaCentrada" style="width:150px;">
 						<f:facet name="header">
-							<h:outputText value="#{etiquetas['actualizarSeguimiento']}" />
+							<h:outputText value="#{etiquetas['actualizarSeguimiento']}"  rendered="#{(usuarioCtrl.profesor and not usuarioCtrl.coordinador and not usuarioCtrl.director) or usuarioCtrl.alumno}"/>
+							<h:outputText value="#{etiquetas['verSeguimiento']}"  rendered="#{usuarioCtrl.coordinador or usuarioCtrl.director}"/>
 						</f:facet>
 						<h:commandLink action="#{seguimientoCtrl.editar}"
 							title="#{etiquetas.editar}">
 							<h:graphicImage value="/img/edit.png" id="editImage"
 								style="width:20px; height:20px" />
 						</h:commandLink>
+					</p:column>
+					<p:column styleClass="columnaCentrada" style="width:350px;" rendered="#{usuarioCtrl.coordinador or usuarioCtrl.director}">
+						<f:facet name="header">
+							<h:outputText value="#{etiquetas['calificarSeguimiento']}"  rendered="#{usuarioCtrl.coordinador or usuarioCtrl.director}"/>
+						</f:facet>
+						<h:panelGrid id="columnas" columns="2" columnClasses="form-label,form-input">
+						<p:selectBooleanCheckbox value="#{item.checkCoordinador1}"  rendered="#{usuarioCtrl.coordinador}" >
+						<f:ajax event="change" render="columnas" listener="#{seguimientoCtrl.guardaCalificacion}"/>
+						</p:selectBooleanCheckbox>						
+						<h:inputTextarea value="#{item.comentarioCoordinador1}" disabled="#{!item.checkCoordinador1}" rendered="#{usuarioCtrl.coordinador}" >
+						<f:ajax event="change" render="columnas" listener="#{seguimientoCtrl.guardaCalificacion}"/>
+						</h:inputTextarea>
+						
+						<p:selectBooleanCheckbox value="#{item.checkCoordinador2}" rendered="#{usuarioCtrl.coordinador}"  >
+						<f:ajax event="change" render="columnas" listener="#{seguimientoCtrl.guardaCalificacion}"/>
+						</p:selectBooleanCheckbox>						
+						<h:inputTextarea value="#{item.comentarioCoordinador2}" disabled="#{!item.checkCoordinador2}" rendered="#{usuarioCtrl.coordinador}" >
+						<f:ajax event="change" render="columnas" listener="#{seguimientoCtrl.guardaCalificacion}"/>
+						</h:inputTextarea>
+						
+						<p:selectBooleanCheckbox value="#{item.checkCoordinador3}" rendered="#{usuarioCtrl.coordinador}" >
+						<f:ajax event="change" render="columnas" listener="#{seguimientoCtrl.guardaCalificacion}" />
+						</p:selectBooleanCheckbox>						
+						<h:inputTextarea value="#{item.comentarioCoordinador3}" disabled="#{!item.checkCoordinador3}" rendered="#{usuarioCtrl.coordinador}" >
+						<f:ajax event="change" render="columnas" listener="#{seguimientoCtrl.guardaCalificacion}"/>
+						</h:inputTextarea>
+						
+						
+						<p:selectBooleanCheckbox value="#{item.checkDirector}" rendered="#{usuarioCtrl.director}" >
+						<f:ajax event="change" render="columnas" listener="#{seguimientoCtrl.guardaCalificacion}"/>
+						</p:selectBooleanCheckbox>						
+						<h:inputTextarea value="#{item.comentarioDirector}" disabled="#{!item.checkDirector}" rendered="#{usuarioCtrl.director}" >
+						<f:ajax event="change" render="columnas" listener="#{seguimientoCtrl.guardaCalificacion}"/>
+						</h:inputTextarea>
+						</h:panelGrid>
 					</p:column>
 					<p:column style="width:80px;" rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno}">
 						<f:facet name="header">
