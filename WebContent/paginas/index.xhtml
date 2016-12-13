@@ -2,7 +2,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" template="/template/general.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 	<ui:define name="title">
 		<h:outputText value="#{etiquetas['seleccione.una.opcion']}" />
 	</ui:define>
@@ -11,59 +11,138 @@
 
 		<h:form>
 			<div align="center">
-				<h:panelGrid columns="6"
-					columnClasses="columnHome,columnHome,columnHome,columnHome,columnHome">
+				<div class="ui-g-6 ui-md-2">
+					<div class="card overview">
+						<div class="overview-content clearfix">
+							<h:commandLink action="/paginas/parametros/parametroLista.jsf"
+								rendered="#{sesionCtrl.administrador}">
+								<h:panelGrid
+									style=" text-align:center;
+    font-size: 16px;
+    width:130px;
+    margin-bottom: 0px; ">
+									<h:graphicImage value="/img/parametros.png"
+										style="width:90px; height:90px;" />
+									<h:outputText value="#{etiquetas['catalogo']}" />
+								</h:panelGrid>
+							</h:commandLink>
 
 
-					<h:commandLink action="/paginas/parametros/parametroLista.jsf"
-						rendered="#{sesionCtrl.administrador}">
-						<h:panelGrid class="botonHome">
-							<h:graphicImage value="/img/parametros.png"
-								style="width:90px; height:90px;" />
-							<h:outputText value="#{etiquetas['catalogo']}" />
-						</h:panelGrid>
-					</h:commandLink>
-					<h:commandLink action="/paginas/usuarios/usuarioLista.jsf"
-						rendered="#{usuarioCtrl.administrador}">
-						<h:panelGrid class="botonHome">
-							<h:graphicImage value="/img/usuarios.png" title="Usuarios"
-								style="width:90px; height:90px;" />
-							<h:outputText value="Usuarios" />
-						</h:panelGrid>
-					</h:commandLink>
 
-					<h:commandLink action="/paginas/materia/materiaLista.jsf"
-						rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
-						<h:panelGrid class="botonHome">
-							<h:graphicImage value="/img/materia2.png" title="Materias"
-								style="width:90px; height:90px;"/>
-							<h:outputText value="Materias" />
-						</h:panelGrid>
-					</h:commandLink>
+						</div>
+					</div>
+				</div>
 
-					<h:commandLink action="/paginas/seguimiento/seguimientoLista.jsf">
-						<h:panelGrid class="botonHome">
-							<h:graphicImage value="/img/seguimiento.jpg" title="Seguimiento"
-								style="width:90px; height:90px;"/>
-							<h:outputText value="Seguimiento" />
-						</h:panelGrid>
-					</h:commandLink>
+				<div class="ui-g-6 ui-md-2">
+					<div class="card overview">
+						<div class="overview-content clearfix">
 
-					<h:commandLink action="/paginas/reporte/reporte.jsf"
-						rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
-						<h:panelGrid class="botonHome">
-							<h:graphicImage value="/img/reporte.png" title="Reporte"
-								style="width:90px; height:90px;" />
-							<h:outputText value="Reporte"  />
-						</h:panelGrid>
-					</h:commandLink>
-				</h:panelGrid>
+
+							<h:commandLink action="/paginas/usuarios/usuarioLista.jsf"
+								rendered="#{usuarioCtrl.administrador}">
+								<h:panelGrid
+									style=" text-align:center;
+    font-size: 16px;
+    width:130px;
+    margin-bottom: 0px; ">
+									<h:graphicImage value="/img/usuarios.png" title="Usuarios"
+										style="width:90px; height:90px;" />
+									<h:outputText value="Usuarios" />
+								</h:panelGrid>
+							</h:commandLink>
+
+
+						</div>
+					</div>
+				</div>
+
+
+				<div class="ui-g-6 ui-md-2">
+					<div class="card overview">
+						<div class="overview-content clearfix">
+
+							<h:commandLink action="/paginas/materia/materiaLista.jsf"
+								rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
+								<h:panelGrid
+									style=" text-align:center;
+    font-size: 16px;
+    width:130px;
+    margin-bottom: 0px; ">
+									<h:graphicImage value="/img/materia2.png" title="Materias"
+										style="width:90px; height:90px;" />
+									<h:outputText value="Materias" />
+								</h:panelGrid>
+							</h:commandLink>
+
+						</div>
+					</div>
+				</div>
+
+
+				<div class="ui-g-6 ui-md-2">
+					<div class="card overview">
+						<div class="overview-content clearfix">
+
+
+							<h:commandLink action="/paginas/seguimiento/seguimientoLista.jsf">
+								<h:panelGrid
+									style=" text-align:center;
+    font-size: 16px;
+    width:130px;
+    margin-bottom: 0px; ">
+									<h:graphicImage value="/img/seguimiento.png"
+										title="Seguimiento" style="width:90px; height:90px;" />
+									<h:outputText value="Seguimiento" />
+								</h:panelGrid>
+							</h:commandLink>
+
+						</div>
+					</div>
+				</div>
+
+
+				<div class="ui-g-6 ui-md-2">
+					<div class="card overview">
+						<div class="overview-content clearfix">
+
+							<h:commandLink action="/paginas/reporte/reporte.jsf"
+								rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
+								<h:panelGrid
+									style=" text-align:center;
+    font-size: 16px;
+    width:130px;
+    margin-bottom: 0px; ">
+									<h:graphicImage value="/img/reporte.png" title="Reporte"
+										style="width:90px; height:90px;" />
+									<h:outputText value="Reporte" />
+								</h:panelGrid>
+							</h:commandLink>
+						</div>
+					</div>
+				</div>
 
 			</div>
-			<div align="center">
-				<h:graphicImage value="/img/marcaAgua.png" id="editImage"
-					style="width:230px; height:230px" />
-			</div>
+
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+
 		</h:form>
 
 	</ui:define>

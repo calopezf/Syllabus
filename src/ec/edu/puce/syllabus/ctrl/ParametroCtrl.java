@@ -58,7 +58,7 @@ public class ParametroCtrl extends BaseCtrl {
 		try {
 			Parametro parametroData = (Parametro) getExternalContext()
 					.getRequestMap().get("item");
-			servicioCrud.remove(parametroData.getNombre(), Parametro.class);
+			servicioCrud.remove(parametroData.getCodigo(), Parametro.class);
 			addInfoMessage(
 					getBundleMensajes("mensaje.informacion.elimina.exito", null),
 					"");

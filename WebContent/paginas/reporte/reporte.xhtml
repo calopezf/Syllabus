@@ -2,74 +2,73 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" template="/template/general.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 	<ui:define name="title">
 		<h:outputText value="#{etiquetas['seguimiento']}" />
 	</ui:define>
 	<ui:define name="content">
 		<h:form id="formSeguimientoLista">
 			<p:growl id="msg" autoUpdate="true" />
-			<h:panelGrid columns="2">
-				<h:panelGrid columns="2" id="gridFiltros" style="width: 700px">
-					<h:panelGrid columns="4" columnClasses="form-label,form-input,form-label,form-input">
-						<h:outputText value="#{etiquetas['semestre']}" />
-							<h:selectOneMenu id="semestre" 
+			<h:panelGrid columns="1">
+				<h:panelGrid columns="1" id="gridFiltros" style="width: 700px">
+					<h:panelGrid columns="2" columnClasses="form-label,form-input">
+						<p:outputLabel value="#{etiquetas['semestre']}" />
+						<p:selectOneMenu id="semestre"
 							value="#{reporteCtrl.seguimientoFiltro.semestre.codigo}"
 							style="width:250px">
 							<f:selectItem />
 							<f:selectItems value="#{seguimientoCtrl.semestreLista}"
-								var="item" itemLabel="#{item.nombre}"
-								itemValue="#{item.codigo}" />
-						</h:selectOneMenu>
-						<h:outputText value="#{etiquetas['estado']}" />
-						<h:selectOneMenu id="estado"
+								var="item" itemLabel="#{item.nombre}" itemValue="#{item.codigo}" />
+						</p:selectOneMenu>
+						<p:outputLabel value="#{etiquetas['estado']}" />
+						<p:selectOneMenu id="estado"
 							value="#{reporteCtrl.seguimientoFiltro.estado}">
 							<f:selectItem />
 							<f:selectItems value="#{selectItemCtrl.estadoEnum}" />
-						</h:selectOneMenu>
-						<h:outputLabel for="facultad" value="#{etiquetas['carrera']}" />
-						<h:selectOneMenu id="facultad"
+						</p:selectOneMenu>
+						<p:outputLabel for="facultad" value="#{etiquetas['carrera']}" />
+						<p:selectOneMenu id="facultad"
 							value="#{reporteCtrl.seguimientoFiltro.carrera}"
 							style="width:250px">
 							<f:selectItem />
 							<f:selectItems value="#{selectItemCtrl.enumCarrera}" />
 							<f:ajax event="change" render="pagMateria"
 								listener="#{reporteCtrl.cambiaCarrera}" />
-						</h:selectOneMenu>
-						<h:outputText value="#{etiquetas['materia']}" />
+						</p:selectOneMenu>
+						<p:outputLabel value="#{etiquetas['materia']}" />
 						<h:panelGroup id="pagMateria">
-							<h:selectOneMenu id="materia"
+							<p:selectOneMenu id="materia"
 								value="#{reporteCtrl.seguimientoFiltro.materia.codigo}"
 								style="width:250px">
 								<f:selectItem />
 								<f:selectItems value="#{reporteCtrl.materiaLista}" var="item"
 									itemLabel="#{item.codigo} - #{item.nombre}"
 									itemValue="#{item.codigo}" />
-							</h:selectOneMenu>
+							</p:selectOneMenu>
 						</h:panelGroup>
-						<h:outputText value="#{etiquetas['profesor']}" />
-						<h:selectOneMenu id="profesor"
+						<p:outputLabel value="#{etiquetas['profesor']}" />
+						<p:selectOneMenu id="profesor"
 							value="#{reporteCtrl.seguimientoFiltro.profesor.identificacion}"
 							style="width:250px">
 							<f:selectItem />
 							<f:selectItems value="#{reporteCtrl.profesorLista}" var="item"
 								itemLabel="#{item.identificacion} - #{item.nombre} #{item.apellido}"
 								itemValue="#{item.identificacion}" />
-						</h:selectOneMenu>
-						<h:outputText value="#{etiquetas['alumno']}" />
-						<h:selectOneMenu id="alumno"
+						</p:selectOneMenu>
+						<p:outputLabel value="#{etiquetas['alumno']}" />
+						<p:selectOneMenu id="alumno"
 							value="#{reporteCtrl.seguimientoFiltro.alumno.identificacion}"
 							style="width:250px">
 							<f:selectItem />
 							<f:selectItems value="#{reporteCtrl.alumnoLista}" var="item"
 								itemLabel="#{item.identificacion} - #{item.nombre} #{item.apellido}"
 								itemValue="#{item.identificacion}" />
-						</h:selectOneMenu>
+						</p:selectOneMenu>
 					</h:panelGrid>
-					<h:commandButton image="/img/view.png" style="align: right;"
-						action="#{reporteCtrl.buscar}" title="#{etiquetas.buscar}">
-						<p:ajax update="@form" process="@form" />
-					</h:commandButton>
+					<p:commandButton value="Buscar" action="#{reporteCtrl.buscar}"
+						title="#{etiquetas.buscar}">
+						<p:ajax update="@form" process="gridFiltros" />
+					</p:commandButton>
 				</h:panelGrid>
 			</h:panelGrid>
 
@@ -94,65 +93,76 @@
 					</h:commandLink>
 				</f:facet>
 
-				<p:column  style="width:100px;">
+				<p:column style="width:100px;">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['semestre']}" />
 					</f:facet>
 					<h:outputText value="#{item.semestre.nombre}" />
 				</p:column>
-				<p:column  style="width:200px;">
+				<p:column style="width:200px;">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['carrera']}" />
 					</f:facet>
 					<h:outputText value="#{etiquetas[item.carrera.etiqueta]}" />
 				</p:column>
-				<p:column  style="width:250px;">
+				<p:column style="width:250px;">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['materia']}" />
 					</f:facet>
 					<h:outputText
 						value="#{item.materia.codigo} - #{item.materia.nombre}" />
 				</p:column>
-				<p:column  style="width:100px;">
+				<p:column style="width:100px;">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['estado']}" />
 					</f:facet>
 					<h:outputText value="#{etiquetas[item.estado.etiqueta]}" />
 				</p:column>
-				<p:column  style="width:250px;">
+				<p:column style="width:250px;">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['profesor']}" />
 					</f:facet>
 					<h:outputText
 						value="#{item.profesor.identificacion} - #{item.profesor.nombre} #{item.profesor.apellido}" />
 				</p:column>
-				<p:column  style="width:250px;">
+				<p:column style="width:250px;">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['alumno']}" />
 					</f:facet>
 					<h:outputText
 						value="#{item.alumno.identificacion} - #{item.alumno.nombre} #{item.alumno.apellido}" />
 				</p:column>
-				<p:column  style="width:100px;">
+				<p:column style="width:100px;">
 					<f:facet name="header">
 						<h:outputText value="Porcentaje Profesor" />
 					</f:facet>
 					<h:outputText value="#{item.profesorPorcentaje}" />
 				</p:column>
-				<p:column  style="width:100px;">
+				<p:column style="width:100px;">
 					<f:facet name="header">
 						<h:outputText value="Porcentaje Alumno" />
 					</f:facet>
 					<h:outputText value="#{item.alumnoPorcentaje}" />
 				</p:column>
 				<p:column style="width:200px;" styleClass="columnaCentrada"
-						headerText="#{etiquetas['generarReporte']}">
-						<h:commandButton action="#{reporteCtrl.generarReporte}" value="#{etiquetas['generarReporte']}"
-							title="#{etiquetas['generarReporte']}">
-						</h:commandButton>
-					</p:column>
+					headerText="#{etiquetas['generarReporte']}">
+					<h:commandButton action="#{reporteCtrl.generarReporte}"
+						value="#{etiquetas['generarReporte']}"
+						title="#{etiquetas['generarReporte']}">
+					</h:commandButton>
+				</p:column>
 			</p:dataTable>
 
+			<br />
+			<br />
+			<br />
+			<div align="center">
+
+				<p:commandButton value="#{etiquetas.atras}"
+					action="/paginas/index?faces-redirect=true"
+					title="#{etiquetas['atras']}" immediate="true">
+				</p:commandButton>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>

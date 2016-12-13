@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>PrimeFaces Ultima</title>
+	<h:outputScript name="js/ripple.js" library="ultima-layout" />
+	<h:outputScript name="js/layout.js" library="ultima-layout" />
+</h:head>
+
+<h:body styleClass="login-body">
+	<div class="card login-panel ui-fluid">
+		<div class="ui-g-16">
+			<div class="ui-g-12">
+				<h2>SYLLABUS</h2>
+			</div>
+			<h:form id="login" onsubmit="action='j_security_check';"
+				prependId="false">
+				<label>Usuario</label>
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="j_username" />
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<label>Contraseña</label>
+					<h:panelGroup styleClass="md-inputfield">
+						<p:password id="j_password" />
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<p:commandButton id="submit" value="Entrar" icon="ui-icon-person" ajax="false" />
+					<br/>
+					<p:button outcome="/paginas/olvidoContrasenia.jsf"
+						value="Olvidó su Contraseña?" icon="ui-icon-help" styleClass="secondary" />
+				</div>
+			</h:form>
+		</div>
+	</div>
+	<h:outputStylesheet name="css/ripple.css" library="ultima-layout" />
+	<h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css"
+		library="ultima-layout" />
+</h:body>
+
+</html>

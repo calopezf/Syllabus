@@ -2,85 +2,81 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	template="/template/general.xhtml" xmlns:p="http://primefaces.org/ui">
-
-	<ui:define name="title">
-		<h:outputText value="#{etiquetas['materia']}" />
-	</ui:define>
+	template="/WEB-INF/template.xhtml" xmlns:p="http://primefaces.org/ui">
 
 	<br />
 
 	<ui:define name="content">
 		<h:form id="formUsuario">
+		<h1>#{etiquetas['materia']}</h1>
 			<p:growl id="growl" autoUpdate="true" />
 			<h:panelGrid columns="2" columnClasses="form-label,form-input">
-				<h:outputLabel value="#{etiquetas['codigoMateria']}*:" />
-				<h:inputText id="cedula" size="16"
+				<p:outputLabel value="#{etiquetas['codigoMateria']}*:" />
+				<p:inputText id="cedula" size="16"
 					value="#{materiaCtrl.materia.codigo}" required="true"
 					requiredMessage="#{etiquetas['codigoMateria']} #{mensajes['requerido.femenino']}"
 					maxlength="10" />
 
-				<h:outputLabel value="#{etiquetas['nombre']}*:" />
-				<h:inputText id="nombre" value="#{materiaCtrl.materia.nombre}"
+				<p:outputLabel value="#{etiquetas['nombre']}*:" />
+				<p:inputText id="nombre" value="#{materiaCtrl.materia.nombre}"
 					required="true"
 					requiredMessage="#{etiquetas['nombre']} #{mensajes['requerido.masculino']}"
 					maxlength="200" size="50" />
 
-				<h:outputLabel value="#{etiquetas['area']}*:" />
-				<h:inputText id="area" value="#{materiaCtrl.materia.area}"
+				<p:outputLabel value="#{etiquetas['area']}*:" />
+				<p:inputText id="area" value="#{materiaCtrl.materia.area}"
 					required="true"
 					requiredMessage="#{etiquetas['area']} #{mensajes['requerido.femenino']}"
 					maxlength="200" size="50" />
 
-				<h:outputLabel value="#{etiquetas['creditos']}*:" />
-				<h:inputText id="nivel" value="#{materiaCtrl.materia.creditos}"
+				<p:outputLabel value="#{etiquetas['creditos']}*:" />
+				<p:inputText id="nivel" value="#{materiaCtrl.materia.creditos}"
 					required="true"
 					requiredMessage="#{etiquetas['creditos']} #{mensajes['requerido.masculino']}"
 					maxlength="2" size="2" />
 					
-					<h:outputLabel value="#{etiquetas['nivel']}*:" />
-				<h:inputText id="creditos" value="#{materiaCtrl.materia.nivel}"
+					<p:outputLabel value="#{etiquetas['nivel']}*:" />
+				<p:inputText id="creditos" value="#{materiaCtrl.materia.nivel}"
 					required="true"
 					requiredMessage="#{etiquetas['nivel']} #{mensajes['requerido.masculino']}"
 					maxlength="100" size="16" />
 
-				<h:outputLabel for="facultad" value="#{etiquetas['carrera']}*:" />
-				<h:selectOneMenu id="facultad"
+				<p:outputLabel for="facultad" value="#{etiquetas['carrera']}*:" />
+				<p:selectOneMenu id="facultad"
 					value="#{materiaCtrl.materia.carrera}">
 					<f:selectItems value="#{selectItemCtrl.enumCarrera}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 				
-				<h:outputText value="#{etiquetas['planEstudio']}:*" />
-				<h:selectOneMenu id="semestre" required="true" requiredMessage="#{etiquetas['planEstudio']} #{mensajes['requerido.masculino']}"
+				<p:outputLabel value="#{etiquetas['planEstudio']}:*" />
+				<p:selectOneMenu id="semestre" required="true" requiredMessage="#{etiquetas['planEstudio']} #{mensajes['requerido.masculino']}"
 					value="#{materiaCtrl.materia.plan.codigo}"
 					style="width:250px">
 					<f:selectItems value="#{materiaCtrl.planLista}" var="item"
 						itemLabel="#{item.nombre}" itemValue="#{item.codigo}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 
-				<h:outputLabel for="estado" value="#{etiquetas['estado']}*:" />
-				<h:selectOneMenu id="estado" value="#{materiaCtrl.materia.estado}">
+				<p:outputLabel for="estado" value="#{etiquetas['estado']}*:" />
+				<p:selectOneMenu id="estado" value="#{materiaCtrl.materia.estado}">
 					<f:selectItems value="#{selectItemCtrl.estadoEnum}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 
 			</h:panelGrid>
+			<br />
+			<br />
 			<h:outputText value="#{etiquetas['campos.obligatorios']}" />
 
 			<br />
 			<br />
-
-			<div align="center">
-				<!--<h:commandLink action="supervisorLista?faces-redirect=true" immediate="true">
-                    <h:graphicImage value="/img/regresar.png" style="width: 42px;" title="#{etiquetas.volver}"/>
-                </h:commandLink>-->
-				<p:commandLink action="#{materiaCtrl.guardar}"
-					title="#{etiquetas.guardar}" update="growl">
-					<h:panelGrid style="text-align:center">
-						<h:graphicImage value="/img/guardar.png"
-							title="#{etiquetas['guardar']}" />
-						<h:outputText value="#{etiquetas['guardar']}" />
-					</h:panelGrid>
-				</p:commandLink>
+			
+				<div align="center">
+				<p:commandButton value="#{etiquetas.guardar}"
+					action="#{materiaCtrl.guardar}" title="#{etiquetas['guardar']}"
+					update="growl">
+				</p:commandButton>
+				<p:commandButton value="#{etiquetas.atras}" 
+					action="/paginas/materia/materiaLista?faces-redirect=true" title="#{etiquetas['atras']}"
+					immediate="true">
+				</p:commandButton>
 			</div>
 		</h:form>
 		<!--<p:ajaxStatus onstart="loadingDialog.show();" onsuccess="loadingDialog.hide();"/>  

@@ -1,0 +1,99 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pu="http://primefaces.org/ultima">
+
+	<h:form id="menuform">
+		<div class="layout-menu #{guestPreferences.menuClass}">
+			<div class="nano">
+				<div class="nano-content menu-scroll-content">
+					<ui:fragment
+						rendered="#{guestPreferences.profileMode == 'inline' and guestPreferences.menuLayout != 'menu-layout-static menu-layout-horizontal'}">
+						<div class="profile">
+							<div>
+								<h:graphicImage value="/img/#{sesionCtrl.usuarioLogueado.foto}"
+									rendered="#{sesionCtrl.usuarioLogueado.foto!=null}"
+									style="width:45px; height:45px;" />
+								<h:outputText value="#{usuarioCtrl.currentDateObj}">
+									<f:convertDateTime pattern="dd 'de' MMMM 'de' yyyy" />
+								</h:outputText>
+								<br/>
+									<h:outputText
+					value="IDENTIFICACION: #{sesionCtrl.usuarioLogueado.identificacion}" />
+							</div>
+							<a id="profile-options" href="#"> <span class="profile-name">USUARIO: #{sesionCtrl.usuarioLogueado.nombre}
+									#{sesionCtrl.usuarioLogueado.apellido}</span> <i
+								class="material-icons">&#xE313;</i>
+							</a>
+						
+						</div>
+
+						<ul id="profile-menu" class="ultima-menu">
+							<li role="menuitem"><a href="#{facesContext.externalContext.requestContextPath}/admin/index.jsp" class="ripplelink"> <i
+									class="material-icons">&#xE8AC;</i> <span>Salir</span>
+							</a></li>
+						</ul>
+					</ui:fragment>
+
+					<pu:menu widgetVar="me">
+						<p:menuitem id="um_dashboard" value="Inicio" icon="&#xE871;"
+							outcome="/paginas/index.jsf" />
+						<p:submenu id="themes" label="Temas" icon="&#xE40A;">
+							<p:menuitem id="theme1" value="Indigo - Pink" icon="&#xE3AE;"
+								actionListener="#{guestPreferences.setTheme('indigo')}"
+								ajax="false" />
+							<p:menuitem id="theme2" value="Brown - Green" icon="&#xE3AE;"
+								actionListener="#{guestPreferences.setTheme('brown')}"
+								ajax="false" />
+							<p:menuitem id="theme3" value="Blue - Amber" icon="&#xE3AE;"
+								actionListener="#{guestPreferences.setTheme('blue')}"
+								ajax="false" />
+							<p:menuitem id="theme4" value="Blue Grey - Green" icon="&#xE3AE;"
+								actionListener="#{guestPreferences.setTheme('blue-grey')}"
+								ajax="false" />
+							<p:menuitem id="theme5" value="Dark - Blue" icon="&#xE3AE;"
+								actionListener="#{guestPreferences.setTheme('dark-blue')}"
+								ajax="false" />
+							<p:menuitem id="theme6" value="Dark - Green" icon="&#xE3AE;"
+								actionListener="#{guestPreferences.setTheme('dark-green')}"
+								ajax="false" />
+							<p:menuitem id="theme7" value="Green - Yellow" icon="&#xE3AE;"
+								actionListener="#{guestPreferences.setTheme('green')}"
+								ajax="false" />
+							<p:menuitem id="theme8" value="Purple - Cyan" icon="&#xE3AE;"
+								actionListener="#{guestPreferences.setTheme('purple-cyan')}"
+								ajax="false" />
+							<p:menuitem id="theme9" value="Purple - Amber" icon="&#xE3AE;"
+								actionListener="#{guestPreferences.setTheme('purple-amber')}"
+								ajax="false" />
+							<p:menuitem id="theme10" value="Teal - Lime" icon="&#xE3AE;"
+								actionListener="#{guestPreferences.setTheme('teal')}"
+								ajax="false" />
+							<p:menuitem id="theme11" value="Cyan - Amber" icon="&#xE3AE;"
+								actionListener="#{guestPreferences.setTheme('cyan')}"
+								ajax="false" />
+							<p:menuitem id="theme12" value="Grey - Deep Orange"
+								icon="&#xE3AE;"
+								actionListener="#{guestPreferences.setTheme('grey')}"
+								ajax="false" />
+						</p:submenu>
+
+						<p:menuitem id="um_utils" value="Catálogo" icon="&#xE869;"
+							outcome="/paginas/parametros/parametroLista.jsf" />
+						<p:menuitem id="um_usu" value="Usuarios" icon="&#xE7FD;"
+							outcome="/paginas/usuarios/usuarioLista.jsf" />
+						<p:menuitem id="um_mat" value="Materia" icon="&#xE880;"
+							outcome="/paginas/materia/materiaLista.jsf" />
+						<p:menuitem id="um_seg" value="Seguimiento" icon="&#xE5D2;"
+							outcome="/paginas/seguimiento/seguimientoLista.jsf" />
+						<p:menuitem id="um_rep" value="Reporte" icon="&#xE7FD;"
+							outcome="/paginas/reporte/reporte.jsf" />
+
+					</pu:menu>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</ui:composition>

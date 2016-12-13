@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="seguimiento" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="f229bb32-96a8-4b6c-bde0-b683656c26f9">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="28"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -45,10 +45,15 @@
 		<defaultValueExpression><![CDATA["C:\\Users\\calop\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select (select semestre from semestre  where semestre=syllabus.semestre) semestre, carrera carrera,(select nombre from materia  where codigo=syllabus.codigo_materia)materia,
+		<![CDATA[select (select nombre from parametro  where codigo=syllabus.semestre) semestre, carrera carrera,(select nombre from materia  where codigo=syllabus.codigo_materia)materia,
 (select area from materia  where codigo=syllabus.codigo_materia)area,
 (select creditos from materia  where codigo=syllabus.codigo_materia)creditos,
-(select nombre||' '||apellido from usuario  where identificacion=syllabus.identificacion_profesor)profesor
+(select nombre||' '||apellido from usuario  where identificacion=syllabus.identificacion_profesor)profesor,
+cometario_coordinador1,cometario_coordinador2,cometario_coordinador3,
+cometario_director,check_coordinador1,check_coordinador2,
+check_coordinador3,check_director,
+(select nombre||' '||apellido from usuario  where identificacion=syllabus.identificacion_coordinador)coordinador,
+(select nombre||' '||apellido from usuario  where identificacion=syllabus.identificacion_director)director
  from seguimiento_syllabus syllabus where id=$P{id}]]>
 	</queryString>
 	<field name="semestre" class="java.lang.String"/>
@@ -57,10 +62,20 @@
 	<field name="area" class="java.lang.String"/>
 	<field name="creditos" class="java.lang.Integer"/>
 	<field name="profesor" class="java.lang.String"/>
+	<field name="cometario_coordinador1" class="java.lang.String"/>
+	<field name="cometario_coordinador2" class="java.lang.String"/>
+	<field name="cometario_coordinador3" class="java.lang.String"/>
+	<field name="cometario_director" class="java.lang.String"/>
+	<field name="check_coordinador1" class="java.lang.Boolean"/>
+	<field name="check_coordinador2" class="java.lang.Boolean"/>
+	<field name="check_coordinador3" class="java.lang.Boolean"/>
+	<field name="check_director" class="java.lang.Boolean"/>
+	<field name="coordinador" class="java.lang.String"/>
+	<field name="director" class="java.lang.String"/>
 	<group name="Group1">
 		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
 		<groupHeader>
-			<band height="106">
+			<band height="105">
 				<subreport>
 					<reportElement x="0" y="4" width="802" height="100" uuid="85a1ef1a-40bc-4b4a-8800-36e11b17ff9e"/>
 					<subreportParameter name="id">
@@ -188,6 +203,61 @@
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band splitType="Stretch"/>
+		<band height="440" splitType="Stretch">
+			<staticText>
+				<reportElement x="48" y="57" width="187" height="20" uuid="01b1b420-cf72-4151-8676-0738c4b741b5"/>
+				<text><![CDATA[Revision Primer Bimestre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="140" width="187" height="20" uuid="0f73ca25-7d9f-4d82-a3c4-402077dbd799"/>
+				<text><![CDATA[Revision Segundo Bimestre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="228" width="187" height="20" uuid="61b0b8eb-3514-4253-9b47-30060c7e20b3"/>
+				<text><![CDATA[Revision Tercer Bimestre:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="249" y="57" width="524" height="69" uuid="62905850-2ceb-4bcc-96c9-d9cd80956a87"/>
+				<textFieldExpression><![CDATA[$F{cometario_coordinador1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="249" y="140" width="524" height="64" uuid="fbfad5fe-511d-4b78-8940-9a16ddaf7a86"/>
+				<textFieldExpression><![CDATA[$F{cometario_coordinador2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="250" y="230" width="523" height="64" uuid="9882e15a-61e0-49b0-959e-43302a335db1"/>
+				<textFieldExpression><![CDATA[$F{cometario_coordinador3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="15" width="266" height="20" uuid="129dd64c-d195-40b7-bfd8-f583aeccc9ff"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REVISIÓN COORDINADOR:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="250" y="15" width="426" height="20" uuid="2f15b89d-cf06-48ca-a438-8fd3f5f16a9a"/>
+				<textFieldExpression><![CDATA[$F{coordinador}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="323" width="266" height="20" uuid="e7ff343e-a991-4d8b-9ce4-7fec510c3a32"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REVISIÓN DIRECTOR:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="250" y="323" width="440" height="20" uuid="41dac599-e94f-49cc-8046-d244fd8fce19"/>
+				<textFieldExpression><![CDATA[$F{director}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="48" y="371" width="187" height="20" uuid="bfb8c520-8157-4e51-b319-f6317d20f5af"/>
+				<text><![CDATA[Revision Final:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="256" y="367" width="517" height="62" uuid="6d78a294-8b66-4c45-9a38-f7d2a00ae9ea"/>
+				<textFieldExpression><![CDATA[$F{cometario_director}]]></textFieldExpression>
+			</textField>
+		</band>
 	</summary>
 </jasperReport>

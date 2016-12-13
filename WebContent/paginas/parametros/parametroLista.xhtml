@@ -2,37 +2,31 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" template="/template/general.xhtml">
-	<ui:define name="title">
-		<h:outputText value="#{etiquetas['catalogoLista']}" />
-	</ui:define>
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 	<ui:define name="content">
 		<h:form id="formParametroLista">
+			<h1>#{etiquetas['catalogoLista']}</h1>
 			<p:growl id="msg" autoUpdate="true" />
-			<h:panelGrid columns="2">
-				<h:panelGrid columns="2" id="gridFiltros" style="width: 700px">
-					<h:panelGrid columns="2" columnClasses="form-label,form-input">
-						<h:outputText value="#{etiquetas['codigo']}" />
-						<h:inputText value="#{parametroCtrl.parametroFiltro.codigo}"
-							style="width:120px" />
-						<h:outputText value="#{etiquetas['nombre']}" />
-						<h:inputText value="#{parametroCtrl.parametroFiltro.nombre}"
-							style="width:120px" />
-					</h:panelGrid>
-					<h:commandButton image="/img/view.png" style="align: right;"
-						action="#{parametroCtrl.buscar}" title="#{etiquetas.buscar}">
-						<p:ajax update="itemsPanel" process="gridFiltros" />
-					</h:commandButton>
+			<h:panelGrid columns="1">
+				<h:panelGrid id="gridFiltros" columns="2"
+					columnClasses="form-label,form-input">
+					<p:outputLabel value="#{etiquetas['codigo']}" />
+					<p:inputText value="#{parametroCtrl.parametroFiltro.codigo}"
+						style="width:120px" />
+					<p:outputLabel value="#{etiquetas['nombre']}" />
+					<p:inputText value="#{parametroCtrl.parametroFiltro.nombre}"
+						style="width:120px" />
 				</h:panelGrid>
-				<h:commandLink
-					action="/paginas/parametros/parametro?faces-redirect=true"
-					title="#{etiquetas['crear.nuevo']}"
-					rendered="#{sesionCtrl.administrador}">
-					<h:panelGrid style="text-align:center">
-						<h:graphicImage value="/img/nueva-ficha.png" id="crearImage" />
-						<h:outputText value="#{etiquetas['crear.nuevo']}" />
-					</h:panelGrid>
-				</h:commandLink>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Nuevo Registro"
+						action="/paginas/parametros/parametro?faces-redirect=true"
+						title="#{etiquetas['crear.nuevo']}" immediate="true">
+					</p:commandButton>
+					<p:commandButton value="Buscar" action="#{parametroCtrl.buscar}"
+						title="#{etiquetas.buscar}">
+						<p:ajax update="itemsPanel" process="gridFiltros" />
+					</p:commandButton>
+				</h:panelGrid>
 			</h:panelGrid>
 
 			<h:panelGroup id="itemsPanel">
