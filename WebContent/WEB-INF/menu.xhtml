@@ -13,26 +13,27 @@
 						rendered="#{guestPreferences.profileMode == 'inline' and guestPreferences.menuLayout != 'menu-layout-static menu-layout-horizontal'}">
 						<div class="profile">
 							<div>
-								<h:graphicImage value="/img/#{sesionCtrl.usuarioLogueado.foto}"
-									rendered="#{sesionCtrl.usuarioLogueado.foto!=null}"
-									style="width:45px; height:45px;" />
 								<h:outputText value="#{usuarioCtrl.currentDateObj}">
 									<f:convertDateTime pattern="dd 'de' MMMM 'de' yyyy" />
 								</h:outputText>
-								<br/>
-									<h:outputText
-					value="IDENTIFICACION: #{sesionCtrl.usuarioLogueado.identificacion}" />
+								<br />
+								
 							</div>
-							<a id="profile-options" href="#"> <span class="profile-name">USUARIO: #{sesionCtrl.usuarioLogueado.nombre}
+							<a id="profile-options" href="#"> <span class="profile-name">
+									#{sesionCtrl.usuarioLogueado.nombre}
 									#{sesionCtrl.usuarioLogueado.apellido}</span> <i
 								class="material-icons">&#xE313;</i>
 							</a>
-						
+							<h:graphicImage value="/img/#{sesionCtrl.usuarioLogueado.foto}"
+										rendered="#{sesionCtrl.usuarioLogueado.foto!=null}"
+										style="width:45px; height:45px;" />
+
 						</div>
 
 						<ul id="profile-menu" class="ultima-menu">
-							<li role="menuitem"><a href="#{facesContext.externalContext.requestContextPath}/admin/index.jsp" class="ripplelink"> <i
-									class="material-icons">&#xE8AC;</i> <span>Salir</span>
+							<li role="menuitem"><a
+								href="#{facesContext.externalContext.requestContextPath}/admin/index.jsp"
+								class="ripplelink"> <i class="material-icons">&#xE8AC;</i> <span>Salir</span>
 							</a></li>
 						</ul>
 					</ui:fragment>

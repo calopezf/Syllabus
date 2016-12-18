@@ -190,7 +190,7 @@ public class UsuarioCtrl extends BaseCtrl {
 				usuario.setRoles(rolesXUsuario);
 				Usuario usuarioEnBase = usuarioServicio
 						.obtieneUsuarioXCedula(usuario.getIdentificacion());
-				if (usuarioEnBase == null) {
+				if (usuarioEnBase.getIdentificacion() == null) {
 					this.usuario.setPassword(this.usuario.getIdentificacion());
 					servicioCrud.insert(this.usuario);
 				} else {

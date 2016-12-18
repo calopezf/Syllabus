@@ -8,7 +8,7 @@
 
 	<ui:define name="content">
 		<h:form id="formUsuario">
-		<h1>#{etiquetas['usuario']}</h1>
+			<h1>#{etiquetas['usuario']}</h1>
 			<p:growl id="growl" autoUpdate="true" />
 			<h:panelGrid columns="2">
 				<h:panelGrid columns="2" columnClasses="form-label,form-input">
@@ -16,8 +16,8 @@
 					<p:inputText id="cedula" size="16"
 						value="#{usuarioCtrl.usuario.identificacion}" required="true"
 						requiredMessage="#{etiquetas['numero.cedula']} #{mensajes['requerido.masculino']}"
-						maxlength="10" >
-						</p:inputText>
+						maxlength="10">
+					</p:inputText>
 					<p:outputLabel value="#{etiquetas['nombres']}*:" />
 					<p:inputText id="nombres" value="#{usuarioCtrl.usuario.nombre}"
 						required="true"
@@ -41,11 +41,12 @@
 					</p:inputText>
 
 					<p:outputLabel value="#{etiquetas['rol']}*:" />
-					  <p:pickList id="pickList" value="#{usuarioCtrl.componenteRoles}" var="roles" itemLabel="#{roles}" itemValue="#{roles}" >
-					  <f:ajax event="transfer" render="semestre"
+					<p:pickList id="pickList" value="#{usuarioCtrl.componenteRoles}"
+						var="roles" itemLabel="#{roles}" itemValue="#{roles}">
+						<f:ajax event="transfer" render="semestre"
 							listener="#{usuarioCtrl.cambiaRoles}" />
-					  </p:pickList>
-					  
+					</p:pickList>
+
 					<!--  >p:selectCheckboxMenu value="#{usuarioCtrl.rolesSeleccionados}"
 						label="Roles" required="true"
 						requiredMessage="#{etiquetas['rol']} #{mensajes['requerido.masculino']}">
@@ -68,21 +69,22 @@
 						<f:selectItems value="#{selectItemCtrl.estadoEnum}" />
 					</p:selectOneMenu>
 
+					<p:outputLabel for="foto" value="#{etiquetas['foto']}:" />
 
+					<h:panelGroup id="panFoto">
+						<h:panelGrid columns="2">
+							<p:graphicImage id="foto" value="#{usuarioCtrl.imagePath}"
+								rendered="#{usuarioCtrl.imagePath != null}"
+								style="width:120px; height:120px;" />
+						</h:panelGrid>
+						<p:fileUpload fileUploadListener="#{usuarioCtrl.upload}"
+							allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="10000000"
+							update="growl panFoto"></p:fileUpload>
+					</h:panelGroup>
 
 
 				</h:panelGrid>
-				<h:panelGroup id="panFoto">
-					<h:panelGrid columns="2" columnClasses="form-label,form-input">
-						<p:outputLabel for="estado" value="#{etiquetas['foto']}:" />
-						<p:graphicImage id="foto" value="#{usuarioCtrl.imagePath}"
-							rendered="#{usuarioCtrl.imagePath != null}"
-							style="width:120px; height:120px;" />
-					</h:panelGrid>
-					<p:fileUpload fileUploadListener="#{usuarioCtrl.upload}"
-						allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="10000000"
-						update="growl panFoto"></p:fileUpload>
-				</h:panelGroup>
+
 
 			</h:panelGrid>
 			<p:outputLabel value="#{etiquetas['campos.obligatorios']}" />
@@ -91,15 +93,15 @@
 
 			<br />
 			<br />
-			
+
 			<div align="center">
 				<p:commandButton value="#{etiquetas.guardar}"
 					action="#{usuarioCtrl.guardar}" title="#{etiquetas['guardar']}"
 					update="growl">
 				</p:commandButton>
-				<p:commandButton value="#{etiquetas.atras}" 
-					action="/paginas/usuarios/usuarioLista?faces-redirect=true" title="#{etiquetas['atras']}"
-					immediate="true">
+				<p:commandButton value="#{etiquetas.atras}"
+					action="/paginas/usuarios/usuarioLista?faces-redirect=true"
+					title="#{etiquetas['atras']}" immediate="true">
 				</p:commandButton>
 			</div>
 

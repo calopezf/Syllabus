@@ -45,16 +45,16 @@
 						<h:outputText value="#{item.nombre}" />
 					</p:column>
 					<p:column headerText="#{etiquetas['carrera']}" style="width:150px;">
-						<h:outputText value="#{etiquetas[item.carrera.etiqueta]}" />
+						<h:outputText value="#{item.carrera.nombre}" />
 					</p:column>
 					<p:column headerText="#{etiquetas['area']}" style="width:150px;">
-						<h:outputText value="#{item.area}" />
+						<h:outputText value="#{item.area.nombre}" />
 					</p:column>
 					<p:column headerText="#{etiquetas['creditos']}" style="width:50px;">
 						<h:outputText value="#{item.creditos}" />
 					</p:column>
 					<p:column headerText="#{etiquetas['nivel']}" style="width:100px;">
-						<h:outputText value="#{item.nivel}" />
+						<h:outputText value="#{item.nivel.nombre}" />
 					</p:column>
 					<p:column headerText="#{etiquetas['estado']}" style="width:100px;">
 						<h:outputText value="#{etiquetas[item.estado.etiqueta]}" />

@@ -27,21 +27,23 @@ public class Materia implements Serializable {
 	private String codigo;// o username
 	@Column(name = "nombre", nullable = false, length = 200)
 	private String nombre;
-	@Column(name = "area", nullable = false, length = 200)
-	private String area;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "area", referencedColumnName = "codigo")
+	private Parametro area;
 	@Column(name = "creditos", nullable = false)
 	private Integer creditos;
-	@Column(name = "nivel", length = 20, nullable = true)
-	private String nivel;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "nivel", referencedColumnName = "codigo")
+	private Parametro nivel;
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "plan", referencedColumnName = "codigo")
 	private Parametro plan;
 	@Column(name = "estado")
 	@Enumerated(EnumType.STRING)
 	private EnumEstado estado;
-	@Column(name = "carrera")
-	@Enumerated(EnumType.STRING)
-	private EnumCarrera carrera;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "carrera", referencedColumnName = "codigo")
+	private Parametro carrera;
 
 	public EnumEstado getEstado() {
 		return estado;
@@ -67,22 +69,6 @@ public class Materia implements Serializable {
 		this.codigo = codigo;
 	}
 
-	public EnumCarrera getCarrera() {
-		return carrera;
-	}
-
-	public void setCarrera(EnumCarrera carrera) {
-		this.carrera = carrera;
-	}
-
-	public String getArea() {
-		return area;
-	}
-
-	public void setArea(String area) {
-		this.area = area;
-	}
-
 	public Integer getCreditos() {
 		return creditos;
 	}
@@ -91,11 +77,11 @@ public class Materia implements Serializable {
 		this.creditos = creditos;
 	}
 
-	public String getNivel() {
+	public Parametro getNivel() {
 		return nivel;
 	}
 
-	public void setNivel(String nivel) {
+	public void setNivel(Parametro nivel) {
 		this.nivel = nivel;
 	}
 
@@ -106,5 +92,23 @@ public class Materia implements Serializable {
 	public void setPlan(Parametro plan) {
 		this.plan = plan;
 	}
+
+	public Parametro getArea() {
+		return area;
+	}
+
+	public void setArea(Parametro area) {
+		this.area = area;
+	}
+
+	public Parametro getCarrera() {
+		return carrera;
+	}
+
+	public void setCarrera(Parametro carrera) {
+		this.carrera = carrera;
+	}
+	
+	
 
 }

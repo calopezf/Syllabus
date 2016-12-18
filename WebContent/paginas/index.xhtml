@@ -10,74 +10,78 @@
 	<ui:define name="content">
 
 		<h:form>
-			<div align="center">
-				<div class="ui-g-6 ui-md-2">
-					<div class="card overview">
-						<div class="overview-content clearfix">
-							<h:commandLink action="/paginas/parametros/parametroLista.jsf"
-								rendered="#{sesionCtrl.administrador}">
-								<h:panelGrid
-									style=" text-align:center;
+				<h:panelGroup rendered="#{usuarioCtrl.administrador}">
+					<div class="ui-g-6 ui-md-2">
+						<div class="card overview">
+							<div class="overview-content clearfix">
+								<h:commandLink action="/paginas/parametros/parametroLista.jsf"
+									rendered="#{sesionCtrl.administrador}">
+									<h:panelGrid
+										style=" text-align:center;
     font-size: 16px;
     width:130px;
     margin-bottom: 0px; ">
-									<h:graphicImage value="/img/parametros.png"
-										style="width:90px; height:90px;" />
-									<h:outputText value="#{etiquetas['catalogo']}" />
-								</h:panelGrid>
-							</h:commandLink>
+										<h:graphicImage value="/img/parametros.png"
+											style="width:90px; height:90px;" />
+										<h:outputText value="Catálogos" />
+									</h:panelGrid>
+								</h:commandLink>
 
 
 
+							</div>
 						</div>
 					</div>
-				</div>
+				</h:panelGroup>
 
-				<div class="ui-g-6 ui-md-2">
-					<div class="card overview">
-						<div class="overview-content clearfix">
+				<h:panelGroup rendered="#{usuarioCtrl.administrador}">
+					<div class="ui-g-6 ui-md-2">
+						<div class="card overview">
+							<div class="overview-content clearfix">
 
 
-							<h:commandLink action="/paginas/usuarios/usuarioLista.jsf"
-								rendered="#{usuarioCtrl.administrador}">
-								<h:panelGrid
-									style=" text-align:center;
+								<h:commandLink action="/paginas/usuarios/usuarioLista.jsf"
+									rendered="#{usuarioCtrl.administrador}">
+									<h:panelGrid
+										style=" text-align:center;
     font-size: 16px;
     width:130px;
     margin-bottom: 0px; ">
-									<h:graphicImage value="/img/usuarios.png" title="Usuarios"
-										style="width:90px; height:90px;" />
-									<h:outputText value="Usuarios" />
-								</h:panelGrid>
-							</h:commandLink>
+										<h:graphicImage value="/img/usuarios.png" title="Usuarios"
+											style="width:90px; height:90px;" />
+										<h:outputText value="Usuarios" />
+									</h:panelGrid>
+								</h:commandLink>
 
 
+							</div>
 						</div>
 					</div>
-				</div>
+				</h:panelGroup>
 
+				<h:panelGroup
+					rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
+					<div class="ui-g-6 ui-md-2">
+						<div class="card overview">
+							<div class="overview-content clearfix">
 
-				<div class="ui-g-6 ui-md-2">
-					<div class="card overview">
-						<div class="overview-content clearfix">
-
-							<h:commandLink action="/paginas/materia/materiaLista.jsf"
-								rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
-								<h:panelGrid
-									style=" text-align:center;
+								<h:commandLink action="/paginas/materia/materiaLista.jsf"
+									rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
+									<h:panelGrid
+										style=" text-align:center;
     font-size: 16px;
     width:130px;
     margin-bottom: 0px; ">
-									<h:graphicImage value="/img/materia2.png" title="Materias"
-										style="width:90px; height:90px;" />
-									<h:outputText value="Materias" />
-								</h:panelGrid>
-							</h:commandLink>
+										<h:graphicImage value="/img/materia2.png" title="Materias"
+											style="width:90px; height:90px;" />
+										<h:outputText value="Materias" />
+									</h:panelGrid>
+								</h:commandLink>
 
+							</div>
 						</div>
 					</div>
-				</div>
-
+				</h:panelGroup>
 
 				<div class="ui-g-6 ui-md-2">
 					<div class="card overview">
@@ -101,27 +105,29 @@
 				</div>
 
 
-				<div class="ui-g-6 ui-md-2">
-					<div class="card overview">
-						<div class="overview-content clearfix">
+				<h:panelGroup
+					rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
+					<div class="ui-g-6 ui-md-2">
+						<div class="card overview">
+							<div class="overview-content clearfix">
 
-							<h:commandLink action="/paginas/reporte/reporte.jsf"
-								rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
-								<h:panelGrid
-									style=" text-align:center;
+								<h:commandLink action="/paginas/reporte/reporte.jsf"
+									rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
+									<h:panelGrid
+										style=" text-align:center;
     font-size: 16px;
     width:130px;
     margin-bottom: 0px; ">
-									<h:graphicImage value="/img/reporte.png" title="Reporte"
-										style="width:90px; height:90px;" />
-									<h:outputText value="Reporte" />
-								</h:panelGrid>
-							</h:commandLink>
+										<h:graphicImage value="/img/reporte.png" title="Reporte"
+											style="width:90px; height:90px;" />
+										<h:outputText value="Reporte" />
+									</h:panelGrid>
+								</h:commandLink>
+							</div>
 						</div>
 					</div>
-				</div>
+				</h:panelGroup>
 
-			</div>
 
 			<br />
 			<br />

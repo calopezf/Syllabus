@@ -13,7 +13,7 @@
 			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 	</f:facet>
-	<title>PrimeFaces Ultima</title>
+	<title>Syllabus</title>
 	<h:outputScript name="js/ripple.js" library="ultima-layout" />
 	<h:outputScript name="js/layout.js" library="ultima-layout" />
 </h:head>
@@ -22,7 +22,7 @@
 	<div class="card login-panel ui-fluid">
 		<div class="ui-g-16">
 			<div class="ui-g-12">
-					<h2>SYLLABUS</h2>
+				<h2>SYLLABUS</h2>
 			</div>
 			<h:form id="login" onsubmit="action='j_security_check';"
 				prependId="false">
@@ -40,10 +40,13 @@
 				</div>
 				<h1>Usuario o Contraseña Incorrecta</h1>
 				<div class="ui-g-12">
-					<p:commandButton id="submit" value="Entrar" icon="ui-icon-person" ajax="false" />
-					<br/>
-					<p:button outcome="/paginas/olvidoContrasenia.jsf"
-						value="Olvidó su Contraseña?" icon="ui-icon-help" styleClass="secondary" />
+					<h:panelGrid columns="1" class="ui-g-12">
+						<p:commandButton id="submit" value="Entrar" icon="ui-icon-person"
+							ajax="false" />
+						<p:button outcome="/paginas/olvidoContrasenia.jsf"
+							value="Olvidó su Contraseña?" icon="ui-icon-help"
+							styleClass="secondary" />
+					</h:panelGrid>
 				</div>
 			</h:form>
 		</div>

@@ -11,24 +11,28 @@
 			<p:growl id="growl" autoUpdate="true" />
 			<h:panelGrid columns="2" columnClasses="form-label,form-input">
 				<p:outputLabel value="#{etiquetas['semestre']}:*" />
-				<p:selectOneMenu id="semestre" required="true"
+				<p:selectOneMenu id="semestre" required="true" requiredMessage="#{etiquetas['semestre']} #{mensajes['requerido.masculino']}"
 					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.semestre.codigo}"
 					style="width:250px">
+					<f:selectItem />
 					<f:selectItems value="#{seguimientoCtrl.semestreLista}" var="item"
 						itemLabel="#{item.nombre}" itemValue="#{item.codigo}" />
 				</p:selectOneMenu>
-				<p:outputLabel for="facultad" value="#{etiquetas['carrera']}*:" />
-				<p:selectOneMenu id="facultad" required="true"
+				<p:outputLabel for="facultad" value="#{etiquetas['carrera']}:" />
+				<p:selectOneMenu id="facultad" required="true" requiredMessage="#{etiquetas['carrera']} #{mensajes['requerido.masculino']}"
 					disabled="#{not usuarioCtrl.administrador}"
-					value="#{seguimientoCtrl.seguimiento.carrera}" style="width:250px">
-					<f:selectItems value="#{selectItemCtrl.enumCarrera}" />
+					value="#{seguimientoCtrl.seguimiento.carrera.codigo}"
+					style="width:250px">
+					<f:selectItem />
+					<f:selectItems value="#{seguimientoCtrl.carreraLista}" var="item"
+						itemLabel="#{item.nombre}" itemValue="#{item.codigo}" />
 					<f:ajax event="change" render="pagMateria"
 						listener="#{seguimientoCtrl.cambiaCarrera}" />
 				</p:selectOneMenu>
 				<p:outputLabel value="#{etiquetas['materia']}:*" />
 				<h:panelGroup id="pagMateria">
-					<p:selectOneMenu id="materia" required="true"
+					<p:selectOneMenu id="materia" required="true" requiredMessage="#{etiquetas['materia']} #{mensajes['requerido.femenino']}"
 						disabled="#{not usuarioCtrl.administrador}"
 						value="#{seguimientoCtrl.seguimiento.materia.codigo}"
 						style="width:250px">
@@ -38,43 +42,46 @@
 					</p:selectOneMenu>
 				</h:panelGroup>
 				<p:outputLabel value="#{etiquetas['profesor']}:*" />
-				<p:selectOneMenu id="profesor" required="true"
+				<p:selectOneMenu id="profesor" required="true" requiredMessage="#{etiquetas['profesor']} #{mensajes['requerido.masculino']}"
 					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.profesor.identificacion}"
 					style="width:250px">
 					<f:selectItems value="#{seguimientoCtrl.profesorLista}" var="item"
-						itemLabel="#{item.identificacion} - #{item.nombre} #{item.apellido}"
+						itemLabel="#{item.apellido} #{item.nombre}"
 						itemValue="#{item.identificacion}" />
 				</p:selectOneMenu>
 				<p:outputLabel value="#{etiquetas['alumno']}:*"
 					rendered="#{not usuarioCtrl.profesor}" />
-				<p:selectOneMenu id="alumno" required="true"
+				<p:selectOneMenu id="alumno" required="true" requiredMessage="#{etiquetas['alumno']} #{mensajes['requerido.masculino']}"
 					rendered="#{not usuarioCtrl.profesor}"
 					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.alumno.identificacion}"
 					style="width:250px">
 					<f:selectItems value="#{seguimientoCtrl.alumnoLista}" var="item"
-						itemLabel="#{item.identificacion} - #{item.nombre} #{item.apellido}"
+						itemLabel="#{item.apellido} #{item.nombre}"
 						itemValue="#{item.identificacion}" />
 				</p:selectOneMenu>
-				<p:outputLabel value="#{etiquetas['coordinador']}:*" rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno}"  />
-				<p:selectOneMenu id="coordinador" required="true" rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno}" 
+				<p:outputLabel value="#{etiquetas['coordinador']}:*"
+					rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno}" />
+				<p:selectOneMenu id="coordinador" required="true" requiredMessage="#{etiquetas['coordinador']} #{mensajes['requerido.masculino']}"
+					rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno}"
 					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.coordinador.identificacion}"
 					style="width:250px">
-					<f:selectItems value="#{seguimientoCtrl.coordinadorLista}" var="item"
-						itemLabel="#{item.identificacion} - #{item.nombre} #{item.apellido}"
+					<f:selectItems value="#{seguimientoCtrl.coordinadorLista}"
+						var="item"
+						itemLabel="#{item.apellido} #{item.nombre}"
 						itemValue="#{item.identificacion}" />
 				</p:selectOneMenu>
 				<p:outputLabel value="#{etiquetas['director']}:*"
 					rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno and not usuarioCtrl.coordinador}" />
-				<p:selectOneMenu id="director" required="true"
+				<p:selectOneMenu id="director" required="true" requiredMessage="#{etiquetas['director']} #{mensajes['requerido.masculino']}"
 					rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno and not usuarioCtrl.coordinador}"
 					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.director.identificacion}"
 					style="width:250px">
 					<f:selectItems value="#{seguimientoCtrl.directorLista}" var="item"
-						itemLabel="#{item.identificacion} - #{item.nombre} #{item.apellido}"
+						itemLabel="#{item.apellido} #{item.nombre}"
 						itemValue="#{item.identificacion}" />
 				</p:selectOneMenu>
 				<p:outputLabel value="#{etiquetas['fecha']}:*" />
@@ -83,7 +90,7 @@
 					disabled="true" style="width:250px" />
 				<p:outputLabel value="#{etiquetas['estado']}:*"
 					rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno}" />
-				<p:selectOneMenu id="estado" required="true"
+				<p:selectOneMenu id="estado" required="true" 
 					rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno}"
 					disabled="#{not usuarioCtrl.administrador}"
 					value="#{seguimientoCtrl.seguimiento.estado}" style="width:250px">
@@ -102,8 +109,9 @@
 			<br />
 			<br />
 
-			<p:dataTable id="itemsTable" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-					paginator="true" rows="10"
+			<p:dataTable id="itemsTable"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+				paginator="true" rows="10"
 				rendered="#{seguimientoCtrl.seguimientoListaDetalle.size()>0}"
 				emptyMessage="#{etiquetas['no.existen.registros']}"
 				value="#{seguimientoCtrl.seguimientoListaDetalle}" var="item"
@@ -172,21 +180,21 @@
 					<p:calendar value="#{item.fechaProfesor}"
 						disabled="#{not usuarioCtrl.profesor}" />
 				</p:column>
-					<p:column style="width:180px;"
+				<p:column style="width:180px;"
 					rendered="#{usuarioCtrl.profesor or usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['horaEntrada']}" />
 					</f:facet>
-					<p:calendar value="#{item.horaEntrada}"  pattern="HH:mm" timeOnly="true"
-						disabled="#{not usuarioCtrl.profesor}" />
+					<p:calendar value="#{item.horaEntrada}" pattern="HH:mm"
+						timeOnly="true" disabled="#{not usuarioCtrl.profesor}" />
 				</p:column>
-					<p:column style="width:180px;"
+				<p:column style="width:180px;"
 					rendered="#{usuarioCtrl.profesor or usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['horaSalida']}" />
 					</f:facet>
-					<p:calendar value="#{item.horaSalida}"  pattern="HH:mm" timeOnly="true"
-						disabled="#{not usuarioCtrl.profesor}" />
+					<p:calendar value="#{item.horaSalida}" pattern="HH:mm"
+						timeOnly="true" disabled="#{not usuarioCtrl.profesor}" />
 				</p:column>
 				<p:column style="width:180px;"
 					rendered="#{usuarioCtrl.profesor or usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
@@ -234,15 +242,15 @@
 			</p:dataTable>
 
 			<br />
-			
-				<div align="center">
+
+			<div align="center">
 				<p:commandButton value="#{etiquetas.guardar}"
 					action="#{seguimientoCtrl.guardar}" title="#{etiquetas['guardar']}"
 					update="growl">
 				</p:commandButton>
-				<p:commandButton value="#{etiquetas.atras}" 
-					action="/paginas/seguimiento/seguimientoLista?faces-redirect=true" title="#{etiquetas['atras']}"
-					immediate="true">
+				<p:commandButton value="#{etiquetas.atras}"
+					action="/paginas/seguimiento/seguimientoLista?faces-redirect=true"
+					title="#{etiquetas['atras']}" immediate="true">
 				</p:commandButton>
 			</div>
 

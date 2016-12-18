@@ -50,9 +50,11 @@ public class ReporteCtrl extends BaseCtrl {
 	public void postConstructor() {
 		this.seguimientoFiltro = new SeguimientoSyllabus();
 		this.seguimientoFiltro.setSemestre(new Parametro());
+		this.seguimientoFiltro.setCarrera(new Parametro());
 		this.seguimientoFiltro.setMateria(new Materia());
 		this.seguimientoFiltro.setAlumno(new Usuario());
 		this.seguimientoFiltro.setProfesor(new Usuario());
+		this.seguimientoFiltro.setMateria(new Materia());
 		this.profesorLista = new ArrayList<Usuario>();
 		this.alumnoLista = new ArrayList<Usuario>();
 		List<Usuario> usuarioLista = servicioCrud.findOrder(new Usuario());

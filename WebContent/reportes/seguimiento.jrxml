@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="seguimiento" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="f229bb32-96a8-4b6c-bde0-b683656c26f9">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="432"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -45,8 +45,10 @@
 		<defaultValueExpression><![CDATA["C:\\Users\\calop\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select (select nombre from parametro  where codigo=syllabus.semestre) semestre, carrera carrera,(select nombre from materia  where codigo=syllabus.codigo_materia)materia,
-(select area from materia  where codigo=syllabus.codigo_materia)area,
+		<![CDATA[select (select nombre from parametro  where codigo=syllabus.semestre) semestre,
+(select (select nombre from parametro  where codigo=carrera) from materia  where codigo=syllabus.codigo_materia)carrera
+,(select nombre from materia  where codigo=syllabus.codigo_materia)materia,
+(select (select nombre from parametro  where codigo=area) from materia  where codigo=syllabus.codigo_materia)area,
 (select creditos from materia  where codigo=syllabus.codigo_materia)creditos,
 (select nombre||' '||apellido from usuario  where identificacion=syllabus.identificacion_profesor)profesor,
 cometario_coordinador1,cometario_coordinador2,cometario_coordinador3,
@@ -75,7 +77,7 @@ check_coordinador3,check_director,
 	<group name="Group1">
 		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
 		<groupHeader>
-			<band height="105">
+			<band height="104">
 				<subreport>
 					<reportElement x="0" y="4" width="802" height="100" uuid="85a1ef1a-40bc-4b4a-8800-36e11b17ff9e"/>
 					<subreportParameter name="id">
@@ -202,60 +204,106 @@ check_coordinador3,check_director,
 	<pageFooter>
 		<band splitType="Stretch"/>
 	</pageFooter>
+	<lastPageFooter>
+		<band height="476">
+			<staticText>
+				<reportElement x="34" y="98" width="61" height="25" uuid="8fe11bde-e305-4e5e-8ef9-f9ca6ea75c0f"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Director:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="48" y="94" width="230" height="1" uuid="3dcecc4b-6542-4f48-b89f-060012f1ae7f"/>
+			</line>
+			<textField>
+				<reportElement x="541" y="104" width="230" height="26" uuid="7956b079-5883-407c-8ea7-ca05428ad185"/>
+				<textFieldExpression><![CDATA[$F{coordinador}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="482" y="93" width="230" height="1" uuid="b4d2e60d-5523-4043-bba7-c7bd7a76e9b5"/>
+			</line>
+			<staticText>
+				<reportElement x="434" y="101" width="104" height="25" uuid="7c797b7d-edd7-42e4-b176-4fb01a4ffa6d"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Coordinador:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="105" y="101" width="230" height="25" uuid="71a90850-7765-4fff-8a59-1163da53f0bf"/>
+				<textFieldExpression><![CDATA[$F{director}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="243" width="219" height="25" uuid="feb3d4af-2bb5-4c80-9ebe-45000bcb076f"/>
+				<textFieldExpression><![CDATA[$F{profesor}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="49" y="223" width="230" height="1" uuid="ee5913f2-fa9c-4295-9ac3-12d7364852a8"/>
+			</line>
+			<staticText>
+				<reportElement x="34" y="239" width="71" height="25" uuid="e6775ff2-ccb3-43ec-9063-a0a4261fe04c"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profesor:]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
 	<summary>
 		<band height="440" splitType="Stretch">
 			<staticText>
-				<reportElement x="48" y="57" width="187" height="20" uuid="01b1b420-cf72-4151-8676-0738c4b741b5"/>
+				<reportElement x="34" y="54" width="187" height="20" uuid="01b1b420-cf72-4151-8676-0738c4b741b5"/>
 				<text><![CDATA[Revision Primer Bimestre:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="48" y="140" width="187" height="20" uuid="0f73ca25-7d9f-4d82-a3c4-402077dbd799"/>
+				<reportElement x="34" y="137" width="187" height="20" uuid="0f73ca25-7d9f-4d82-a3c4-402077dbd799"/>
 				<text><![CDATA[Revision Segundo Bimestre:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="48" y="228" width="187" height="20" uuid="61b0b8eb-3514-4253-9b47-30060c7e20b3"/>
+				<reportElement x="34" y="225" width="187" height="20" uuid="61b0b8eb-3514-4253-9b47-30060c7e20b3"/>
 				<text><![CDATA[Revision Tercer Bimestre:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="249" y="57" width="524" height="69" uuid="62905850-2ceb-4bcc-96c9-d9cd80956a87"/>
+				<reportElement x="235" y="54" width="524" height="69" uuid="62905850-2ceb-4bcc-96c9-d9cd80956a87"/>
 				<textFieldExpression><![CDATA[$F{cometario_coordinador1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="249" y="140" width="524" height="64" uuid="fbfad5fe-511d-4b78-8940-9a16ddaf7a86"/>
+				<reportElement x="235" y="137" width="524" height="64" uuid="fbfad5fe-511d-4b78-8940-9a16ddaf7a86"/>
 				<textFieldExpression><![CDATA[$F{cometario_coordinador2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="250" y="230" width="523" height="64" uuid="9882e15a-61e0-49b0-959e-43302a335db1"/>
+				<reportElement x="236" y="227" width="523" height="64" uuid="9882e15a-61e0-49b0-959e-43302a335db1"/>
 				<textFieldExpression><![CDATA[$F{cometario_coordinador3}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="30" y="15" width="266" height="20" uuid="129dd64c-d195-40b7-bfd8-f583aeccc9ff"/>
+				<reportElement x="16" y="12" width="266" height="20" uuid="129dd64c-d195-40b7-bfd8-f583aeccc9ff"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[REVISIÓN COORDINADOR:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="250" y="15" width="426" height="20" uuid="2f15b89d-cf06-48ca-a438-8fd3f5f16a9a"/>
+				<reportElement x="236" y="12" width="426" height="20" uuid="2f15b89d-cf06-48ca-a438-8fd3f5f16a9a"/>
 				<textFieldExpression><![CDATA[$F{coordinador}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="30" y="323" width="266" height="20" uuid="e7ff343e-a991-4d8b-9ce4-7fec510c3a32"/>
+				<reportElement x="16" y="320" width="266" height="20" uuid="e7ff343e-a991-4d8b-9ce4-7fec510c3a32"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[REVISIÓN DIRECTOR:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="250" y="323" width="440" height="20" uuid="41dac599-e94f-49cc-8046-d244fd8fce19"/>
+				<reportElement x="236" y="320" width="440" height="20" uuid="41dac599-e94f-49cc-8046-d244fd8fce19"/>
 				<textFieldExpression><![CDATA[$F{director}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="48" y="371" width="187" height="20" uuid="bfb8c520-8157-4e51-b319-f6317d20f5af"/>
+				<reportElement x="34" y="368" width="187" height="20" uuid="bfb8c520-8157-4e51-b319-f6317d20f5af"/>
 				<text><![CDATA[Revision Final:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="256" y="367" width="517" height="62" uuid="6d78a294-8b66-4c45-9a38-f7d2a00ae9ea"/>
+				<reportElement x="242" y="364" width="517" height="62" uuid="6d78a294-8b66-4c45-9a38-f7d2a00ae9ea"/>
 				<textFieldExpression><![CDATA[$F{cometario_director}]]></textFieldExpression>
 			</textField>
 		</band>

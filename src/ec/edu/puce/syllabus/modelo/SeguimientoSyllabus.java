@@ -42,9 +42,9 @@ public class SeguimientoSyllabus implements Serializable {
 	@JoinColumn(name = "semestre", referencedColumnName = "codigo")
 	private Parametro semestre;
 
-	@Column(name = "carrera")
-	@Enumerated(EnumType.STRING)
-	private EnumCarrera carrera;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "carrera", referencedColumnName = "codigo")
+	private Parametro carrera;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "codigo_materia", referencedColumnName = "codigo")
@@ -126,11 +126,11 @@ public class SeguimientoSyllabus implements Serializable {
 		this.semestre = semestre;
 	}
 
-	public EnumCarrera getCarrera() {
+	public Parametro getCarrera() {
 		return carrera;
 	}
 
-	public void setCarrera(EnumCarrera carrera) {
+	public void setCarrera(Parametro carrera) {
 		this.carrera = carrera;
 	}
 
