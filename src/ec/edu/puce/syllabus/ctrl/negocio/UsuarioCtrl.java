@@ -179,7 +179,7 @@ public class UsuarioCtrl extends BaseCtrl {
 	public String guardar() {
 
 		try {
-//			if (validadorDeCedula(this.usuario.getIdentificacion())) {
+			if (validadorDeCedula(this.usuario.getIdentificacion())) {
 				// pone los roles seleccionados
 				List<Rol> rolesXUsuario = new ArrayList<Rol>();
 				Rol rolNuevo;
@@ -200,9 +200,9 @@ public class UsuarioCtrl extends BaseCtrl {
 				String m = getBundleMensajes("registro.guardado.correctamente",
 						null);
 				addInfoMessage(m, m);
-//			} else {
-//				return null;
-//			}
+			} else {
+				return null;
+			}
 		} catch (Exception e) {
 			// e.printStackTrace();
 			String m = getBundleMensajes("registro.noguardado.exception",
