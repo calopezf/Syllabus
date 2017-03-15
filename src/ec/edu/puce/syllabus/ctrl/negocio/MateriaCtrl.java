@@ -37,8 +37,10 @@ public class MateriaCtrl extends BaseCtrl {
 	private List<Materia> materias;
 	private List<Parametro> planLista;
 	private List<Parametro> carreraLista;
+	private List<Parametro> carreraListaFiltro;
 	private List<Parametro> areaLista;
 	private List<Parametro> nivelLista;
+	private List<Parametro> nivelListaFiltro;
 
 	@PostConstruct
 	public void postConstructor() {
@@ -129,7 +131,9 @@ public class MateriaCtrl extends BaseCtrl {
 
 	public List<Materia> getMaterias() {
 		if (this.materias == null) {
-			materias = this.servicioCrud.findOrder(this.materiaFiltro);
+			this.materiaFiltro.setCodigo(this.materiaFiltro.getCodigo()!=null?"%"+this.materiaFiltro.getCodigo()+"%":this.materiaFiltro.getCodigo()); 
+			this.materiaFiltro.setNombre(this.materiaFiltro.getNombre()!=null?"%"+this.materiaFiltro.getNombre()+"%":this.materiaFiltro.getNombre());
+			materias = this.servicioCrud.findOrder(this.materiaFiltro, "carrera.codigo", "nivel.codigo", "area.codigo");
 		}
 		return materias;
 	}
@@ -173,6 +177,21 @@ public class MateriaCtrl extends BaseCtrl {
 	public void setCarreraLista(List<Parametro> carreraLista) {
 		this.carreraLista = carreraLista;
 	}
+	
+	
+
+	public List<Parametro> getCarreraListaFiltro() {
+		if (this.carreraListaFiltro == null) {
+			Parametro carreraFiltro = new Parametro();
+			carreraFiltro.setTipo(EnumTipoParametro.CARRERA);
+			this.carreraListaFiltro = servicioCrud.findOrder(carreraFiltro,"nombre");
+		}
+		return carreraListaFiltro;
+	}
+
+	public void setCarreraListaFiltro(List<Parametro> carreraListaFiltro) {
+		this.carreraListaFiltro = carreraListaFiltro;
+	}
 
 	public List<Parametro> getAreaLista() {
 		if (this.areaLista == null) {
@@ -201,6 +220,21 @@ public class MateriaCtrl extends BaseCtrl {
 	public void setNivelLista(List<Parametro> nivelLista) {
 		this.nivelLista = nivelLista;
 	}
+
+	public List<Parametro> getNivelListaFiltro() {
+		if (this.nivelListaFiltro == null) {
+			Parametro nivelFiltro = new Parametro();
+			nivelFiltro.setTipo(EnumTipoParametro.NIVEL_ALUMNO);
+			this.nivelListaFiltro = servicioCrud.findOrder(nivelFiltro);
+		}
+		return nivelListaFiltro;
+	}
+
+	public void setNivelListaFiltro(List<Parametro> nivelListaFiltro) {
+		this.nivelListaFiltro = nivelListaFiltro;
+	}
+	
+	
 	
 	
 

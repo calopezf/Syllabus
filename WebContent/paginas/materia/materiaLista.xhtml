@@ -16,6 +16,22 @@
 						<p:outputLabel value="#{etiquetas['nombre']}" />
 						<p:inputText value="#{materiaCtrl.materiaFiltro.nombre}"
 							style="width:120px" />
+							<p:outputLabel for="facultad" value="#{etiquetas['carrera']}" />
+						<p:selectOneMenu id="facultad"
+							value="#{materiaCtrl.materiaFiltro.carrera.codigo}"
+							style="width:250px">
+							<f:selectItem />
+							<f:selectItems value="#{materiaCtrl.carreraListaFiltro}" var="item"
+								itemLabel="#{item.nombre}" itemValue="#{item.codigo}" />
+						</p:selectOneMenu>
+						<p:outputLabel for="nivel" value="#{etiquetas['nivel']}" />
+						<p:selectOneMenu id="nivel"
+							value="#{materiaCtrl.materiaFiltro.nivel.codigo}"
+							style="width:250px">
+							<f:selectItem />
+							<f:selectItems value="#{materiaCtrl.nivelListaFiltro}" var="item"
+								itemLabel="#{item.nombre}" itemValue="#{item.codigo}" />
+						</p:selectOneMenu>
 					</h:panelGrid>
 				</h:panelGrid>
 				<h:panelGrid columns="2">

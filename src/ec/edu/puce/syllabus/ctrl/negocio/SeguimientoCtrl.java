@@ -79,7 +79,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 		this.alumnoLista = new ArrayList<Usuario>();
 		this.coordinadorLista = new ArrayList<Usuario>();
 		this.directorLista = new ArrayList<Usuario>();
-		List<Usuario> usuarioLista = servicioCrud.findOrder(new Usuario());
+		List<Usuario> usuarioLista = servicioCrud.findOrder(new Usuario(),"apellido", "nombre");
 		for (Usuario usu : usuarioLista) {
 			for (Rol rol : usu.getRoles()) {
 				if (rol.getId().equals("PROFESOR")) {
@@ -318,7 +318,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 				semestreFiltro.setCodigo(this.seguimiento.getCarrera()
 						.getCodigo());
 			}
-			carreraLista = servicioCrud.findOrder(semestreFiltro);
+			carreraLista = servicioCrud.findOrder(semestreFiltro, "nombre");
 		}
 		return carreraLista;
 	}
@@ -335,12 +335,12 @@ public class SeguimientoCtrl extends BaseCtrl {
 			if (this.seguimientoFiltro != null
 					&& this.seguimientoFiltro.getCarrera().getCodigo() != null) {
 				materiaFiltro.setCarrera(this.seguimientoFiltro.getCarrera());
-				materiaLista = servicioCrud.findOrder(materiaFiltro);
+				materiaLista = servicioCrud.findOrder(materiaFiltro,"nombre");
 			}
 			if (this.seguimiento != null
 					&& this.seguimiento.getCarrera().getCodigo() != null) {
 				materiaFiltro.setCarrera(this.seguimiento.getCarrera());
-				materiaLista = servicioCrud.findOrder(materiaFiltro);
+				materiaLista = servicioCrud.findOrder(materiaFiltro,"nombre");
 			}
 
 		}

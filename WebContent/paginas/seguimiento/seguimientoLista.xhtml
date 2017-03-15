@@ -100,7 +100,7 @@
 					</h:panelGrid>
 				</h:panelGrid>
 				<h:panelGrid columns="2">
-					<p:commandButton value="Nuevo Registro"
+					<p:commandButton value="Nuevo Registro" rendered="#{not usuarioCtrl.profesor and not usuarioCtrl.alumno}" 
 						action="/paginas/seguimiento/seguimiento?faces-redirect=true"
 						title="#{etiquetas['crear.nuevo']}" immediate="true">
 					</p:commandButton>

@@ -41,13 +41,15 @@
 					value="#{usuarioCtrl.usuarios}" var="item" 
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 					paginator="true" rows="10" style="width:100%; margin-bottom:20px">
-					<p:column style="width:100px;">
+					
+					<p:column style="width:150px;">
 						<f:facet name="header">
-							<h:outputText value="#{etiquetas['cedula']}" />
+							<h:outputText value="#{etiquetas['apellidos']}" />
 						</f:facet>
-						<h:outputText styleClass="tachado" value="#{item.identificacion}"
+						<h:outputText value="#{item.apellido}"
+							styleClass="inputUpper tachado"
 							rendered="#{item.tachado == false}" />
-						<h:outputText value="#{item.identificacion}"
+						<h:outputText value="#{item.apellido}" styleClass="inputUpper"
 							rendered="#{item.tachado == true}" />
 					</p:column>
 					<p:column style="width:150px;">
@@ -60,16 +62,16 @@
 						<h:outputText value="#{item.nombre}" styleClass="inputUpper"
 							rendered="#{item.tachado == true}" />
 					</p:column>
-					<p:column style="width:150px;">
+					<p:column style="width:100px;">
 						<f:facet name="header">
-							<h:outputText value="#{etiquetas['apellidos']}" />
+							<h:outputText value="#{etiquetas['cedula']}" />
 						</f:facet>
-						<h:outputText value="#{item.apellido}"
-							styleClass="inputUpper tachado"
+						<h:outputText styleClass="tachado" value="#{item.identificacion}"
 							rendered="#{item.tachado == false}" />
-						<h:outputText value="#{item.apellido}" styleClass="inputUpper"
+						<h:outputText value="#{item.identificacion}"
 							rendered="#{item.tachado == true}" />
 					</p:column>
+					
 					<p:column style="width:100px;">
 						<f:facet name="header">
 							<h:outputText value="#{etiquetas['estado']}" />

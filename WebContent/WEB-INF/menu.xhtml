@@ -44,7 +44,7 @@
 					<pu:menu widgetVar="me">
 						<p:menuitem id="um_dashboard" value="Inicio" icon="&#xE871;"
 							outcome="/paginas/index.jsf" />
-						<p:submenu id="themes" label="Temas" icon="&#xE40A;">
+						<p:submenu id="themes" label="Temas" icon="&#xE40A;" rendered="#{usuarioCtrl.administrador}">
 							<p:menuitem id="theme1" value="Indigo - Pink" icon="&#xE3AE;"
 								actionListener="#{guestPreferences.setTheme('indigo')}"
 								ajax="false" />
@@ -85,19 +85,34 @@
 						</p:submenu>
 
 						<p:menuitem id="um_utils" value="Catálogo" icon="&#xE869;"
-							outcome="/paginas/parametros/parametroLista.jsf" />
+							outcome="/paginas/parametros/parametroLista.jsf" rendered="#{usuarioCtrl.administrador}"/>
 						<p:menuitem id="um_usu" value="Usuarios" icon="&#xE7FD;"
-							outcome="/paginas/usuarios/usuarioLista.jsf" />
+							outcome="/paginas/usuarios/usuarioLista.jsf" rendered="#{usuarioCtrl.administrador}"/>
 						<p:menuitem id="um_mat" value="Materia" icon="&#xE880;"
-							outcome="/paginas/materia/materiaLista.jsf" />
+							outcome="/paginas/materia/materiaLista.jsf" rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}"/>
 						<p:menuitem id="um_seg" value="Seguimiento" icon="&#xE5D2;"
 							outcome="/paginas/seguimiento/seguimientoLista.jsf" />
 						<p:menuitem id="um_rep" value="Reporte" icon="&#xE7FD;"
-							outcome="/paginas/reporte/reporte.jsf" />
+							outcome="/paginas/reporte/reporte.jsf" rendered="#{usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}"/>
 
 					</pu:menu>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<span class="footer-text-left">Autor: Cristian López</span>
+            <br/>
+            <span class="footer-text-left">Director: Ing. Luis Aguas</span>
+            <br/>
+            <span class="footer-text-left">Revisor: Ing. Francisco Rodriguez</span>
+            <br/>
+            <span class="footer-text-left">Revisor: Ing. Alberto Pazmiño</span>
+            <br/>
 				</div>
 			</div>
 		</div>
+		
 	</h:form>
 </ui:composition>

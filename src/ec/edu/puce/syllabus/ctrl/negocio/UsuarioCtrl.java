@@ -179,7 +179,7 @@ public class UsuarioCtrl extends BaseCtrl {
 	public String guardar() {
 
 		try {
-			if (validadorDeCedula(this.usuario.getIdentificacion())) {
+//			if (validadorDeCedula(this.usuario.getIdentificacion())) {
 				// pone los roles seleccionados
 				List<Rol> rolesXUsuario = new ArrayList<Rol>();
 				Rol rolNuevo;
@@ -200,9 +200,9 @@ public class UsuarioCtrl extends BaseCtrl {
 				String m = getBundleMensajes("registro.guardado.correctamente",
 						null);
 				addInfoMessage(m, m);
-			} else {
-				return null;
-			}
+//			} else {
+//				return null;
+//			}
 		} catch (Exception e) {
 			// e.printStackTrace();
 			String m = getBundleMensajes("registro.noguardado.exception",
@@ -367,7 +367,10 @@ public class UsuarioCtrl extends BaseCtrl {
 
 	public List<Usuario> getUsuarios() {
 		if (this.usuarios == null) {
-			usuarios = this.servicioCrud.findOrder(this.usuarioFiltro);
+			this.usuarioFiltro.setIdentificacion(this.usuarioFiltro.getIdentificacion()!=null?"%"+this.usuarioFiltro.getIdentificacion()+"%":this.usuarioFiltro.getIdentificacion()); 
+			this.usuarioFiltro.setNombre(this.usuarioFiltro.getNombre()!=null?"%"+this.usuarioFiltro.getNombre()+"%":this.usuarioFiltro.getNombre());
+			this.usuarioFiltro.setApellido(this.usuarioFiltro.getApellido()!=null?"%"+this.usuarioFiltro.getApellido()+"%":this.usuarioFiltro.getApellido());
+			usuarios = this.servicioCrud.findOrder(this.usuarioFiltro, "apellido", "nombre");
 		}
 		return usuarios;
 	}
