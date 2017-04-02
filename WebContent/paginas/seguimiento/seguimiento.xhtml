@@ -111,7 +111,7 @@
 
 			<p:dataTable id="itemsTable"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-				paginator="true" rows="1"
+				paginator="true" rows="2"
 				rendered="#{seguimientoCtrl.seguimientoListaDetalle.size()>0}"
 				emptyMessage="#{etiquetas['no.existen.registros']}"
 				value="#{seguimientoCtrl.seguimientoListaDetalle}" var="item"

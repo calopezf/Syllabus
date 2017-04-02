@@ -307,7 +307,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 	public List<SeguimientoSyllabus> getSeguimientoLista() {
 		if (this.seguimientoLista == null) {
 			seguimientoLista = this.servicioCrud
-					.findOrder(this.seguimientoFiltro);
+					.findOrder(this.seguimientoFiltro,"carrera.nombre", "materia.nombre");
 		}
 		return seguimientoLista;
 	}
@@ -319,7 +319,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 	public List<SeguimientoSyllabus> getSeguimientoListaCoordinador() {
 		if (this.seguimientoListaCoordinador == null) {
 			seguimientoListaCoordinador = this.servicioCrud
-					.findOrder(this.seguimientoFiltroCoordinador);
+					.findOrder(this.seguimientoFiltroCoordinador,"carrera.nombre", "materia.nombre");
 		}
 		return seguimientoListaCoordinador;
 	}
@@ -332,7 +332,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 	public List<SeguimientoSyllabus> getSeguimientoListaDirector() {
 		if (this.seguimientoListaDirector == null) {
 			seguimientoListaDirector = this.servicioCrud
-					.findOrder(this.seguimientoFiltroDirector);
+					.findOrder(this.seguimientoFiltroDirector,"carrera.nombre", "materia.nombre");
 		}
 		return seguimientoListaDirector;
 	}
