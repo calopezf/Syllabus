@@ -69,7 +69,7 @@ public class ReporteCtrl extends BaseCtrl {
 			}
 
 		}
-		this.createAreaModel();
+		//this.createAreaModel();
 	}
 
 	private void createAreaModel() {

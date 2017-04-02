@@ -111,7 +111,7 @@
 
 			<p:dataTable id="itemsTable"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-				paginator="true" rows="10"
+				paginator="true" rows="1"
 				rendered="#{seguimientoCtrl.seguimientoListaDetalle.size()>0}"
 				emptyMessage="#{etiquetas['no.existen.registros']}"
 				value="#{seguimientoCtrl.seguimientoListaDetalle}" var="item"
@@ -221,7 +221,7 @@
 						<h:outputText value="#{etiquetas['alumno']}" />
 					</f:facet>
 					<p:selectBooleanCheckbox value="#{item.checkAlumno}"
-						disabled="#{not usuarioCtrl.alumno}" />
+						disabled="#{not usuarioCtrl.alumno or !item.checkProfesor}" />
 				</p:column>
 				<p:column style="width:180px;"
 					rendered="#{usuarioCtrl.alumno or usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
@@ -229,7 +229,7 @@
 						<h:outputText value="#{etiquetas['fecha']}" />
 					</f:facet>
 					<p:calendar value="#{item.fechaAlumno}"
-						disabled="#{not usuarioCtrl.alumno}" />
+						disabled="#{not usuarioCtrl.alumno or !item.checkProfesor} " />
 				</p:column>
 				<p:column style="width:180px;"
 					rendered="#{usuarioCtrl.alumno or usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
@@ -237,7 +237,7 @@
 						<h:outputText value="#{etiquetas['comentarioAlumno']}" />
 					</f:facet>
 					<p:inputTextarea value="#{item.comentarioAlumno}"
-						disabled="#{not usuarioCtrl.alumno}" />
+						disabled="#{not usuarioCtrl.alumno or !item.checkProfesor}" />
 				</p:column>
 			</p:dataTable>
 

@@ -37,7 +37,11 @@ public class SeguimientoCtrl extends BaseCtrl {
 	private ServicioCrud servicioCrud;
 	private SeguimientoSyllabus seguimiento;
 	private SeguimientoSyllabus seguimientoFiltro;
+	private SeguimientoSyllabus seguimientoFiltroCoordinador;
+	private SeguimientoSyllabus seguimientoFiltroDirector;
 	private List<SeguimientoSyllabus> seguimientoLista;
+	private List<SeguimientoSyllabus> seguimientoListaCoordinador;
+	private List<SeguimientoSyllabus> seguimientoListaDirector;
 	private List<SeguimientoSyllabusDetalle> seguimientoListaDetalle;
 	private List<Materia> materiaLista;
 	private List<Parametro> semestreLista;
@@ -53,28 +57,59 @@ public class SeguimientoCtrl extends BaseCtrl {
 		this.seguimientoFiltro.setMateria(new Materia());
 		this.seguimientoFiltro.setSemestre(new Parametro());
 		this.seguimientoFiltro.setCarrera(new Parametro());
-		if (isAlumno() && !isAdministrador()) {
+		this.seguimientoFiltro.setAlumno(new Usuario());
+		this.seguimientoFiltro.setProfesor(new Usuario());
+		this.seguimientoFiltro.setDirector(new Usuario());
+		this.seguimientoFiltro.setCoordinador(new Usuario());
+
+		this.seguimientoFiltroCoordinador = new SeguimientoSyllabus();
+		this.seguimientoFiltroCoordinador.setMateria(new Materia());
+		this.seguimientoFiltroCoordinador.setSemestre(new Parametro());
+		this.seguimientoFiltroCoordinador.setCarrera(new Parametro());
+		this.seguimientoFiltroCoordinador.setAlumno(new Usuario());
+		this.seguimientoFiltroCoordinador.setProfesor(new Usuario());
+		this.seguimientoFiltroCoordinador.setDirector(new Usuario());
+		this.seguimientoFiltroCoordinador.setCoordinador(new Usuario());
+		
+		this.seguimientoFiltroDirector = new SeguimientoSyllabus();
+		this.seguimientoFiltroDirector.setMateria(new Materia());
+		this.seguimientoFiltroDirector.setSemestre(new Parametro());
+		this.seguimientoFiltroDirector.setCarrera(new Parametro());
+		this.seguimientoFiltroDirector.setAlumno(new Usuario());
+		this.seguimientoFiltroDirector.setProfesor(new Usuario());
+		this.seguimientoFiltroDirector.setDirector(new Usuario());
+		this.seguimientoFiltroDirector.setCoordinador(new Usuario());
+		
+		if (isAlumno()) {
 			this.seguimientoFiltro.setAlumno(getUsuarioLogueado());
 		} else {
 			this.seguimientoFiltro.setAlumno(new Usuario());
 		}
-		if (isProfesor() && !isCoordinador() && !isDirector()
-				&& !isAdministrador()) {
+		if (isProfesor()) {
 			this.seguimientoFiltro.setProfesor(getUsuarioLogueado());
 		} else {
 			this.seguimientoFiltro.setProfesor(new Usuario());
 		}
-		if (isCoordinador() && !isDirector() && !isAdministrador()) {
-			this.seguimientoFiltro.setCoordinador(getUsuarioLogueado());
-		} else {
-			this.seguimientoFiltro.setCoordinador(new Usuario());
+//		if (isCoordinador() && !isDirector() && !isAdministrador()) {
+//			this.seguimientoFiltro.setCoordinador(getUsuarioLogueado());
+//		} else {
+//			this.seguimientoFiltro.setCoordinador(new Usuario());
+//		}
+//		if (isDirector() && !isAdministrador()) {
+//			this.seguimientoFiltro.setDirector(getUsuarioLogueado());
+//		} else {
+//			this.seguimientoFiltro.setDirector(new Usuario());
+//		}
+		if (isCoordinador()) {			
+			//this.seguimientoFiltro.setCoordinador(getUsuarioLogueado());
+			this.seguimientoFiltroCoordinador.setCoordinador(getUsuarioLogueado());
 		}
-		if (isDirector() && !isAdministrador()) {
-			this.seguimientoFiltro.setDirector(getUsuarioLogueado());
-		} else {
-			this.seguimientoFiltro.setDirector(new Usuario());
+		if (isDirector()) {	
+			//this.seguimientoFiltro.setDirector(getUsuarioLogueado());
+			this.seguimientoFiltroDirector.setDirector(getUsuarioLogueado());
 		}
-
+		
+		
 		this.profesorLista = new ArrayList<Usuario>();
 		this.alumnoLista = new ArrayList<Usuario>();
 		this.coordinadorLista = new ArrayList<Usuario>();
@@ -153,11 +188,23 @@ public class SeguimientoCtrl extends BaseCtrl {
 
 		try {
 			if (this.seguimiento.getId() == null) {
-				this.seguimiento = servicioCrud.insertReturn(seguimiento);
 				Syllabus syllabus = servicioCrud.findById(this.seguimiento
 						.getMateria().getCodigo(), Syllabus.class);
+				if(syllabus==null){
+					addErrorMessage("cedula",
+							getBundleMensajes("materiaSinContenido", null), "");
+					return null;
+				}
 				SyllabusDetalle syllabusDetalleFiltro = new SyllabusDetalle();
 				syllabusDetalleFiltro.setSyllabus(syllabus);
+				List<SyllabusDetalle> listaDeta=servicioCrud.findOrder(syllabusDetalleFiltro);
+				if(listaDeta==null || listaDeta.isEmpty()){
+					addErrorMessage("cedula",
+							getBundleMensajes("materiaSinContenido", null), "");
+					return null;
+				}
+				this.seguimiento = servicioCrud.insertReturn(seguimiento);
+			
 				for (SyllabusDetalle detalle : servicioCrud
 						.findOrder(syllabusDetalleFiltro)) {
 					SeguimientoSyllabusDetalle seguimientoDetalle = new SeguimientoSyllabusDetalle();
@@ -267,6 +314,32 @@ public class SeguimientoCtrl extends BaseCtrl {
 
 	public void setSeguimientoLista(List<SeguimientoSyllabus> seguimientoLista) {
 		this.seguimientoLista = seguimientoLista;
+	}
+
+	public List<SeguimientoSyllabus> getSeguimientoListaCoordinador() {
+		if (this.seguimientoListaCoordinador == null) {
+			seguimientoListaCoordinador = this.servicioCrud
+					.findOrder(this.seguimientoFiltroCoordinador);
+		}
+		return seguimientoListaCoordinador;
+	}
+
+	public void setSeguimientoListaCoordinador(
+			List<SeguimientoSyllabus> seguimientoListaCoordinador) {
+		this.seguimientoListaCoordinador = seguimientoListaCoordinador;
+	}
+
+	public List<SeguimientoSyllabus> getSeguimientoListaDirector() {
+		if (this.seguimientoListaDirector == null) {
+			seguimientoListaDirector = this.servicioCrud
+					.findOrder(this.seguimientoFiltroDirector);
+		}
+		return seguimientoListaDirector;
+	}
+
+	public void setSeguimientoListaDirector(
+			List<SeguimientoSyllabus> seguimientoListaDirector) {
+		this.seguimientoListaDirector = seguimientoListaDirector;
 	}
 
 	public SeguimientoSyllabus getSeguimientoFiltro() {
@@ -390,5 +463,25 @@ public class SeguimientoCtrl extends BaseCtrl {
 	public void setDirectorLista(List<Usuario> directorLista) {
 		this.directorLista = directorLista;
 	}
+
+	public SeguimientoSyllabus getSeguimientoFiltroCoordinador() {
+		return seguimientoFiltroCoordinador;
+	}
+
+	public void setSeguimientoFiltroCoordinador(
+			SeguimientoSyllabus seguimientoFiltroCoordinador) {
+		this.seguimientoFiltroCoordinador = seguimientoFiltroCoordinador;
+	}
+
+	public SeguimientoSyllabus getSeguimientoFiltroDirector() {
+		return seguimientoFiltroDirector;
+	}
+
+	public void setSeguimientoFiltroDirector(
+			SeguimientoSyllabus seguimientoFiltroDirector) {
+		this.seguimientoFiltroDirector = seguimientoFiltroDirector;
+	}
+	
+	
 
 }

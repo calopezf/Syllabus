@@ -34,22 +34,22 @@ public class SeguimientoSyllabusDetalle implements Serializable {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "GEN_SEGUIMIENTO_SYLLABUS_DETALLE")
 	private Long id;
 
-	@Column(name = "unidad", nullable = false, length = 4000)
+	@Column(name = "unidad", nullable = true, length = 4000)
 	private String unidad;
 
 	@Column(name = "clase", nullable = false)
 	private Integer clase;
 
-	@Column(name = "contenido", nullable = false, length = 4000)
+	@Column(name = "contenido", nullable = true, length = 4000)
 	private String contenido;
 
-	@Column(name = "actividad", nullable = false, length = 4000)
+	@Column(name = "actividad", nullable = true, length = 4000)
 	private String actividad;
 
-	@Column(name = "trabajo", nullable = false, length = 4000)
+	@Column(name = "trabajo", nullable = true, length = 4000)
 	private String trabajo;
 
-	@Column(name = "evidencia", nullable = false, length = 4000)
+	@Column(name = "evidencia", nullable = true, length = 4000)
 	private String evidencia;
 
 	@Column(name = "bimestre", nullable = true)
