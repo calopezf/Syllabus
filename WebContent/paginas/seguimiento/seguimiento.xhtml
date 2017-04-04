@@ -178,7 +178,7 @@
 						<h:outputText value="#{etiquetas['fecha']}" />
 					</f:facet>
 					<p:calendar value="#{item.fechaProfesor}"
-						disabled="#{not usuarioCtrl.profesor}" />
+						disabled="#{not usuarioCtrl.profesor}" mindate="#{seguimientoCtrl.hoy}"/>
 				</p:column>
 				<p:column style="width:180px;"
 					rendered="#{usuarioCtrl.profesor or usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
@@ -186,14 +186,14 @@
 						<h:outputText value="#{etiquetas['horaEntrada']}" />
 					</f:facet>
 					<p:calendar value="#{item.horaEntrada}" pattern="HH:mm"
-						timeOnly="true" disabled="#{not usuarioCtrl.profesor}" />
+						timeOnly="true" disabled="#{not usuarioCtrl.profesor}"  />
 				</p:column>
 				<p:column style="width:180px;"
 					rendered="#{usuarioCtrl.profesor or usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">
 					<f:facet name="header">
 						<h:outputText value="#{etiquetas['horaSalida']}" />
 					</f:facet>
-					<p:calendar value="#{item.horaSalida}" pattern="HH:mm"
+					<p:calendar id="salida" value="#{item.horaSalida}" pattern="HH:mm"
 						timeOnly="true" disabled="#{not usuarioCtrl.profesor}" />
 				</p:column>
 				<p:column style="width:180px;"
@@ -229,7 +229,7 @@
 						<h:outputText value="#{etiquetas['fecha']}" />
 					</f:facet>
 					<p:calendar value="#{item.fechaAlumno}"
-						disabled="#{not usuarioCtrl.alumno or !item.checkProfesor} " />
+						disabled="#{not usuarioCtrl.alumno or !item.checkProfesor}" mindate="#{seguimientoCtrl.hoy}"/>
 				</p:column>
 				<p:column style="width:180px;"
 					rendered="#{usuarioCtrl.alumno or usuarioCtrl.administrador or usuarioCtrl.coordinador or usuarioCtrl.director}">

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="seguimiento" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="f229bb32-96a8-4b6c-bde0-b683656c26f9">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="432"/>
+	<property name="ireport.y" value="48"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -84,7 +84,7 @@ check_coordinador3,check_director,
 						<subreportParameterExpression><![CDATA[$P{id}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "seguimiento_subreport.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["C:\\Users\\Administrator\\git\\Syllabus\\WebContent\\reportes\\seguimiento_subreport.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>
@@ -163,7 +163,7 @@ check_coordinador3,check_director,
 			</textField>
 			<image>
 				<reportElement x="16" y="4" width="187" height="134" uuid="8f43301b-a913-4b02-93ca-61de04f2ee08"/>
-				<imageExpression><![CDATA["C:\\Java\\workspaceTesis\\Syllabus\\WebContent\\reportes\\logopuce1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\Users\\Administrator\\git\\Syllabus\\WebContent\\reportes\\logopuce1.jpg"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="596" y="172" width="206" height="20" uuid="2554f0ef-6f60-45a1-a4ff-a357319bd57a"/>

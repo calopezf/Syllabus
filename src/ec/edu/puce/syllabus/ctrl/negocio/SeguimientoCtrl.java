@@ -1,14 +1,19 @@
 package ec.edu.puce.syllabus.ctrl.negocio;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.xml.soap.Detail;
+
+import org.primefaces.event.SelectEvent;
 
 import ec.edu.puce.syllabus.constantes.EnumEstado;
 import ec.edu.puce.syllabus.constantes.EnumTipoParametro;
@@ -50,9 +55,11 @@ public class SeguimientoCtrl extends BaseCtrl {
 	private List<Usuario> alumnoLista;
 	private List<Usuario> coordinadorLista;
 	private List<Usuario> directorLista;
+	private Date hoy;
 
 	@PostConstruct
 	public void postConstructor() {
+		this.hoy = new Date();
 		this.seguimientoFiltro = new SeguimientoSyllabus();
 		this.seguimientoFiltro.setMateria(new Materia());
 		this.seguimientoFiltro.setSemestre(new Parametro());
@@ -70,7 +77,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 		this.seguimientoFiltroCoordinador.setProfesor(new Usuario());
 		this.seguimientoFiltroCoordinador.setDirector(new Usuario());
 		this.seguimientoFiltroCoordinador.setCoordinador(new Usuario());
-		
+
 		this.seguimientoFiltroDirector = new SeguimientoSyllabus();
 		this.seguimientoFiltroDirector.setMateria(new Materia());
 		this.seguimientoFiltroDirector.setSemestre(new Parametro());
@@ -79,7 +86,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 		this.seguimientoFiltroDirector.setProfesor(new Usuario());
 		this.seguimientoFiltroDirector.setDirector(new Usuario());
 		this.seguimientoFiltroDirector.setCoordinador(new Usuario());
-		
+
 		if (isAlumno()) {
 			this.seguimientoFiltro.setAlumno(getUsuarioLogueado());
 		} else {
@@ -90,31 +97,32 @@ public class SeguimientoCtrl extends BaseCtrl {
 		} else {
 			this.seguimientoFiltro.setProfesor(new Usuario());
 		}
-//		if (isCoordinador() && !isDirector() && !isAdministrador()) {
-//			this.seguimientoFiltro.setCoordinador(getUsuarioLogueado());
-//		} else {
-//			this.seguimientoFiltro.setCoordinador(new Usuario());
-//		}
-//		if (isDirector() && !isAdministrador()) {
-//			this.seguimientoFiltro.setDirector(getUsuarioLogueado());
-//		} else {
-//			this.seguimientoFiltro.setDirector(new Usuario());
-//		}
-		if (isCoordinador()) {			
-			//this.seguimientoFiltro.setCoordinador(getUsuarioLogueado());
-			this.seguimientoFiltroCoordinador.setCoordinador(getUsuarioLogueado());
+		// if (isCoordinador() && !isDirector() && !isAdministrador()) {
+		// this.seguimientoFiltro.setCoordinador(getUsuarioLogueado());
+		// } else {
+		// this.seguimientoFiltro.setCoordinador(new Usuario());
+		// }
+		// if (isDirector() && !isAdministrador()) {
+		// this.seguimientoFiltro.setDirector(getUsuarioLogueado());
+		// } else {
+		// this.seguimientoFiltro.setDirector(new Usuario());
+		// }
+		if (isCoordinador()) {
+			// this.seguimientoFiltro.setCoordinador(getUsuarioLogueado());
+			this.seguimientoFiltroCoordinador
+					.setCoordinador(getUsuarioLogueado());
 		}
-		if (isDirector()) {	
-			//this.seguimientoFiltro.setDirector(getUsuarioLogueado());
+		if (isDirector()) {
+			// this.seguimientoFiltro.setDirector(getUsuarioLogueado());
 			this.seguimientoFiltroDirector.setDirector(getUsuarioLogueado());
 		}
-		
-		
+
 		this.profesorLista = new ArrayList<Usuario>();
 		this.alumnoLista = new ArrayList<Usuario>();
 		this.coordinadorLista = new ArrayList<Usuario>();
 		this.directorLista = new ArrayList<Usuario>();
-		List<Usuario> usuarioLista = servicioCrud.findOrder(new Usuario(),"apellido", "nombre");
+		List<Usuario> usuarioLista = servicioCrud.findOrder(new Usuario(),
+				"apellido", "nombre");
 		for (Usuario usu : usuarioLista) {
 			for (Rol rol : usu.getRoles()) {
 				if (rol.getId().equals("PROFESOR")) {
@@ -190,21 +198,22 @@ public class SeguimientoCtrl extends BaseCtrl {
 			if (this.seguimiento.getId() == null) {
 				Syllabus syllabus = servicioCrud.findById(this.seguimiento
 						.getMateria().getCodigo(), Syllabus.class);
-				if(syllabus==null){
+				if (syllabus == null) {
 					addErrorMessage("cedula",
 							getBundleMensajes("materiaSinContenido", null), "");
 					return null;
 				}
 				SyllabusDetalle syllabusDetalleFiltro = new SyllabusDetalle();
 				syllabusDetalleFiltro.setSyllabus(syllabus);
-				List<SyllabusDetalle> listaDeta=servicioCrud.findOrder(syllabusDetalleFiltro);
-				if(listaDeta==null || listaDeta.isEmpty()){
+				List<SyllabusDetalle> listaDeta = servicioCrud
+						.findOrder(syllabusDetalleFiltro);
+				if (listaDeta == null || listaDeta.isEmpty()) {
 					addErrorMessage("cedula",
 							getBundleMensajes("materiaSinContenido", null), "");
 					return null;
 				}
 				this.seguimiento = servicioCrud.insertReturn(seguimiento);
-			
+
 				for (SyllabusDetalle detalle : servicioCrud
 						.findOrder(syllabusDetalleFiltro)) {
 					SeguimientoSyllabusDetalle seguimientoDetalle = new SeguimientoSyllabusDetalle();
@@ -306,8 +315,8 @@ public class SeguimientoCtrl extends BaseCtrl {
 
 	public List<SeguimientoSyllabus> getSeguimientoLista() {
 		if (this.seguimientoLista == null) {
-			seguimientoLista = this.servicioCrud
-					.findOrder(this.seguimientoFiltro,"carrera.nombre", "materia.nombre");
+			seguimientoLista = this.servicioCrud.findOrder(
+					this.seguimientoFiltro, "carrera.nombre", "materia.nombre");
 		}
 		return seguimientoLista;
 	}
@@ -318,8 +327,9 @@ public class SeguimientoCtrl extends BaseCtrl {
 
 	public List<SeguimientoSyllabus> getSeguimientoListaCoordinador() {
 		if (this.seguimientoListaCoordinador == null) {
-			seguimientoListaCoordinador = this.servicioCrud
-					.findOrder(this.seguimientoFiltroCoordinador,"carrera.nombre", "materia.nombre");
+			seguimientoListaCoordinador = this.servicioCrud.findOrder(
+					this.seguimientoFiltroCoordinador, "carrera.nombre",
+					"materia.nombre");
 		}
 		return seguimientoListaCoordinador;
 	}
@@ -331,8 +341,9 @@ public class SeguimientoCtrl extends BaseCtrl {
 
 	public List<SeguimientoSyllabus> getSeguimientoListaDirector() {
 		if (this.seguimientoListaDirector == null) {
-			seguimientoListaDirector = this.servicioCrud
-					.findOrder(this.seguimientoFiltroDirector,"carrera.nombre", "materia.nombre");
+			seguimientoListaDirector = this.servicioCrud.findOrder(
+					this.seguimientoFiltroDirector, "carrera.nombre",
+					"materia.nombre");
 		}
 		return seguimientoListaDirector;
 	}
@@ -408,12 +419,12 @@ public class SeguimientoCtrl extends BaseCtrl {
 			if (this.seguimientoFiltro != null
 					&& this.seguimientoFiltro.getCarrera().getCodigo() != null) {
 				materiaFiltro.setCarrera(this.seguimientoFiltro.getCarrera());
-				materiaLista = servicioCrud.findOrder(materiaFiltro,"nombre");
+				materiaLista = servicioCrud.findOrder(materiaFiltro, "nombre");
 			}
 			if (this.seguimiento != null
 					&& this.seguimiento.getCarrera().getCodigo() != null) {
 				materiaFiltro.setCarrera(this.seguimiento.getCarrera());
-				materiaLista = servicioCrud.findOrder(materiaFiltro,"nombre");
+				materiaLista = servicioCrud.findOrder(materiaFiltro, "nombre");
 			}
 
 		}
@@ -481,7 +492,14 @@ public class SeguimientoCtrl extends BaseCtrl {
 			SeguimientoSyllabus seguimientoFiltroDirector) {
 		this.seguimientoFiltroDirector = seguimientoFiltroDirector;
 	}
-	
-	
+
+	public Date getHoy() {
+		return hoy;
+	}
+
+	public void setHoy(Date hoy) {
+		this.hoy = hoy;
+	}
+
 
 }
